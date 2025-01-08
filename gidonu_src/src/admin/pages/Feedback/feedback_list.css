@@ -1,0 +1,298 @@
+.table-container {
+  width: 70%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 16px;
+  border-radius: 30px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(123, 123, 123, 0.1);
+}
+
+.styled-table th,
+.styled-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+  text-align: justify;
+  cursor: pointer;
+}
+
+.styled-table thead th {
+  background-color: #dedede;
+  color: #333;
+  text-align: center;
+}
+
+.styled-table tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #dedede;
+}
+
+.styled-table tbody tr:hover {
+  background-color: #dedede;
+}
+
+.select-container {
+  width: 70%;
+  margin: 0 auto;
+  padding: 20px;
+  padding-bottom: 0px;
+}
+
+.styled-select {
+  position: relative;
+  display: inline-block;
+  width: 200px;
+}
+
+.styled-select select {
+  appearance: none;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.styled-select::after {
+  content: "\25BC"; /* Unicode символ для стрелки вниз */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #666;
+}
+
+.styled-select select:focus {
+  border-color: #a7a6a6;
+  outline: none;
+}
+
+.styled-select option {
+  background-color: #ffffff;
+  color: #333;
+  padding: 10px;
+}
+
+.back-button {
+  text-decoration: none;
+  color: #272727;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 7px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.back-button:hover {
+  background-color: #ffffff;
+}
+
+/*#region Контейнер "деталі заявки"*/
+
+.details-container {
+  background-color: white;
+  border-radius: 23px;
+  width: 70%;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 2px rgba(0, 0, 0, 0.3);
+}
+.details {
+  padding: 20px;
+  padding-left: 60px;
+}
+
+.details h1 {
+  text-align: center;
+  color: #5294A6;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+  margin-bottom: 34px;
+  letter-spacing: 0.6px;
+}
+
+.details p{
+  color: #2F2F2F;
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 25px;
+  letter-spacing: 0.6px;
+}
+
+.user_image{
+  margin-top: -30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
+}
+/*#endregion Контейнер "деталі заявки"*/
+
+/*#region Контейнер "Відповісти"*/
+.message-container {
+  background-color: white;
+  border-radius: 25px;
+  width: 70%;
+  margin: 0 auto;
+  box-shadow: 7px 10px 15px rgba(0, 0, 0, 0.3);
+}
+.message-container h1 {
+  text-align: center;
+  color: #5294A6;
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+  padding-top: 40px;
+  letter-spacing: 0.6px;
+}
+
+.message {
+  margin: auto 0;
+}
+
+.message textarea {
+  width: calc(100% - 160px);
+  height: 190px;
+  padding: 20px;
+  margin: 10px 60px;
+  border: none;
+  background-color: #e4e4e4;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 0.6px;
+  font-size: 20px;
+  outline: none;
+  border-radius: 15px;
+  resize: none;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+.message textarea:focus {
+  outline: none;
+  border: 2px solid #5294a6;
+}
+
+.file-upload-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-left: 12%;
+}
+.container_add_upload{
+  margin-left: 10%;
+}
+
+/*.line{*/
+/*  text-align: left;*/
+/*  margin: 0 0 0 60px;*/
+/*  font-family: 'Noto Sans', sans-serif;*/
+/*  font-size: 16px;*/
+/*  color: #7A7A7A;*/
+/*  padding-bottom: 10px;*/
+/*  padding-top: 30px;*/
+/*}*/
+
+
+input[type="file"] {
+  width: 100px;
+  height: 70px;
+  background-color: #E4E4E4; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin: 0 0 0 80px;
+  border-radius: 5px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
+}
+
+input[type="file"]:before {
+  content: "+";
+  font-size: 70px;
+  text-align: center;
+  color: #7A7A7A;
+}
+
+input[type="file"]:hover {
+  background-color: #ddd; 
+}
+
+input[type="file"]:active {
+  background-color: #bbb; 
+}
+
+input[type="file"]:active:before {
+  color: #555; 
+}
+
+.img_wrapper {
+  width: 0;
+  height: 0;
+  border: 0.5px solid #ccc;
+  overflow: hidden;
+  position: relative;
+  transition: width 0.5s, height 0.5s; /* Плавный переход размеров */
+  border-radius: 15px;   
+  margin-left: 100px;
+  box-shadow: 0 3px 4px rgba(0, 0, 0, 0.3);
+}
+
+.img_wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.img_wrapper .delete-btn {
+  display: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgb(139, 137, 137);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.img_wrapper:hover .delete-btn {
+  display: block;
+}
+
+.send_answer{
+  background-color: #5294A6;
+  color: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  font-size: 16px;
+  letter-spacing: 0.6px;
+  border: none;
+  border-radius: 30px;
+  height: 48px;
+  width: 227px;
+  cursor: pointer;
+  margin: 20px 0 40px 42%;
+}
+/*#endregion Контейнер "Відповісти"*/

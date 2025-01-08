@@ -1,0 +1,10 @@
+.users-main {
+  height: calc(100% - 30px);
+  padding: 40px 20px 0 20px;
+  margin-bottom: 30px;
+  overflow: auto;
+}
+
+.users-cont {
+  width: max-content;
+}

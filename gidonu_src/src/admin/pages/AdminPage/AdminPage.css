@@ -1,0 +1,50 @@
+.admin-main {
+  display: flex;
+  flex-direction: row;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
+.line {
+  justify-content: space-between;
+  padding: 20px 0;
+  position: sticky;
+  z-index: 2;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  column-gap: 16px;
+  font-size: 38px;
+  text-shadow: 1px 1px 5px rgba(100,100,100,0.75);
+  font-weight: bold;
+  color: #fff;
+}
+
+.logotype {
+  margin-left: -20px;
+  width: 80px;
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 4px;
+  border: 1px solid #000;
+}
+
+.top-line {
+  width: 100%;
+  z-index: 1;
+  padding-left: 60px;
+  left: 230px;
+}
+
+.right {
+  padding-top: 90px;
+  width: calc(100% - 270px);
+}
+
+.tab-elem {
+  padding: 8px 0;
+}

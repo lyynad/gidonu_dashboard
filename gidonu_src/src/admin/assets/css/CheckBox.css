@@ -1,0 +1,36 @@
+.checkBox-border-active-user {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+}
+.checkBox-body-active-user {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  background: #e8e8e8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.checkBox-border-inactive-user {
+  width: 15px;
+  height: 15px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+}
+.checkBox-body-inactive-user {
+  width: 13px;
+  height: 13px;
+  border-radius: 3px;
+  background: #e8e8e8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
