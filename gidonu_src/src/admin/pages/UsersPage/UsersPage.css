@@ -7,4 +7,7 @@
 
 .users-cont {
   width: max-content;
+  border-radius: 1vw;
+  overflow: hidden;
+  outline: 1px solid #B1B1B1;
 }

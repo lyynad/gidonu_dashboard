@@ -1,0 +1,26 @@
+.contextMenu {
+    position: absolute;
+    width: 200px;
+    height: 30px;
+    font-size: 18px;
+    list-style: none;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    background-color: #E8E8E8;
+    outline: 1px solid black;
+    cursor: default;
+}
+
+.contextMenu:hover{
+    background-color: #d8d8d8;
+}
+
+.contextMenu > li {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    margin: 0;
+    height: 30px;
+    width: 100%;
+}

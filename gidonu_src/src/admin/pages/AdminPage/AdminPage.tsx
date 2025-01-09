@@ -11,7 +11,10 @@ import UserMain from "../UserMain/UserMain";
 import UsersPage from "../UsersPage/UsersPage";
 import GnFeedBack from "../Feedback/GnFeedBack";
 import Building from "../Buildings/Building";
+import FacultiesPage from "../FacultiesPage/FacultiesPage";
+import LogsPage from "../LogsPage/LogsPage";
 import SvgSprite from "../../../gn-components/sprite/SvgSprite";
+
 export default function AdminPage() {
   const [adminActiveTab, setAdminActiveTab] = useState<number>(
     +localStorage.getItem("adminActiveTab")!,
@@ -27,6 +30,8 @@ export default function AdminPage() {
     "Корпуси",
     "Відділи",
     "Типи відділів",
+    "Факультети",
+    "Історія"
   ];
 
   const icons: string[] = [
@@ -35,11 +40,13 @@ export default function AdminPage() {
     "buildings",
     "departments",
     "departmentTypes",
+    "faculties",
+    "logs",
   ];
 
   function toUsers() {
     changeAdminActiveTab(0);
-  }
+  };
   return (
     <div className="size-full flex flex-row">
       <div className="admin-main h-full relative w-max">
@@ -110,6 +117,8 @@ export default function AdminPage() {
           {adminActiveTab === 1 && <UsersPage />}
           {adminActiveTab === 2 && <GnFeedBack />}
           {adminActiveTab === 3 && <Building />}
+          {adminActiveTab === 6 && <FacultiesPage />}
+          {adminActiveTab === 7 && <LogsPage />}
         </div>
       )}
     </div>

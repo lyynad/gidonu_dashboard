@@ -1,0 +1,259 @@
+.faculty-info-window{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 28.5vw;
+    max-height: 95vh;
+    padding-bottom: 1.74vw;
+    border-radius: 1.4vw;
+    background-color: #5294A6;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: white;
+    z-index: 1;
+}
+
+.faculty-info-window > h1{
+    font-weight: 500;
+    text-align: center;
+    font-size: 1.4vw;
+    max-width: 90%;
+    margin-top: 0;
+    margin-bottom: 2.6vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.faculty-info-window-fields-container{
+    display: flex;
+    flex-direction: column;
+    gap: 2.6vh;
+    width: 100%;
+}
+
+.faculty-info-window-field{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 75.7%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.faculty-info-window-field > label{
+    font-size: 0.97vw;
+    margin-bottom: 5px;
+}
+
+.faculty-info-window-field > input, .faculty-info-window-field > textarea{
+    color: black;
+    font-size: 1.1vw;
+    padding-left: 1.04vw;
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 1.74vw;
+    border: none;
+    background-color: #D9D9D9;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.faculty-info-window-field > input{
+    height: 7.32vh;
+}
+.faculty-info-window-field > input:focus{
+    outline: 1px solid black;
+}
+
+.tooltip{
+    position: absolute;
+    bottom: -35px;
+    left: 10%;
+    display: flex;
+    place-content: center;
+    align-items: center;
+    font-size: 1.1vw;
+    height: 2.1vw;
+    width: 80%;
+    background-color: #5fcae7ad;
+    border-radius: 5px;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.3);
+    display: flex;
+    color: black;
+    z-index: 1;
+}
+
+.tooltip::after{
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 10%;
+    transform: rotate(180deg);
+    margin-left: -5px;
+    border-width: 12px;
+    border-style: solid;
+    border-color: #5fcae7ad transparent transparent transparent
+}
+
+.faculty-info-window-field-selectContainer {
+    position: relative;
+    height: 7.32vh;
+    color: black;
+}
+
+.faculty-info-window-field-selectContainer > ul {
+    position: absolute;
+    list-style-type: none;
+    background-color: #D9D9D9;
+    top: 99%;
+    width: 100%;
+    max-height: 0;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    box-shadow: 0px 6px 5px -3px rgba(0, 0, 0, 0.5);
+    border-radius: 0px 0px 1.74vw 1.74vw;
+    overflow: hidden;
+    animation: list-animation 0.2s forwards ease-in;
+    z-index: 1;
+}
+
+@keyframes list-animation {
+    0% {
+        max-height: 0;
+    }
+    100% {
+        max-height: 500px;
+    }
+}
+
+.faculty-info-window-field-selectContainer > ul > li {
+    display: grid;
+    align-items: center;
+    color: black;
+    font-size: 0.98vw;
+    cursor: default;
+    overflow: hidden;
+    height: 4.6vh;
+    padding-left: 15px;
+}
+
+.faculty-info-window-field-selectContainer > ul > li:hover {
+    padding-left: 1.25vw;
+    background-color: rgba(166, 159, 159, 0.43);
+}
+
+.faculty-info-window-field-selectContainer > button {
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    padding-left: 1.04vw;
+    box-sizing: border-box;
+    font-size: 1.1vw;
+    background-color: #D9D9D9;
+    border: none;
+}
+
+.faculty-info-window-field-selectContainer > button:hover{
+    outline: 1px solid black;
+}
+
+.faculty-info-window-field-selectContainer > button:hover + ul {
+    box-shadow: 0px 6px 5px -3px rgba(0, 0, 0, 0.5), -1.5px 0px 0px -0.5px black, 1.5px 0px 0px -0.5px black, 0px 1.5px 0px -0.5px black;
+}
+
+.faculty-info-window-field-selectContainer-arrow{
+    position: absolute;
+    right: 0.7vw;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-left: 0.42vw solid transparent;
+    border-right: 0.42vw solid transparent;
+    border-top: 0.7vw solid #646363;
+    pointer-events: none;
+}
+
+.faculty-info-window-field-selectContainer-arrow.animate {
+    animation: flipArrow 0.2s forwards ease-in;
+}
+
+.faculty-info-window-field-selectContainer-arrow.animateBack {
+    animation: flipArrowBack 0.2s forwards ease-in;
+}
+
+@keyframes flipArrow {
+    0% {
+        border-top: 0.7vw solid #646363;
+        border-bottom: 0px solid #646363;
+    }
+    50%{
+        border-top: 0px solid #646363;
+        border-bottom: 0px solid #646363;
+    }
+    100% {
+        border-top: 0px solid #646363;
+        border-bottom: 0.7vw solid #646363;
+    }
+}
+
+@keyframes flipArrowBack {
+    0% {
+        border-top: 0px solid #646363;
+        border-bottom: 0.7vw solid #646363;
+
+    }
+    50%{
+        border-top: 0px solid #646363;
+        border-bottom: 0px solid #646363;
+    }
+    100% {
+        border-top: 0.7vw solid #646363;
+        border-bottom: 0px solid #646363;
+    }
+}
+
+.faculty-info-window-field > textarea{
+    padding-top: 1.74vw;
+    height: 15.7vh;
+    resize: none;
+}
+.faculty-info-window-field > textarea:focus{
+    outline: 1px solid black;
+}
+
+.faculty-info-window-field > textarea::-webkit-scrollbar-track-piece:start{
+    margin-top: 10px;
+}
+.faculty-info-window-field > textarea::-webkit-scrollbar-track-piece:end{
+    margin-bottom: 5px;
+}
+
+.faculty-info-window-button-container{
+    display: flex;
+    direction: row;
+    gap: 2.8vw;
+    width: 100%;
+    place-content: center;
+    margin-top: 3.9vh;
+}
+
+.faculty-info-window-button-container > button{
+    color: black;
+    width: 9.03vw;
+    height: 5.75vh;
+    border-radius: 1.4vw;
+    border: none;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.3);
+    padding-top: 5px;
+    background-color: #D9D9D9;
+    font-size: 0.98vw;
+    cursor: pointer;
+}
+
+.faculty-info-window-button-container > button:active{
+    transform: translateY(4px);
+    border: none;
+}
