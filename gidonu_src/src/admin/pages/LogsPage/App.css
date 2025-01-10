@@ -13,15 +13,19 @@ body{
     background-color: #E8E8E8;
 }
 
-.logsTable-container {
-    position: absolute;
-    left: 21.5%;
-    top: 15%;
-    width: 75vw;
-    max-height: 75.5vh;
+.logsTable-wrapper {
+    height: calc(100% - 30px);
+    padding: 40px 20px 0 20px;
+    margin-bottom: 30px;
     overflow: auto;
-    box-shadow: 0px -2px 0px -1px #B1B1B1, -2px 0px 0px -1px #B1B1B1, 2px 0px 0px -1px #B1B1B1, 0px 2px 0px -1px #B1B1B1;
+  }
+
+.logsTable-container {
+    width: max-content;
+    min-width: 1137px;
+    max-height: 75.5vh;
     overflow: hidden;
+    box-shadow: 0px -2px 0px -1px #B1B1B1, -2px 0px 0px -1px #B1B1B1, 2px 0px 0px -1px #B1B1B1, 0px 2px 0px -1px #B1B1B1;
     border-radius: 1vw;
 }
 .logsTable-container::-webkit-scrollbar {
@@ -46,12 +50,11 @@ body{
     background-color: #D9D9D9;
     box-shadow: 0 3px 3px #B1B1B1;
     font-size: 22px;
-    font-weight: 500;
 }
 
 .logsTable-container > table > thead > tr > td {
     min-width: 2.8vw;
-    height: 2.8vw;
+    height: 46px;
     padding-left: 15px;
 }
 
@@ -62,7 +65,7 @@ body{
 
 .logsTable-container > table > tbody > tr > td {
     min-width: 1.4vw;
-    height: 2.8vw;
+    height: 58px;
     padding-left: 15px;
 }
 

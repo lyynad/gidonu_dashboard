@@ -33,7 +33,7 @@ export default function UserMain({close, userProfile, handleProfileChange}: Prop
     }, []);
 
     return (
-        <div className="user-card" style={{"width": "60%", "zIndex": "51"}}>
+        <div className="user-card" style={{"minWidth": "60%", "maxWidth": "90%", "zIndex": "2"}}>
             <div className="header">
                 <div className="text">super admin</div>
             </div>

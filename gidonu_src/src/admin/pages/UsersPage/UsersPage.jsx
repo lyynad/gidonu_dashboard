@@ -95,85 +95,85 @@ const UsersPage = () => {
   return (
     <>
       {showUserCard &&
-        <BackgroundBlur>
           <UserCard
             close={handleUserCardClose}
             userProfile={userProfile}
             handleProfileChange={handleProfileChange}
           />
-        </BackgroundBlur>
       }
-      <div className="users-main">
-        <div className="w-full px-[12px] flex items-center justify-between mb-[30px]">
-          <div className="relative">
-            <img src={search} className="absolute top-[12px] right-[30px]"/>
-            <input
-              placeholder={"Пошук"}
-              onChange={(e) => {
-                setSearchInput(e?.target?.value);
-              }}
-              className="w-[300px] outline-none bg-[#D3D3D3] text-[#292929] pl-[25px] h-[43px] rounded-[10px] pr-[50px]"
-            />
-          </div>
-          <button></button>
-        </div>
-        <div className="users-cont">
-          <div className=" flex text-[22px]  h-[48px] border border-b-[#B1B1B1] bg-[#D9D9D9] shadow-[0_3px_1px_rgba(0,0,0,0.3)]">
-            <div className="w-[50px] h-full border border-r-[#B1B1B1] flex items-center justify-center">
-              <p>№</p>
+      {!showUserCard &&
+        <div className="users-main">
+          <div className="w-full px-[12px] flex items-center justify-between mb-[30px]">
+            <div className="relative">
+              <img src={search} className="absolute top-[12px] right-[30px]"/>
+              <input
+                placeholder={"Пошук"}
+                onChange={(e) => {
+                  setSearchInput(e?.target?.value);
+                }}
+                className="w-[300px] outline-none bg-[#D3D3D3] text-[#292929] pl-[25px] h-[43px] rounded-[10px] pr-[50px]"
+              />
             </div>
+            <button></button>
+          </div>
+          <div className="users-cont">
+            <div className=" flex text-[22px]  h-[48px] border border-b-[#B1B1B1] bg-[#D9D9D9] shadow-[0_3px_1px_rgba(0,0,0,0.3)]">
+              <div className="w-[50px] h-full border border-r-[#B1B1B1] flex items-center justify-center">
+                <p>№</p>
+              </div>
 
-            <div className="w-[200px] text-center h-full border border-r-[#B1B1B1] flex items-center pl-[15px]">
-              <p className=" ">Користувачі</p>
+              <div className="w-[200px] text-center h-full border border-r-[#B1B1B1] flex items-center pl-[15px]">
+                <p className=" ">Користувачі</p>
+              </div>
+              <div className="w-[280px] text-center h-full border border-r-[#B1B1B1] flex items-center pl-[15px]">
+                <p className=" ">Email</p>
+              </div>
+              <div className="w-[215px] text-center h-full border border-r-[#B1B1B1] flex items-center pl-[15px]">
+                <p className=" "> Дата реєстраціі</p>
+              </div>
+              <div className="w-[210px] text-center h-full border border-r-[#B1B1B1] flex items-center pl-[15px]">
+                <p className=" ">Статус заявки</p>
+              </div>
+              <div className="w-[210px] h-full flex items-center pl-[15px]">
+                <p className="">Роль</p>
+              </div>
             </div>
-            <div className="w-[280px] text-center h-full border border-r-[#B1B1B1] flex items-center pl-[15px]">
-              <p className=" ">Email</p>
-            </div>
-            <div className="w-[215px] text-center h-full border border-r-[#B1B1B1] flex items-center pl-[15px]">
-              <p className=" "> Дата реєстраціі</p>
-            </div>
-            <div className="w-[210px] text-center h-full border border-r-[#B1B1B1] flex items-center pl-[15px]">
-              <p className=" ">Статус заявки</p>
-            </div>
-            <div className="w-[210px] h-full flex items-center pl-[15px]">
-              <p className="">Роль</p>
-            </div>
-          </div>
-          <div className="flex flex-col  ">
-            {filteredAdmins?.map((elem, i) => {
-              return (
-                <div
-                  key={i}
-                  className={`h-[60px] border border-b-[#B1B1B1] flex cursor-pointer ${
-                    switchStates[i] ? "bg-[#E1E4E7]" : "bg-[#E8E8E8]"
-                  }`}
-                  onClick={() => handleUserCardShow(elem.id)}
-                >
-                  <div className="h-full w-[50px] flex items-center justify-center border border-r-[#B1B1B1]">
-                    <p>{i + 1}</p>
-                  </div>
-                  <div className="h-full w-[200px] flex items-center border border-r-[#B1B1B1] pl-[15px]">
-                    <p>{elem?.name}</p>
-                  </div>
+            <div className="flex flex-col  ">
+              {filteredAdmins?.map((elem, i) => {
+                return (
                   <div
-                    className="h-full w-[280px] flex items-center border border-r-[#B1B1B1] overflow-hidden pl-[15px]">
-                    <p>{elem?.email}</p>
+                    key={i}
+                    className={`h-[60px] border border-b-[#B1B1B1] flex cursor-pointer ${
+                      switchStates[i] ? "bg-[#E1E4E7]" : "bg-[#E8E8E8]"
+                    }`}
+                    onClick={() => handleUserCardShow(elem.id)}
+                  >
+                    <div className="h-full w-[50px] flex items-center justify-center border border-r-[#B1B1B1]">
+                      <p>{i + 1}</p>
+                    </div>
+                    <div className="h-full w-[200px] flex items-center border border-r-[#B1B1B1] pl-[15px]">
+                      <p>{elem?.name}</p>
+                    </div>
+                    <div
+                      className="h-full w-[280px] flex items-center border border-r-[#B1B1B1] overflow-hidden pl-[15px]">
+                      <p>{elem?.email}</p>
+                    </div>
+                    <div className="h-full w-[215px] flex items-center border border-r-[#B1B1B1] pl-[15px]">
+                      <p className="bg-[#5294a64d] rounded-lg pl-[15px] pr-[15px]">{renderDate(elem?.dataRegistration)}</p>
+                    </div>
+                    <div className="h-full w-[210px] flex items-center border border-r-[#B1B1B1] pl-[15px]">
+                      <p className="bg-[rgba(150,214,179,0.45)] rounded-lg pl-[10px] pr-[10px]">Прийнята</p>
+                    </div>
+                    <div className="h-full w-[210px] flex items-center pl-[15px]">
+                      <p>Адмін</p>
+                    </div>
                   </div>
-                  <div className="h-full w-[215px] flex items-center border border-r-[#B1B1B1] pl-[15px]">
-                    <p className="bg-[#5294a64d] rounded-lg pl-[15px] pr-[15px]">{renderDate(elem?.dataRegistration)}</p>
-                  </div>
-                  <div className="h-full w-[210px] flex items-center border border-r-[#B1B1B1] pl-[15px]">
-                    <p className="bg-[rgba(150,214,179,0.45)] rounded-lg pl-[10px] pr-[10px]">Прийнята</p>
-                  </div>
-                  <div className="h-full w-[210px] flex items-center pl-[15px]">
-                    <p>Адмін</p>
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
+      }
     </>
 
   );

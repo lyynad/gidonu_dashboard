@@ -30,7 +30,7 @@ export default function UserMain() {
   return (
     <div className="right">
       <div className="main-cont">
-        <div className="user-card" style={{"width": isEditing ? "100%" : "", "margin": isEditing ? "0 10%": ""}}>
+        <div className="user-card" style={{"minWidth": isEditing ? "60%" : ""}}>
           <div className="header">
             <div className="text">super admin</div>
             <div className="buttons">

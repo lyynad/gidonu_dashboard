@@ -47,35 +47,37 @@ function App() {
 
     return (
         <>
-            <div className="logsTable-container" style={{"padding": "0"}}>
-                <table>
+            <div className="logsTable-wrapper">
+                <div className="logsTable-container" style={{"padding": "0", "marginLeft": "20px"}}>
+                        <table>
 
-                    <thead>
-                        <tr>
-                            <td style={{"textAlign": "center", "padding": "0"}}>№</td>
-                            <td>Номер користувача</td>
-                            <td>Змінена таблиця</td>
-                            <td>Номер запису</td>
-                            <td>Дія</td>
-                            <td>Дата</td>
-                        </tr>
-                    </thead>
+                            <thead>
+                                <tr>
+                                    <td style={{"textAlign": "center", "padding": "0"}}>№</td>
+                                    <td>Номер користувача</td>
+                                    <td>Змінена таблиця</td>
+                                    <td>Номер запису</td>
+                                    <td>Дія</td>
+                                    <td>Дата</td>
+                                </tr>
+                            </thead>
 
-                    <tbody>
-                        {logs.map((log) => (
-                            <tr key={log.id} onContextMenu={(e) => { handleEntryClick(e, log.id) }}>
-                                <td style={{"textAlign": "center", "padding": "0"}}>{log.id}</td>
-                                <td>{log.id_user}</td>
-                                <td>{log.table_name}</td>
-                                <td>{log.id_record}</td>
-                                <td>{log.action}</td>
-                                <td>{renderDate(log.logdate)}</td>
-                            </tr>
-                        ))}
-                    </tbody>
+                            <tbody>
+                                {logs.map((log) => (
+                                    <tr key={log.id} onContextMenu={(e) => { handleEntryClick(e, log.id) }}>
+                                        <td style={{"textAlign": "center", "padding": "0"}}>{log.id}</td>
+                                        <td>{log.id_user}</td>
+                                        <td>{log.table_name}</td>
+                                        <td>{log.id_record}</td>
+                                        <td>{log.action}</td>
+                                        <td>{renderDate(log.logdate)}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
 
-                </table>
-            </div>
+                        </table>
+                    </div>
+                </div>
 
             {showContextMenu && contextMenuPosition && <ContextMenu position={contextMenuPosition} entry_id={selectedLogId} setUpdateData={setUpdateData} setShowContextMenu={setShowContextMenu} />}
         </>

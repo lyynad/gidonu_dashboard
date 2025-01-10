@@ -1,7 +1,7 @@
 // import host from "../../../module_global/host"
 
-//let host = window.SERVER_URL;
-let host = "http://localhost:3000";
+let host = window.SERVER_URL;
+//let host = "http://localhost:3000";
 
 export const getFaculties = async () => {
     try {

@@ -1,7 +1,7 @@
 // import host from "../../../module_global/host";
 
-//const host = window.SERVER_URL;
-let host = "http://localhost:3000";
+const host = window.SERVER_URL;
+//let host = "http://localhost:3000";
 
 export const getLogs = async () => {
     try {
