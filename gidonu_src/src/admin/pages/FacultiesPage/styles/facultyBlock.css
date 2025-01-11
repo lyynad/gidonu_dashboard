@@ -9,8 +9,8 @@
     display: grid;
     grid-template-columns: 1fr 0.1fr;
     width: 31.5vw;
-    padding-top: 2.2vmin;
-    padding-bottom: 2.2vmin;
+    padding-top: 1.2vmax;
+    padding-bottom: 1.2vmax;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     background-color: #77A3BB;
     border-radius: 1.4vw;
@@ -47,13 +47,9 @@
     cursor: pointer;
 }
 
-/*
-
-@media (width < 1024px) {
+@media (width < 1440px) {
     .control-element-text-container{
         width: 38vw;
-        padding-top: 2.65vmin;
-        padding-bottom: 2.65vmin;
     }
     
     .control-element-text-container-text{
@@ -70,6 +66,8 @@
         height: 3vw;
     }
 }
+
+/*
 
 @media (width <= 768px) {
     .control-element-text-container{

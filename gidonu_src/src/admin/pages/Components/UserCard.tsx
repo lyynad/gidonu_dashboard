@@ -11,7 +11,9 @@ interface IUserProfile {
     lastChangesDate: string,
     applicationDate: string,
     lastActivityDate: string,
-    telegram: string
+    telegram: string,
+    isAdmin: boolean,
+    isSuper: boolean
 }
 
 interface Props {

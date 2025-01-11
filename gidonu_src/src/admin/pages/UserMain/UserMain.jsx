@@ -25,7 +25,9 @@ export default function UserMain() {
     lastChangesDate: '20 квіт. 2024р.',
     applicationDate: '20 квіт. 2024р.',
     lastActivityDate: '20 квіт. 2024р.',
-    telegram: '@r_al_l'
+    telegram: '@r_al_l',
+    isAdmin: false,
+    isSuper: true
   }
   return (
     <div className="right">

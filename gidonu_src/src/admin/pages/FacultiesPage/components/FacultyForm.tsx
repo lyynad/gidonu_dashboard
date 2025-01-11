@@ -301,7 +301,7 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
             
             <form className="faculty-info-window" onSubmit={e => e.preventDefault()}>
 
-                <img src={closeIcon} alt="close" role="button" style={{"marginLeft": "auto", "marginRight": "1.74vw", "marginTop": "1.4vw", "cursor": "pointer", "width": "1.25vw"}} onClick={handleDeclineClick} />
+                <img src={closeIcon} alt="close" role="button" style={{"marginLeft": "auto", "marginRight": "6.2cqw", "marginTop": "5cqw", "cursor": "pointer", "width": "4.5cqw"}} onClick={handleDeclineClick} />
                 <h1>{title}</h1>
 
                 <div className="faculty-info-window-fields-container">
@@ -315,7 +315,7 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
                     <div className="faculty-info-window-field">
                         <label>Корпус</label>
                         <div className='faculty-info-window-field-selectContainer'>
-                            <button className="faculty-info-window-field-selectContainer-button listShown" type="button" onClick={handleListButtonClick} style={{"borderRadius": `${buildingsListVisibility ? "1.74vw 1.74vw 0px 0px" : "1.74vw"}`}}>{currentDependencies.length === 0 ? " " : (currentDependencies.length === 1 ? buildings.find((building) => { return building.id === currentDependencies[0].id_buildings })?.title : `Корпусів: ${currentDependencies.length}`)}</button>
+                            <button className="faculty-info-window-field-selectContainer-button listShown" type="button" onClick={handleListButtonClick} style={{"borderRadius": `${buildingsListVisibility ? "6cqw 6cqw 0px 0px" : "6cqw"}`}}>{currentDependencies.length === 0 ? " " : (currentDependencies.length === 1 ? buildings.find((building) => { return building.id === currentDependencies[0].id_buildings })?.title : `Корпусів: ${currentDependencies.length}`)}</button>
                             <ul className='faculty-info-window-field-selectContainer-list' style={{"display" : `${buildingsListVisibility ? "block" : "none"}`}}>
                                 {buildings.map((building) => (
                                     <li className="faculty-info-window-field-selectContainer-list-listElement" key={building.id} style={{"backgroundColor": `${checkDependency(building.id, faculty.id) ? "rgba(166, 159, 159, 0.43)" : ""}`}} onClick={(e) => handleValuesChange(e, building)}>{building.title}</li>

@@ -97,15 +97,7 @@ body{
   margin-left: 3vw;
 }
 
-/*
-
-@media (width < 1024px) {
-  .content-container{
-    left: 29vw;
-    width: 71vw;
-    height: 88.7vh;
-  }
-
+@media (width < 1440px) {
   .add-btn{
     width: 24.5%;
     padding-top: 1.45vh;
@@ -117,6 +109,8 @@ body{
     font-size: 1.81vw;
   }
 }
+
+/*
 
 @media (width <= 768px) {
   .content-container{

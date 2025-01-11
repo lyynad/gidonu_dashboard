@@ -14,7 +14,9 @@ interface IUserProfile {
   lastChangesDate: string,
   applicationDate: string,
   lastActivityDate: string,
-  telegram: string
+  telegram: string,
+  isAdmin: boolean,
+  isSuper: boolean
 }
 
 interface GnProfileChangeProps {
@@ -28,6 +30,8 @@ export default function GnProfileChange({close, userProfile, handleProfileChange
   const [email, setEmail] = useState<string>(userProfile.email);
   const [userStatus, setUserStatus] = useState<string>(userProfile.userStatus);
   const [lastChangesDate, setLastChangesDate] = useState<string>(userProfile.lastChangesDate);
+  const [isAdmin, setIsAdmin] = useState<boolean>(userProfile.isAdmin);
+  const [isSuper, setIsSuper] = useState<boolean>(userProfile.isSuper);
 
   const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value)
@@ -55,7 +59,9 @@ export default function GnProfileChange({close, userProfile, handleProfileChange
       lastChangesDate: lastChangesDate,
       applicationDate: userProfile.applicationDate,
       lastActivityDate: userProfile.lastActivityDate,
-      telegram: userProfile.telegram
+      telegram: userProfile.telegram,
+      isAdmin: isAdmin,
+      isSuper: isSuper
     };
     
     if(handleProfileChange)
@@ -63,9 +69,6 @@ export default function GnProfileChange({close, userProfile, handleProfileChange
 
     close();
   }
-
-  const [isAdmin, setIsAdmin] = useState<boolean>(true);
-  const [isSuper, setIsSuper] = useState<boolean>(true);
 
   return (
     <div>
@@ -112,7 +115,7 @@ export default function GnProfileChange({close, userProfile, handleProfileChange
           <div className="border-l border-black h-full"></div>
           <div className="flex flex-row gap-2 cursor-pointer" onClick={close}>
             <img src={cross}/>
-            <div>Відмінини</div>
+            <div>Відмінити</div>
           </div>
         </div>
       </div>

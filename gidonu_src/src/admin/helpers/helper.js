@@ -118,9 +118,9 @@ const createUser = async (updateObj, setLoadingCreateUser) => {
   }
 };
 
-const updateUser = async(id, name, email) => {
+const updateUser = async(id, name, email, isAdmin, isSuper) => {
   try {
-    const data = {name: name, email: email};
+    const data = {name: name, email: email, isAdmin: isAdmin, isSuper: isSuper};
 
     await axios.put(`${BASE_URL}/api/admin/users/${id}`, data)
     .then(response => {

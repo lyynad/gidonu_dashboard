@@ -69,7 +69,9 @@ const UsersPage = () => {
           lastChangesDate: '20 квіт. 2024р.',
           applicationDate: '20 квіт. 2024р.',
           lastActivityDate: '20 квіт. 2024р.',
-          telegram: '@temporary'
+          telegram: '@temporary',
+          isAdmin: profile.isAdmin,
+          isSuper: profile.isSuper
         }
 
         setUserProfile(sortedProfile); 
@@ -88,7 +90,7 @@ const UsersPage = () => {
   };
 
   const handleProfileChange = async (newProfile) => {
-    await updateUser(newProfile.id, newProfile.name, newProfile.email);
+    await updateUser(newProfile.id, newProfile.name, newProfile.email, newProfile.isAdmin, newProfile.isSuper);
     await getAllAdmins(setAdmins, setLoading);
   }
 
@@ -165,7 +167,7 @@ const UsersPage = () => {
                       <p className="bg-[rgba(150,214,179,0.45)] rounded-lg pl-[10px] pr-[10px]">Прийнята</p>
                     </div>
                     <div className="h-full w-[210px] flex items-center pl-[15px]">
-                      <p>Адмін</p>
+                      <p>{elem.isAdmin ? "Адмін" : "Супер"}</p>
                     </div>
                   </div>
                 );

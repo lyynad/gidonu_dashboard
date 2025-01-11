@@ -1,4 +1,5 @@
 .faculty-info-window{
+    container-type: inline-size;
     position: fixed;
     display: flex;
     flex-direction: column;
@@ -15,10 +16,16 @@
     z-index: 1;
 }
 
+@media (width < 1340px) {
+    .faculty-info-window {
+        width: 40vw;
+    }
+}
+
 .faculty-info-window > h1{
     font-weight: 500;
     text-align: center;
-    font-size: 1.4vw;
+    font-size: 4.9cqw;
     max-width: 90%;
     margin-top: 0;
     margin-bottom: 2.6vh;
@@ -43,17 +50,17 @@
 }
 
 .faculty-info-window-field > label{
-    font-size: 0.97vw;
+    font-size: 3.4cqw;
     margin-bottom: 5px;
 }
 
 .faculty-info-window-field > input, .faculty-info-window-field > textarea{
     color: black;
-    font-size: 1.1vw;
-    padding-left: 1.04vw;
+    font-size: 3.8cqw;
+    padding-left: 3.7cqw;
     width: 100%;
     box-sizing: border-box;
-    border-radius: 1.74vw;
+    border-radius: 6cqw;
     border: none;
     background-color: #D9D9D9;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -73,8 +80,8 @@
     display: flex;
     place-content: center;
     align-items: center;
-    font-size: 1.1vw;
-    height: 2.1vw;
+    font-size: 3.8cqw;
+    height: 7.4cqw;
     width: 80%;
     background-color: #5fcae7ad;
     border-radius: 5px;
@@ -113,7 +120,7 @@
     margin: 0;
     box-sizing: border-box;
     box-shadow: 0px 6px 5px -3px rgba(0, 0, 0, 0.5);
-    border-radius: 0px 0px 1.74vw 1.74vw;
+    border-radius: 0px 0px 6cqw 6cqw;
     overflow: hidden;
     animation: list-animation 0.2s forwards ease-in;
     z-index: 1;
@@ -132,7 +139,7 @@
     display: grid;
     align-items: center;
     color: black;
-    font-size: 0.98vw;
+    font-size: 3.4cqw;
     cursor: default;
     overflow: hidden;
     height: 4.6vh;
@@ -150,7 +157,7 @@
     text-align: left;
     padding-left: 1.04vw;
     box-sizing: border-box;
-    font-size: 1.1vw;
+    font-size: 3.8cqw;
     background-color: #D9D9D9;
     border: none;
 }
@@ -216,7 +223,7 @@
 }
 
 .faculty-info-window-field > textarea{
-    padding-top: 1.74vw;
+    padding-top: 6cqw;
     height: 15.7vh;
     resize: none;
 }
@@ -242,14 +249,14 @@
 
 .faculty-info-window-button-container > button{
     color: black;
-    width: 9.03vw;
+    width: 32cqw;
     height: 5.75vh;
-    border-radius: 1.4vw;
+    border-radius: 5cqw;
     border: none;
     box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.3);
     padding-top: 5px;
     background-color: #D9D9D9;
-    font-size: 0.98vw;
+    font-size: 3.5cqw;
     cursor: pointer;
 }
 

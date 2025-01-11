@@ -24,7 +24,7 @@ body{
     width: max-content;
     min-width: 1137px;
     max-height: 75.5vh;
-    overflow: hidden;
+    overflow: auto;
     box-shadow: 0px -2px 0px -1px #B1B1B1, -2px 0px 0px -1px #B1B1B1, 2px 0px 0px -1px #B1B1B1, 0px 2px 0px -1px #B1B1B1;
     border-radius: 1vw;
 }
@@ -46,7 +46,7 @@ body{
 
 .logsTable-container > table > thead {
     position: sticky;
-    top: 0.5px;
+    top: 0;
     background-color: #D9D9D9;
     box-shadow: 0 3px 3px #B1B1B1;
     font-size: 22px;
