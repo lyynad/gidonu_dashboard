@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import './App.css'
+import './FacultiesPage.css'
 
 // import Header from './components/Header';
-import FacultyBlock from './components/FacultyBlock';
+import FacultyRow from './components/FacultyRow';
 import FacultyForm from './components/FacultyForm';
 import Popup from './components/Popup';
 
@@ -110,13 +110,15 @@ function App() {
         {showForm && <FacultyForm faculty={{id: getId(), title: "", description: null, contacts: null}} title="Додати новий факультет" onClose={handleAddClose} formType="add" updateFaculties={updateFaculties} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} buildings={buildings} buildingsFacultiesDependences={buildingsFacultiesDependences} />}
         {showPopup && <Popup message={popupMessage} />} 
 
-        <div className="control-elements-container">
-            
-          {sortedFaculties.map((faculty) => (
-            <FacultyBlock updateFaculties={updateFaculties} key={faculty.id} faculty={faculty} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} buildings={buildings} buildingsFacultiesDependences={buildingsFacultiesDependences} />
-          ))}
+        <div className="facultiesTable-container">
 
-          <div style={{"marginTop": "5%"}}></div>
+          <div className="table-header"><span>Факультети</span></div>
+          <div className="row-container">
+            {sortedFaculties.map((faculty) => (
+              <FacultyRow updateFaculties={updateFaculties} key={faculty.id} faculty={faculty} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} buildings={buildings} buildingsFacultiesDependences={buildingsFacultiesDependences} />
+            ))}
+          </div>
+
         </div>
       </div>
     </>

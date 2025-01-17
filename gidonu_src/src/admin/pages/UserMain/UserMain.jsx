@@ -34,7 +34,7 @@ export default function UserMain() {
       <div className="main-cont">
         <div className="user-card" style={{"minWidth": isEditing ? "60%" : ""}}>
           <div className="header">
-            <div className="text">super admin</div>
+            <div className="text" style={{"borderRadius": "30%", "paddingLeft": "15px", "paddingRight": "15px"}}>super admin</div>
             <div className="buttons">
               <img className="card-btn cursor-pointer" src={edit} onClick={() => setIsEditing(!isEditing)}/>
               <img className="card-btn" src={deleteImg}/>

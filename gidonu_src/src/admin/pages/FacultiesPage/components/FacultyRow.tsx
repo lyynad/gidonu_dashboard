@@ -1,5 +1,6 @@
+import ReactDOM from 'react-dom';
 import { useState, useEffect } from 'react';
-import '../styles/facultyBlock.css';
+import '../styles/facultyRow.css';
 import deleteImage from '../assets/trash.svg';
 import editImage from '../assets/pencil.svg';
 import Faculty from '../module/types/faculty';
@@ -8,6 +9,7 @@ import FacultyForm from './FacultyForm';
 import ConfirmWindow from './ConfirmWindow';
 import * as api from '../module/classes/api';
 import BuildingsFacultiesDependence from '../module/types/buildingsFacultiesDependance';
+import { Root } from 'postcss';
 
 interface Props{
     faculty: Faculty,
@@ -19,6 +21,7 @@ interface Props{
 };
 
 const Control = ({faculty, updateFaculties, setResponseMessage, setShowResponse, buildings, buildingsFacultiesDependences}: Props) => {  
+    const rootElement = document.getElementById('root');
     const [showForm, setShowForm] = useState<boolean>(false);
     const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
 
@@ -69,18 +72,25 @@ const Control = ({faculty, updateFaculties, setResponseMessage, setShowResponse,
     };
 
     return (
-        <div className="control-element">
+        <>
+        {showForm && rootElement && ReactDOM.createPortal(
+                    <FacultyForm faculty={faculty} title="Редагувати інформацію про факультет" onClose={handleEditClose} formType="edit" updateFaculties={updateFaculties} setResponseMessage={setResponseMessage} setShowResponse={setShowResponse} buildings={buildings} buildingsFacultiesDependences={buildingsFacultiesDependences} />,
+                    rootElement
+        )}
+        {showConfirmDelete && rootElement && ReactDOM.createPortal(
+            <ConfirmWindow faculty={faculty} text="бажаєте видалити факультет" onClose={handleDeleteAccept} confirmType="delete" />,
+            rootElement
+        )}
 
-                <div className="control-element-text-container">
-                    <span className="control-element-text-container-text">{faculty.title}</span>
-                    <img className="control-element-text-container-image-edit" src={editImage} alt="edit" role="button" onClick={handleEditClick}/>
+        <div className="faculty-row">
+
+                <span className="faculty-row-text"><i>{faculty.title}</i></span>
+                <div className="faculty-row-images">
+                    <img className="image-edit" src={editImage} alt="edit" role="button" onClick={handleEditClick}/>
+                    <img className="image-delete" src={deleteImage} alt="delete" role="button" onClick={handleDeleteClick} />
                 </div>
-                <img className="control-element-image-delete" src={deleteImage} alt="delete" role="button" onClick={handleDeleteClick} />
-
-                {showForm && <FacultyForm faculty={faculty} title="Редагувати інформацію про факультет" onClose={handleEditClose} formType="edit" updateFaculties={updateFaculties} setResponseMessage={setResponseMessage} setShowResponse={setShowResponse} buildings={buildings} buildingsFacultiesDependences={buildingsFacultiesDependences} />}
-                {showConfirmDelete && <ConfirmWindow faculty={faculty} text="бажаєте видалити факультет" onClose={handleDeleteAccept} confirmType="delete" />}
-    
         </div>
+        </>
     )
 }
 

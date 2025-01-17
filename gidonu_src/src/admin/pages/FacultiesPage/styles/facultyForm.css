@@ -231,6 +231,10 @@
     outline: 1px solid black;
 }
 
+.faculty-info-window-field > textarea::-webkit-scrollbar-thumb{
+    background-color: transparent;
+}
+
 .faculty-info-window-field > textarea::-webkit-scrollbar-track-piece:start{
     margin-top: 10px;
 }

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import '../styles/editConfirmWindow.css';
+import '../styles/confirmWindow.css';
 import closeIcon from '../assets/closeIcon.svg';
 import Faculty from '../module/types/faculty';
 

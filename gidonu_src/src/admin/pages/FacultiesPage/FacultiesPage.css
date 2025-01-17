@@ -1,19 +1,20 @@
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 3px;
+  padding-left: 20px;
 }
 
 ::-webkit-scrollbar-track {
   background: transparent;
-  border-radius: 20px;
+  border-radius: 4cqw;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #7A97A7;
-  border-radius: 20px;
+  background: #787878;
+  border-radius: 4cqw;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3F6C84;
+  background: #686868;
 }
 
 .overlay {
@@ -41,6 +42,7 @@ body{
 }
 
 .content-container{
+  container-type: inline-size;
   position: relative;
   display: flex;
   overflow: auto;
@@ -53,7 +55,6 @@ body{
   position: sticky;
   top: 6.3vh;
   margin-left: 3vw;
-  align-self: center;
   display: grid;
   grid-template-columns: 1fr 0.4fr;
   width: 20.3%;
@@ -88,13 +89,50 @@ body{
   margin-left: 25%;
 }
 
-.control-elements-container{
-  min-height: 8.2vw;
+.facultiesTable-container {
+  container-type: inline-size;
+  position: relative;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 80cqw;
+  min-width: 711px;
+  max-height: 60cqh;
+  overflow: auto;
+  margin-right: -20px;
+  border-radius: 1.5cqw;
+}
+
+.facultiesTable-container::-webkit-scrollbar {
+  padding-left: 20px;
+}
+
+.facultiesTable-container::-webkit-scrollbar-track-piece:start{
+  margin-top: 6cqw;
+}
+.facultiesTable-container::-webkit-scrollbar-track-piece:end{
+  margin-bottom: 0.5cqw;
+}
+
+.facultiesTable-container > .table-header {
+  position: sticky;
+  top: 0;
   display: flex;
-  flex-direction: column;
-  gap: 1.8vmax;
-  margin-top: 6.3vh;
-  margin-left: 3vw;
+  align-items: center;
+  justify-content: center;
+  background-color: #D4E4E9;
+  font-size: 2.8cqw;
+  font-weight: 500;
+  color: #275771;
+  scrollbar-gutter: stable;
+  height: 6cqw;
+  box-shadow: 0px 0 5px 3px rgba(0, 0, 0, 0.247), 0 2px 0 -1px rgba(0, 0, 0, 0.247);
+  z-index: 1;
+}
+
+.facultiesTable-container > .row-container {
+  width: 100%;
 }
 
 @media (width < 1440px) {

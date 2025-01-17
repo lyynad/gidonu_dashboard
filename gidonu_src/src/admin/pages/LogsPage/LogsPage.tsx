@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import * as api from "./module/classes/api";
 import Log from "./module/types/log";
-import "./App.css";
+import "./LogsPage.css";
 import ContextMenu from "./components/ContextMenu";
 
 function App() {
