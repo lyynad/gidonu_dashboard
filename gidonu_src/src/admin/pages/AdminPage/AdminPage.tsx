@@ -12,6 +12,7 @@ import UsersPage from "../UsersPage/UsersPage";
 import GnFeedBack from "../Feedback/GnFeedBack";
 import Building from "../Buildings/Building";
 import FacultiesPage from "../FacultiesPage/FacultiesPage";
+import BuildingsPage from "../BuildingsPage/BuildingsPage";
 import LogsPage from "../LogsPage/LogsPage";
 import SvgSprite from "../../../gn-components/sprite/SvgSprite";
 
@@ -116,7 +117,7 @@ export default function AdminPage() {
           </div>
           {adminActiveTab === 1 && <UsersPage />}
           {adminActiveTab === 2 && <GnFeedBack />}
-          {adminActiveTab === 3 && <Building />}
+          {adminActiveTab === 3 && <BuildingsPage />}
           {adminActiveTab === 6 && <FacultiesPage />}
           {adminActiveTab === 7 && <LogsPage />}
         </div>

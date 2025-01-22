@@ -1,4 +1,4 @@
-.faculty-info-window{
+.info-window{
     container-type: inline-size;
     position: fixed;
     display: flex;
@@ -6,23 +6,18 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 28.5vw;
-    max-height: 95vh;
+    min-height: 85vh;
+    width: calc(85vh * 0.67);
+    max-width: 95vw;
     padding-bottom: 1.74vw;
     border-radius: 1.4vw;
     background-color: #5294A6;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: white;
-    z-index: 1;
+    z-index: 2;
 }
 
-@media (width < 1340px) {
-    .faculty-info-window {
-        width: 40vw;
-    }
-}
-
-.faculty-info-window > h1{
+.info-window > h1{
     font-weight: 500;
     text-align: center;
     font-size: 4.9cqw;
@@ -33,14 +28,14 @@
     margin-right: auto;
 }
 
-.faculty-info-window-fields-container{
+.info-window-fields-container{
     display: flex;
     flex-direction: column;
     gap: 2.6vh;
     width: 100%;
 }
 
-.faculty-info-window-field{
+.info-window-field{
     position: relative;
     display: flex;
     flex-direction: column;
@@ -49,12 +44,12 @@
     margin-right: auto;
 }
 
-.faculty-info-window-field > label{
+.info-window-field > label{
     font-size: 3.4cqw;
     margin-bottom: 5px;
 }
 
-.faculty-info-window-field > input, .faculty-info-window-field > textarea{
+.info-window-field input, .info-window-field textarea{
     color: black;
     font-size: 3.8cqw;
     padding-left: 3.7cqw;
@@ -66,11 +61,59 @@
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.faculty-info-window-field > input{
+.info-window-field input{
     height: 7.32vh;
 }
-.faculty-info-window-field > input:focus{
+.info-window-field input:focus{
     outline: 1px solid black;
+}
+
+.info-window-field-numeric-container {
+    position: relative;
+    color: black;
+    padding: 0;
+}
+
+.info-window-field-numeric-container-arrowUp, .info-window-field-numeric-container-arrowDown{
+    display: none;
+    position: absolute;
+    right: 4cqw;
+    width: 3cqw;
+    height: 5cqw;
+    background-size: 3cqw 5cqw;
+    z-index: 2;
+    color: rgba(0, 0, 0, 0.48);
+}
+
+.info-window-field-numeric-container:hover .info-window-field-numeric-container-arrowUp,
+.info-window-field-numeric-container:hover .info-window-field-numeric-container-arrowDown,
+.info-window-field-numeric-container:focus-within .info-window-field-numeric-container-arrowUp,
+.info-window-field-numeric-container:focus-within .info-window-field-numeric-container-arrowDown{
+    display: block;
+}
+
+.info-window-field-numeric-container-arrowUp:hover, .info-window-field-numeric-container-arrowDown:hover{
+    color: black;
+}
+
+.info-window-field-numeric-container-arrowUp{
+    top: 17%;
+}
+
+.info-window-field-numeric-container-arrowDown{
+    transform: rotate(180deg);
+    bottom: 17%;
+}
+
+.info-window-field input[type="number"] {
+    position: relative;
+    caret-color: transparent;
+    cursor: default;
+    margin: 0;
+}
+
+.info-window-field-numeric-container > input[type="number"]::-webkit-inner-spin-button{
+    -webkit-appearance: none;
 }
 
 .tooltip{
@@ -103,13 +146,13 @@
     border-color: #5fcae7ad transparent transparent transparent
 }
 
-.faculty-info-window-field-selectContainer {
+.info-window-field-selectContainer {
     position: relative;
     height: 7.32vh;
     color: black;
 }
 
-.faculty-info-window-field-selectContainer > ul {
+.info-window-field-selectContainer > ul {
     position: absolute;
     list-style-type: none;
     background-color: #D9D9D9;
@@ -135,7 +178,7 @@
     }
 }
 
-.faculty-info-window-field-selectContainer > ul > li {
+.info-window-field-selectContainer > ul > li {
     display: grid;
     align-items: center;
     color: black;
@@ -146,12 +189,12 @@
     padding-left: 15px;
 }
 
-.faculty-info-window-field-selectContainer > ul > li:hover {
+.info-window-field-selectContainer > ul > li:hover {
     padding-left: 1.25vw;
     background-color: rgba(166, 159, 159, 0.43);
 }
 
-.faculty-info-window-field-selectContainer > button {
+.info-window-field-selectContainer > button {
     width: 100%;
     height: 100%;
     text-align: left;
@@ -162,15 +205,15 @@
     border: none;
 }
 
-.faculty-info-window-field-selectContainer > button:hover{
+.info-window-field-selectContainer > button:hover{
     outline: 1px solid black;
 }
 
-.faculty-info-window-field-selectContainer > button:hover + ul {
+.info-window-field-selectContainer > button:hover + ul {
     box-shadow: 0px 6px 5px -3px rgba(0, 0, 0, 0.5), -1.5px 0px 0px -0.5px black, 1.5px 0px 0px -0.5px black, 0px 1.5px 0px -0.5px black;
 }
 
-.faculty-info-window-field-selectContainer-arrow{
+.info-window-field-selectContainer-arrow{
     position: absolute;
     right: 0.7vw;
     top: 50%;
@@ -183,11 +226,11 @@
     pointer-events: none;
 }
 
-.faculty-info-window-field-selectContainer-arrow.animate {
+.info-window-field-selectContainer-arrow.animate {
     animation: flipArrow 0.2s forwards ease-in;
 }
 
-.faculty-info-window-field-selectContainer-arrow.animateBack {
+.info-window-field-selectContainer-arrow.animateBack {
     animation: flipArrowBack 0.2s forwards ease-in;
 }
 
@@ -222,27 +265,27 @@
     }
 }
 
-.faculty-info-window-field > textarea{
+.info-window-field > textarea{
     padding-top: 6cqw;
     height: 15.7vh;
     resize: none;
 }
-.faculty-info-window-field > textarea:focus{
+.info-window-field > textarea:focus{
     outline: 1px solid black;
 }
 
-.faculty-info-window-field > textarea::-webkit-scrollbar-thumb{
+.info-window-field > textarea::-webkit-scrollbar-thumb{
     background-color: transparent;
 }
 
-.faculty-info-window-field > textarea::-webkit-scrollbar-track-piece:start{
+.info-window-field > textarea::-webkit-scrollbar-track-piece:start{
     margin-top: 10px;
 }
-.faculty-info-window-field > textarea::-webkit-scrollbar-track-piece:end{
+.info-window-field > textarea::-webkit-scrollbar-track-piece:end{
     margin-bottom: 5px;
 }
 
-.faculty-info-window-button-container{
+.info-window-button-container{
     display: flex;
     direction: row;
     gap: 2.8vw;
@@ -251,7 +294,7 @@
     margin-top: 3.9vh;
 }
 
-.faculty-info-window-button-container > button{
+.info-window-button-container > button{
     color: black;
     width: 32cqw;
     height: 5.75vh;
@@ -264,7 +307,7 @@
     cursor: pointer;
 }
 
-.faculty-info-window-button-container > button:active{
+.info-window-button-container > button:active{
     transform: translateY(4px);
     border: none;
 }

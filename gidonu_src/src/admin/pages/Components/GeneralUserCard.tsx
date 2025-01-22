@@ -1,4 +1,4 @@
-import './UserCard.css';
+import './GeneralUserCard.css';
 import GnProfileChange from "./GnProfileChange";
 import { useEffect } from 'react';
 

@@ -1,11 +1,11 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import '../styles/facultyForm.css';
-import Faculty from "../module/types/faculty";
-import Building from '../module/types/building';
-import ConfirmWindow from './ConfirmWindow';
-import closeIcon from '../assets/closeIcon.svg';
-import * as api from '../module/classes/api';
-import BuildingsFacultiesDependence from '../module/types/buildingsFacultiesDependance';
+import './GeneralFacultyForm.css';
+import Faculty from "../FacultiesPage/module/types/faculty";
+import Building from '../FacultiesPage/module/types/building';
+import ConfirmWindow from './GeneralConfirmWindow';
+import closeIcon from "../../assets/images/svg/closeIcon.svg";
+import * as api from '../FacultiesPage/module/classes/api';
+import BuildingsFacultiesDependence from '../FacultiesPage/module/types/buildingsFacultiesDependance';
 
 type FormType = "add" | "edit";
 
@@ -68,7 +68,7 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
 
         document.addEventListener("mousedown", handleTooltip, false);
         document.addEventListener("mousedown", handleBuildingsList, false);
-        document.getElementsByClassName("faculty-info-window-field-selectContainer")[0].addEventListener("mousedown", (event) => {
+        document.getElementsByClassName("info-window-field-selectContainer")[0].addEventListener("mousedown", (event) => {
             event.stopPropagation();
             handleTooltip();
         });
@@ -92,7 +92,7 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
     }, [showConfirmAccept, showConfirmDecline, textAreaFocused, buildingsListVisibility, titleChanged, contactsChanged, descriptionChanged, dependenciesChanged]);
 
     const handleAcceptClick = async () => {
-        (document.getElementsByClassName("faculty-info-window-field-title")[0] as HTMLInputElement).checkValidity();   
+        (document.getElementsByClassName("info-window-field-title")[0] as HTMLInputElement).checkValidity();   
 
         if((titleChanged || descriptionChanged || contactsChanged || dependenciesChanged) && !showTooltip) {
             setShowConfirmAccept(true);
@@ -172,7 +172,7 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
 
     const handleValuesChange = async (event: ChangeEvent<any>, building?: Building) => {
         switch(event.target.className){
-            case "faculty-info-window-field-title":
+            case "info-window-field-title":
                 if (event.target.value != faculty.title){
                     setEditedFaculty({
                         ...editedFaculty,
@@ -184,7 +184,7 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
                     setTitleChanged(false);
                 }
                 break;
-            case "faculty-info-window-field-description":
+            case "info-window-field-description":
                 if (event.target.value != faculty.description){
                     setEditedFaculty({
                         ...editedFaculty,
@@ -197,7 +197,7 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
                     setDescriptionChanged(false);
                 }
                 break;
-            case "faculty-info-window-field-contacts":
+            case "info-window-field-contacts":
                 if (event.target.value != faculty.contacts){
                     setEditedFaculty({
                         ...editedFaculty,
@@ -210,7 +210,7 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
                     setContactsChanged(false);
                 }
                 break;
-            case "faculty-info-window-field-selectContainer-list-listElement":
+            case "info-window-field-selectContainer-list-listElement":
                 let valuesChanged = false;
 
                 if(building && !currentDependencies.find((dependency) => dependency.id_buildings === building.id)){
@@ -299,53 +299,53 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
 
             {showOverlay && <div className='overlay'></div>}
             
-            <form className="faculty-info-window" onSubmit={e => e.preventDefault()}>
+            <form className="info-window" onSubmit={e => e.preventDefault()}>
 
                 <img src={closeIcon} alt="close" role="button" style={{"marginLeft": "auto", "marginRight": "6.2cqw", "marginTop": "5cqw", "cursor": "pointer", "width": "4.5cqw"}} onClick={handleDeclineClick} />
                 <h1>{title}</h1>
 
-                <div className="faculty-info-window-fields-container">
+                <div className="info-window-fields-container">
                     
-                    <div className="faculty-info-window-field">
+                    <div className="info-window-field">
                         <label>Назва</label>
-                        <input className="faculty-info-window-field-title" defaultValue={faculty.title || ""} onChange={handleValuesChange} required={true} onInvalid={handleInvalidInput} autoFocus readOnly={(showConfirmAccept || showConfirmDecline) ? true : false}></input>
+                        <input className="info-window-field-title" defaultValue={faculty.title || ""} onChange={handleValuesChange} required={true} onInvalid={handleInvalidInput} autoFocus readOnly={(showConfirmAccept || showConfirmDecline) ? true : false}></input>
                         <div className="tooltip" style={showTooltip ? {"visibility": "visible"} : {"visibility": "hidden"}}>Будь ласка, введіть назву.</div>
                     </div>
                     
-                    <div className="faculty-info-window-field">
+                    <div className="info-window-field">
                         <label>Корпус</label>
-                        <div className='faculty-info-window-field-selectContainer'>
-                            <button className="faculty-info-window-field-selectContainer-button listShown" type="button" onClick={handleListButtonClick} style={{"borderRadius": `${buildingsListVisibility ? "6cqw 6cqw 0px 0px" : "6cqw"}`}}>{currentDependencies.length === 0 ? " " : (currentDependencies.length === 1 ? buildings.find((building) => { return building.id === currentDependencies[0].id_buildings })?.title : `Корпусів: ${currentDependencies.length}`)}</button>
-                            <ul className='faculty-info-window-field-selectContainer-list' style={{"display" : `${buildingsListVisibility ? "block" : "none"}`}}>
+                        <div className='info-window-field-selectContainer'>
+                            <button className="info-window-field-selectContainer-button listShown" type="button" onClick={handleListButtonClick} style={{"borderRadius": `${buildingsListVisibility ? "6cqw 6cqw 0px 0px" : "6cqw"}`}}>{currentDependencies.length === 0 ? " " : (currentDependencies.length === 1 ? buildings.find((building) => { return building.id === currentDependencies[0].id_buildings })?.title : `Корпусів: ${currentDependencies.length}`)}</button>
+                            <ul className='info-window-field-selectContainer-list' style={{"display" : `${buildingsListVisibility ? "block" : "none"}`}}>
                                 {buildings.map((building) => (
-                                    <li className="faculty-info-window-field-selectContainer-list-listElement" key={building.id} style={{"backgroundColor": `${checkDependency(building.id, faculty.id) ? "rgba(166, 159, 159, 0.43)" : ""}`}} onClick={(e) => handleValuesChange(e, building)}>{building.title}</li>
+                                    <li className="info-window-field-selectContainer-list-listElement" key={building.id} style={{"backgroundColor": `${checkDependency(building.id, faculty.id) ? "rgba(166, 159, 159, 0.43)" : ""}`}} onClick={(e) => handleValuesChange(e, building)}>{building.title}</li>
                                 ))}
                             </ul>
-                            <div className={`faculty-info-window-field-selectContainer-arrow ${toggleListAnimation ? (buildingsListVisibility ? "animate" : "animateBack") : ""}`}></div>
+                            <div className={`info-window-field-selectContainer-arrow ${toggleListAnimation ? (buildingsListVisibility ? "animate" : "animateBack") : ""}`}></div>
                         </div>
                     </div>
 
-                    <div className="faculty-info-window-field">
+                    <div className="info-window-field">
                         <label>Опис</label>
-                        <textarea className="faculty-info-window-field-description" defaultValue={faculty.description || ""} onFocus={handleTextAreaOnFocus} onBlur={handleTextAreaOnFocusOut} onChange={handleValuesChange} readOnly={(showConfirmAccept || showConfirmDecline) ? true : false}></textarea>
+                        <textarea className="info-window-field-description" defaultValue={faculty.description || ""} onFocus={handleTextAreaOnFocus} onBlur={handleTextAreaOnFocusOut} onChange={handleValuesChange} readOnly={(showConfirmAccept || showConfirmDecline) ? true : false}></textarea>
                     </div>
 
-                    <div className="faculty-info-window-field">
+                    <div className="info-window-field">
                         <label>Контакти</label>
-                        <textarea className="faculty-info-window-field-contacts" defaultValue={faculty.contacts || ""} onFocus={handleTextAreaOnFocus} onBlur={handleTextAreaOnFocusOut} onChange={handleValuesChange} readOnly={(showConfirmAccept || showConfirmDecline) ? true : false}></textarea>
+                        <textarea className="info-window-field-contacts" defaultValue={faculty.contacts || ""} onFocus={handleTextAreaOnFocus} onBlur={handleTextAreaOnFocusOut} onChange={handleValuesChange} readOnly={(showConfirmAccept || showConfirmDecline) ? true : false}></textarea>
                     </div>
 
                 </div>
 
-                <div className="faculty-info-window-button-container">
+                <div className="info-window-button-container">
                     <button type="submit" onClick={handleAcceptClick}>Зберегти</button>
                     <button type="button" onClick={handleDeclineClick}>Відмінити</button>
                 </div>
 
             </form>
 
-            {showConfirmAccept && <ConfirmWindow faculty={editedFaculty} text="хочете зберегти зміни" onClose={handleAcceptClose} confirmType="edit" />}
-            {showConfirmDecline && <ConfirmWindow faculty={editedFaculty} text="хочете відмінити зміни" onClose={handleDeclineClose} confirmType="edit" />}
+            {showConfirmAccept && <ConfirmWindow entity={editedFaculty} text="хочете зберегти зміни" onClose={handleAcceptClose} confirmType="edit" />}
+            {showConfirmDecline && <ConfirmWindow entity={editedFaculty} text="хочете відмінити зміни" onClose={handleDeclineClose} confirmType="edit" />}
 
         </>
     )

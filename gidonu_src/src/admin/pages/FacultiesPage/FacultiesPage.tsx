@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import './FacultiesPage.css'
 
 // import Header from './components/Header';
-import FacultyRow from './components/FacultyRow';
-import FacultyForm from './components/FacultyForm';
+import GeneralTable from '../Components/GeneralTable';
+import FacultyForm from '../Components/GeneralFacultyForm';
 import Popup from './components/Popup';
 
 import * as api from './module/classes/api';
@@ -28,7 +28,12 @@ function App() {
     const fetchData = async () => {
       try{
         const faculties = await api.getFaculties();
-        const sortedFaculties = [...faculties].sort((a: Faculty, b: Faculty) => {
+        const updatedFaculties = faculties.map((faculty: Faculty) => ({
+          ...faculty,
+          type: 'faculty'  // or any logic you want for the "type"
+        }));
+
+        const sortedFaculties = [...updatedFaculties].sort((a: Faculty, b: Faculty) => {
           if (a.title < b.title){
             return -1;
           }
@@ -107,19 +112,10 @@ function App() {
 
         </div>
 
-        {showForm && <FacultyForm faculty={{id: getId(), title: "", description: null, contacts: null}} title="Додати новий факультет" onClose={handleAddClose} formType="add" updateFaculties={updateFaculties} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} buildings={buildings} buildingsFacultiesDependences={buildingsFacultiesDependences} />}
+        {showForm && <FacultyForm faculty={{type: "faculty", id: getId(), title: "", description: null, contacts: null}} title="Додати новий факультет" onClose={handleAddClose} formType="add" updateFaculties={updateFaculties} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} buildings={buildings} buildingsFacultiesDependences={buildingsFacultiesDependences} />}
         {showPopup && <Popup message={popupMessage} />} 
 
-        <div className="facultiesTable-container">
-
-          <div className="table-header"><span>Факультети</span></div>
-          <div className="row-container">
-            {sortedFaculties.map((faculty) => (
-              <FacultyRow updateFaculties={updateFaculties} key={faculty.id} faculty={faculty} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} buildings={buildings} buildingsFacultiesDependences={buildingsFacultiesDependences} />
-            ))}
-          </div>
-
-        </div>
+        <GeneralTable updateFaculties={updateFaculties} rowList={sortedFaculties} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} buildings={buildings} buildingsFacultiesDependences={buildingsFacultiesDependences} />
       </div>
     </>
   )

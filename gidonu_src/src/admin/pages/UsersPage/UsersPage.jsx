@@ -1,7 +1,7 @@
 import { getAllAdmins, updateUser } from "../../helpers/helper";
 import { useState, useEffect } from "react";
 import CheckBox from "../Components/CheckBox";
-import UserCard from '../Components/UserCard';
+import UserCard from '../Components/GeneralUserCard';
 import BackgroundBlur from "../Components/BackgroundBlur";
 
 import './UsersPage.css';
