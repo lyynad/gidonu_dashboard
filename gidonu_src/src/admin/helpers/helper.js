@@ -3,18 +3,8 @@ import * as url from "./urlHelper";
 
 const BASE_URL = url.BASE_URL;
 
-const getBuildings = async (setBuildings, setLoading) => {
-  try {
-    setLoading(true);
-    const response = await axios.get("http://localhost:3000/api/buildings");
-    setBuildings(response.data);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
-  } finally {
-    setLoading(false);
-  }
-};
+let host = window.SERVER_URL;
+//let host = "http://localhost:3000";
 
 const getAllAdmins = async (setAdmins, setLoading) => {
   try {
@@ -30,81 +20,269 @@ const getAllAdmins = async (setAdmins, setLoading) => {
   }
 };
 
-const getBuildingInfo = async (setBuildingInfo, setLoadingBuildingInfo, id) => {
-  try {
-    setLoadingBuildingInfo(true);
-    const response = await axios.get(
-      `http://localhost:3000/api/buildings/${id}`
-    );
-    setBuildingInfo(response.data);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
-  } finally {
-    setLoadingBuildingInfo(false);
-  }
+export const getFaculties = async () => {
+    try {
+        const url = new URL(`${host}/api/faculties`);
+
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if(!response.ok){
+            throw {
+                response: await response.json(),
+                message: new Error(`HTTP error. Status: ${response.status}`)
+            };
+        }
+    
+        return await response.json();
+    } catch(error) {
+        console.error('Error getting faculties: ', error);
+        throw error;
+    }
 };
 
-const getBuildingFloorInfo = async (
-  setBuildingFloorInfo,
-  setLoadingBuildingFloorInfo,
-  id,
-  floor
-) => {
-  try {
-    setLoadingBuildingFloorInfo(true);
-    const response = await axios.get(
-      `http://localhost:3000/api/floor/map?buildingId=${id}&floor=${floor}`
-    );
-    setBuildingFloorInfo(response.data);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
-  } finally {
-    setLoadingBuildingFloorInfo(false);
-  }
+export const deleteFaculty = async(id) => {
+    const url = new URL(`${host}/api/faculties/${id}`);
+
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    if(!response.ok){
+        throw {
+            response: await response.json(),
+            message: new Error(`HTTP error. Status: ${response.status}`)
+        };
+    }
+
+    return await response.json();
 };
 
-const updateBuildingInfo = async (id, updateObj, setLoadingUpdateBuilding) => {
-  try {
-    setLoadingUpdateBuilding(true);
-    await axios.post(
-      `http://localhost:3000/api/buildings/${id}?title=${updateObj.title}&floor_amount=${updateObj.floor_amount}&description=${updateObj.description}&address=${updateObj.address}`
-    );
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
-  } finally {
-    setLoadingUpdateBuilding(false);
-  }
+export const addFaculty = async(id, title, description, contacts) => {
+    const url = new URL(`${host}/api/faculties`);
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id: id,
+            title: title,
+            description: description,
+            contacts: contacts
+        })
+    });
+
+    if(!response.ok){
+        throw {
+            response: await response.json(),
+            message: new Error(`HTTP error. Status: ${response.status}`)
+        };
+    }
+
+    return await response.json();
 };
 
-const deleteBuilding = async (id, setLoadingDeleteBuilding) => {
-  try {
-    setLoadingDeleteBuilding(true);
-    await axios.delete(`http://localhost:3000/api/buildings/${id}`);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
-  } finally {
-    setLoadingDeleteBuilding(false);
-  }
+export const editFaculty = async(id, title, description, contacts) => {
+    const url = new URL(`${host}/api/faculties/${id}`);
+
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            title: title,
+            description: description,
+            contacts: contacts
+        })
+    });
+
+    if(!response.ok){
+        throw {
+            response: await response.json(),
+            message: new Error(`HTTP error. Status: ${response.status}`)
+        };
+    }
+
+    return await response.json();
+}
+
+export const getBuildings = async () => {
+    try {
+        const url = new URL(`${host}/api/buildings`);
+
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if(!response.ok){
+            throw {
+                response: await response.json(),
+                message: new Error(`HTTP error. Status: ${response.status}`)
+            };
+        }
+    
+        return await response.json();
+    } catch(error) {
+        console.error('Error getting buildings: ', error);
+        throw error;
+    }
 };
 
-const addNewBuilding = async (updateObj, setLoadingAddBuilding, buildings) => {
-  setLoadingAddBuilding(true);
-  try {
-    await axios.patch(
-      `http://localhost:3000/api/buildings?title=${updateObj.title}&floor_amount=${updateObj.floor_amount}&description=${updateObj.description}&address=${updateObj.address}`
-    );
-    buildings.push(updateObj);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
-  } finally {
-    setLoadingAddBuilding(false);
-  }
+export const addBuilding = async(id, title, description, address, floor_amount) => {
+    const url = new URL(`${host}/api/buildings`);
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id: id,
+            title: title,
+            description: description,
+            address: address,
+            floor_amount: floor_amount
+        })
+    });
+
+    if(!response.ok){
+        throw {
+            response: await response.json(),
+            message: new Error(`HTTP error. Status: ${response.status}`)
+        };
+    }
+
+    return await response.json();
 };
+
+export const editBuilding = async(id, title, description, address, floor_amount) => {
+    const url = new URL(`${host}/api/buildings/${id}`);
+
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            title: title,
+            description: description,
+            address: address,
+            floor_amount: floor_amount
+        })
+    });
+
+    if(!response.ok){
+        throw {
+            response: await response.json(),
+            message: new Error(`HTTP error. Status: ${response.status}`)
+        };
+    }
+
+    return await response.json();
+}
+
+export const deleteBuilding = async(id) => {
+    const url = new URL(`${host}/api/buildings/${id}`);
+
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    if(!response.ok){
+        throw {
+            response: await response.json(),
+            message: new Error(`HTTP error. Status: ${response.status}`)
+        };
+    }
+
+    return await response.json();
+};
+
+export const getBuildingsFacultiesDependences = async () => {
+    try {
+        const url = new URL(`${host}/api/buildings_faculties`);
+
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if(!response.ok){
+            throw {
+                response: await response.json(),
+                message: new Error(`HTTP error. Status: ${response.status}`)
+            };
+        }
+    
+        return await response.json();
+    } catch(error) {
+        console.error('Error getting faculties: ', error);
+        throw error;
+    }
+};
+
+export const addBuildingsFacultiesDependence = async(id, id_buildings, id_faculties) => {
+    const url = new URL(`${host}/api/buildings_faculties`);
+
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            id: id,
+            id_buildings: id_buildings,
+            id_faculties: id_faculties,
+        })
+    });
+
+    if(!response.ok){
+        throw {
+            response: await response.json(),
+            message: new Error(`HTTP error. Status: ${response.status}`)
+        };
+    }
+
+    return await response.json();
+};
+
+export const deleteBuildingsFacultiesDependency = async(id) => {
+    const url = new URL(`${host}/api/buildings_faculties/${id}`);
+
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    if(!response.ok){
+        throw {
+            response: await response.json(),
+            message: new Error(`HTTP error. Status: ${response.status}`)
+        };
+    }
+
+    return await response.json();
+}
 
 const createUser = async (updateObj, setLoadingCreateUser) => {
   setLoadingCreateUser(true);
@@ -132,12 +310,6 @@ const updateUser = async(id, name, email, isAdmin, isSuper) => {
 }
 
 export {
-  getBuildings,
-  getBuildingInfo,
-  getBuildingFloorInfo,
-  deleteBuilding,
-  updateBuildingInfo,
-  addNewBuilding,
   createUser,
   getAllAdmins,
   updateUser

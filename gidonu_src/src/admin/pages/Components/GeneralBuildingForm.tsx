@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef, ChangeEvent, FormEvent, SyntheticEvent } from 'react';
-import './GeneralFacultyForm.css';
-import Building from '../FacultiesPage/module/types/building';
+import { useState, useEffect, useRef, ChangeEvent, FormEvent } from 'react';
+import './GeneralForm.css';
+import { Building } from '../../helpers/interfaces';
 import ConfirmWindow from './GeneralConfirmWindow';
 import closeIcon from "../../assets/images/svg/closeIcon.svg";
-import * as api from '../FacultiesPage/module/classes/api';
+import * as api from '../../helpers/helper';
 
 type FormType = "add" | "edit";
 
@@ -30,8 +30,11 @@ const BuildingForm = ({building, title, onClose, formType, updateFaculties, setR
     const [floorAmountChanged, setFloorAmountChanged] = useState<boolean>(false);
     const [descriptionChanged, setDescriptionChanged] = useState<boolean>(false);
 
-    const numericInputRef = useRef<HTMLInputElement>(null);
     const [floorAmountValueHandler, setFloorAmountValueHandler] = useState<number>(building.floor_amount);
+
+    const numericInputRef = useRef<HTMLInputElement>(null);
+    const addressInputRef = useRef<HTMLInputElement>(null);
+    const titleInputRef = useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         const handleEscape = (event: KeyboardEvent) => {
@@ -71,7 +74,7 @@ const BuildingForm = ({building, title, onClose, formType, updateFaculties, setR
     const handleAcceptClick = async () => {
         (document.getElementsByClassName("info-window-field-title")[0] as HTMLInputElement).checkValidity();   
 
-        if((titleChanged || descriptionChanged || floorAmountChanged || addressChanged) && !showTooltip) {
+        if(((formType === "edit" && (titleChanged || descriptionChanged || addressChanged || floorAmountChanged)) || (formType === "add" && (titleChanged && floorAmountChanged && addressChanged))) && !showTooltip) {
             setShowConfirmAccept(true);
             setShowOverlay(false);
         }
@@ -82,30 +85,28 @@ const BuildingForm = ({building, title, onClose, formType, updateFaculties, setR
     };
 
     const handleAcceptClose = {
-        closeMain: async (id: number, title?: string, description?: string, contacts?: string) => {  
+        closeMain: async (id: number, title?: string, description?: string, address?: string, floor_amount?: number) => {  
             onClose();
             updateFaculties();
             
-            // let responseFaculty;
+            let response;
             try{                
                 switch(formType){
                     case "add":
-                        //responseFaculty = await api.addFaculty(id, title || null, description || null, contacts || null);
-                        await api.addFaculty(id, title || null, description || null, contacts || null);
+                        response = await api.addBuilding(id, title || null, description || null, address || null, floor_amount || null);
                         break;
                     case "edit":
-                        if(titleChanged || addressChanged || descriptionChanged || floorAmountChanged)
-                            //responseFaculty = await api.editFaculty(id, title || null, description || null, contacts || null);
-                            await api.editFaculty(id, title || null, description || null, contacts || null);
+                        if(titleChanged || descriptionChanged || addressChanged || floorAmountChanged)
+                            response = await api.editBuilding(id, title || null, description || null, address || null, floor_amount || null);
                         break;
                 };
             } catch(error: any){
                 console.log(error.message);
-                //responseFaculty = error.response;
+                response = error.response;
             };
 
-            //setResponseMessage(responseFaculty.message + " Статус: " + responseFaculty.code);
-            //setShowResponse(true);
+            setResponseMessage(response.message + " Статус: " + response.code);
+            setShowResponse(true);
         },
 
         closeCurrent: async () => {
@@ -176,7 +177,6 @@ const BuildingForm = ({building, title, onClose, formType, updateFaculties, setR
                 }
                 break;
             case "info-window-field-floorAmount":
-                event.target.focus();
                 if (event.target.value != building.floor_amount){
                     setEditedBuilding({
                         ...editedBuilding,
@@ -205,60 +205,71 @@ const BuildingForm = ({building, title, onClose, formType, updateFaculties, setR
     };
 
     const handleNumericIncrement = () => {
-        if (floorAmountValueHandler < 20)
-            setFloorAmountValueHandler(floorAmountValueHandler + 1);
+        if (floorAmountValueHandler < 20){
+            const newValue = floorAmountValueHandler + 1;
+            setFloorAmountValueHandler(newValue);
 
-        let fakeEvent: ChangeEvent<HTMLInputElement>;
-        if (numericInputRef.current) {
-            numericInputRef.current.value = String(floorAmountValueHandler + 1);
-            fakeEvent = {
-                target: numericInputRef.current,
-                currentTarget: numericInputRef.current,
-                nativeEvent: new Event('change'),
-                bubbles: false,
-                cancelable: true,
-                defaultPrevented: false,
-                eventPhase: 2,
-                isTrusted: true,
-                isDefaultPrevented: () => false,
-                isPropagationStopped: () => false,
-                preventDefault: () => {},
-                stopPropagation: () => {},
-                persist: () => {},
-                timeStamp: Date.now(),
-                type: 'change',
-            };
+            let fakeEvent: ChangeEvent<HTMLInputElement>;
+            if (numericInputRef.current) {
+                if (newValue === 0)
+                    numericInputRef.current.value = String(undefined);
+                else
+                    numericInputRef.current.value = String(newValue);
+                fakeEvent = {
+                    target: numericInputRef.current,
+                    currentTarget: numericInputRef.current,
+                    nativeEvent: new Event('change'),
+                    bubbles: false,
+                    cancelable: true,
+                    defaultPrevented: false,
+                    eventPhase: 2,
+                    isTrusted: true,
+                    isDefaultPrevented: () => false,
+                    isPropagationStopped: () => false,
+                    preventDefault: () => {},
+                    stopPropagation: () => {},
+                    persist: () => {},
+                    timeStamp: Date.now(),
+                    type: 'change',
+                };
 
-            handleValuesChange(fakeEvent);
+                handleValuesChange(fakeEvent);
+            }
         }
     };
 
     const handleNumericDecrement = () => {
         if (floorAmountValueHandler > 0)
-            setFloorAmountValueHandler(floorAmountValueHandler - 1);
+        {
+            const newValue = floorAmountValueHandler - 1;
+            setFloorAmountValueHandler(newValue);
 
-        let fakeEvent: ChangeEvent<HTMLInputElement>;
-        if (numericInputRef.current) {
-            numericInputRef.current.value = String(floorAmountValueHandler - 1);
-            fakeEvent = {
-                target: numericInputRef.current,
-                currentTarget: numericInputRef.current,
-                nativeEvent: new Event('change'),
-                bubbles: false,
-                cancelable: true,
-                defaultPrevented: false,
-                eventPhase: 2,
-                isTrusted: true,
-                isDefaultPrevented: () => false,
-                isPropagationStopped: () => false,
-                preventDefault: () => {},
-                stopPropagation: () => {},
-                persist: () => {},
-                timeStamp: Date.now(),
-                type: 'change',
-            };
+            let fakeEvent: ChangeEvent<HTMLInputElement>;
+            if (numericInputRef.current) {
+                if (newValue === 0)
+                    numericInputRef.current.value = String(undefined);
+                else
+                    numericInputRef.current.value = String(newValue);
+                fakeEvent = {
+                    target: numericInputRef.current,
+                    currentTarget: numericInputRef.current,
+                    nativeEvent: new Event('change'),
+                    bubbles: false,
+                    cancelable: true,
+                    defaultPrevented: false,
+                    eventPhase: 2,
+                    isTrusted: true,
+                    isDefaultPrevented: () => false,
+                    isPropagationStopped: () => false,
+                    preventDefault: () => {},
+                    stopPropagation: () => {},
+                    persist: () => {},
+                    timeStamp: Date.now(),
+                    type: 'change',
+                };
 
-            handleValuesChange(fakeEvent);
+                handleValuesChange(fakeEvent);
+            }
         }
     };
 
@@ -276,28 +287,60 @@ const BuildingForm = ({building, title, onClose, formType, updateFaculties, setR
                     
                     <div className="info-window-field">
                         <label>Назва</label>
-                        <input type="text" className="info-window-field-title" defaultValue={building.title || ""} onChange={handleValuesChange} required={true} onInvalid={handleInvalidInput} autoFocus readOnly={(showConfirmAccept || showConfirmDecline) ? true : false}></input>
-                        <div className="tooltip" style={showTooltip ? {"visibility": "visible"} : {"visibility": "hidden"}}>Будь ласка, введіть назву.</div>
+                        <input 
+                            ref={titleInputRef}
+                            type="text" 
+                            className="info-window-field-title" 
+                            defaultValue={building.title || ""} 
+                            onChange={handleValuesChange} 
+                            required={true} 
+                            onInvalid={handleInvalidInput} 
+                            autoFocus 
+                            readOnly={(showConfirmAccept || showConfirmDecline) ? true : false}>
+                        </input>
+                        <div 
+                            className="tooltip" 
+                            style={(showTooltip && (titleInputRef.current?.value === undefined || titleInputRef.current?.value === "")) ? {"visibility": "visible"} : {"visibility": "hidden"}}>Будь ласка, введіть назву.
+                        </div>
                     </div>
                     
                     <div className="info-window-field">
                         <label>Адреса</label>
-                        <input className="info-window-field-address" defaultValue={building.address || ""} onBlur={handleTextAreaOnFocusOut} onChange={handleValuesChange} readOnly={(showConfirmAccept || showConfirmDecline) ? true : false}></input>
+                        <input 
+                            ref={addressInputRef}
+                            className="info-window-field-address" 
+                            defaultValue={building.address || ""} 
+                            onBlur={handleTextAreaOnFocusOut} 
+                            onChange={handleValuesChange} 
+                            required={true}
+                            onInvalid={handleInvalidInput} 
+                            readOnly={(showConfirmAccept || showConfirmDecline) ? true : false}>
+                        </input>
+                        <div className="tooltip" style={(showTooltip && (addressInputRef.current?.value === undefined || addressInputRef.current?.value === "")) ? {"visibility": "visible"} : {"visibility": "hidden"}}>Будь ласка, введіть адресу.</div>
                     </div>
 
 
                     <div className="info-window-field">
                         <label>Кількість поверхів</label>
                         <div className="info-window-field-numeric-container">
-                            <svg className="info-window-field-numeric-container-arrowUp" width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={handleNumericIncrement}>
+                            <svg className="info-window-field-numeric-container-arrowUp" width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={handleNumericIncrement} onMouseDown={(e) => {e.preventDefault(); numericInputRef.current?.focus();}}>
                                 <path d="M6.05762 0L0.861465 7.5L11.2538 7.5L6.05762 0Z" fill="currentColor" />
                             </svg>
 
-                            <svg className="info-window-field-numeric-container-arrowDown" width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={handleNumericDecrement}>
+                            <svg className="info-window-field-numeric-container-arrowDown" width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => {handleNumericDecrement();}} onMouseDown={(e) => {e.preventDefault(); numericInputRef.current?.focus();}}>
                                 <path d="M6.05762 0L0.861465 7.5L11.2538 7.5L6.05762 0Z" fill="currentColor" />
                             </svg>
 
-                            <input ref={numericInputRef} className="info-window-field-floorAmount" onChange={(e) => {console.log("triggered2"); handleValuesChange(e)}} value={floorAmountValueHandler} readOnly={(showConfirmAccept || showConfirmDecline) ? true : false} type="number"></input>
+                            <input 
+                                ref={numericInputRef} 
+                                className="info-window-field-floorAmount" 
+                                value={floorAmountValueHandler === 0 ? undefined : floorAmountValueHandler} 
+                                required={true}
+                                onInvalid={handleInvalidInput} 
+                                readOnly={(showConfirmAccept || showConfirmDecline) ? true : false} 
+                                type="number">
+                            </input>
+                            <div className="tooltip" style={(showTooltip && (numericInputRef.current?.value === undefined || numericInputRef.current?.value === "")) ? {"visibility": "visible"} : {"visibility": "hidden"}}>Вкажіть кількість поверхів.</div>
                         </div>
                     </div>
 

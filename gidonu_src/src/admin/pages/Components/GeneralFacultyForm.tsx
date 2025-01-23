@@ -1,11 +1,9 @@
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import './GeneralFacultyForm.css';
-import Faculty from "../FacultiesPage/module/types/faculty";
-import Building from '../FacultiesPage/module/types/building';
+import './GeneralForm.css';
+import { Faculty, Building, BuildingsFacultiesDependence } from "../../helpers/interfaces";
 import ConfirmWindow from './GeneralConfirmWindow';
 import closeIcon from "../../assets/images/svg/closeIcon.svg";
-import * as api from '../FacultiesPage/module/classes/api';
-import BuildingsFacultiesDependence from '../FacultiesPage/module/types/buildingsFacultiesDependance';
+import * as api from '../../helpers/helper';
 
 type FormType = "add" | "edit";
 

@@ -1,15 +1,14 @@
 import ReactDOM from 'react-dom';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Faculty, Building, BuildingsFacultiesDependence } from "../../helpers/interfaces";
 import './GeneralTable.css';
 import deleteImage from '../../assets/images/svg/trash.svg';
 import editImage from '../../assets/images/svg/pencil.svg';
-import Faculty from '../FacultiesPage/module/types/faculty';
-import Building from '../FacultiesPage/module/types/building';
 import FacultyForm from './GeneralFacultyForm';
 import ConfirmWindow from './GeneralConfirmWindow';
-import * as api from '../FacultiesPage/module/classes/api';
-import BuildingsFacultiesDependence from '../FacultiesPage/module/types/buildingsFacultiesDependance';
+import * as api from '../../helpers/helper';
+import BuildingForm from './GeneralBuildingForm';
 
 enum TableType {
     Faculties,
@@ -91,6 +90,10 @@ const Control = ({rowList, updateFaculties, setResponseMessage, setShowResponse,
                             await api.deleteBuildingsFacultiesDependency(buildingsFacultiesDependences![i].id);
                     }
                 }
+
+                if(tableType === TableType.Buildings){
+                    response = await api.deleteBuilding(id);
+                }
             } catch(error: any){
                 console.log(error.message);
                 response = error.response;
@@ -110,8 +113,17 @@ const Control = ({rowList, updateFaculties, setResponseMessage, setShowResponse,
             <FacultyForm faculty={selectedRow as Faculty} title="Редагувати інформацію про факультет" onClose={handleEditClose} formType="edit" updateFaculties={updateFaculties} setResponseMessage={setResponseMessage} setShowResponse={setShowResponse} buildings={buildings!} buildingsFacultiesDependences={buildingsFacultiesDependences!} />,
             rootElement
         )}
+        {tableType === TableType.Buildings && showForm && rootElement && ReactDOM.createPortal(
+            <BuildingForm building={selectedRow as Building} title="Редагувати інформацію про корпус" onClose={handleEditClose} formType="edit" updateFaculties={updateFaculties} setResponseMessage={setResponseMessage} setShowResponse={setShowResponse} />,
+            rootElement
+        )}
+
         {tableType === TableType.Faculties && showConfirmDelete && rootElement && ReactDOM.createPortal(
             <ConfirmWindow entity={selectedRow as Faculty} text="бажаєте видалити факультет" onClose={handleDeleteAccept} confirmType="delete" />,
+            rootElement
+        )}
+        {tableType === TableType.Buildings && showConfirmDelete && rootElement && ReactDOM.createPortal(
+            <ConfirmWindow entity={selectedRow as Building} text="бажаєте видалити корпус" onClose={handleDeleteAccept} confirmType="delete" />,
             rootElement
         )}
 

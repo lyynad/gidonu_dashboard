@@ -4,11 +4,11 @@ import './BuildingsPage.css'
 // import Header from './components/Header';
 import GeneralTable from '../Components/GeneralTable';
 import BuildingForm from '../Components/GeneralBuildingForm';
-import Popup from './components/Popup';
+import Popup from '../Components/GeneralPopup';
 
-import * as api from './module/classes/api';
+import * as api from '../../helpers/helper';
 
-import Building from './module/types/building';
+import { Building } from '../../helpers/interfaces';
 
 import plusIcon from './assets/plus.svg';
 
@@ -98,7 +98,7 @@ function App() {
 
         </div>
 
-        {showForm && <BuildingForm building={{type: "building", id: getId(), title: "", description: null, address: null, floor_amount: 0}} title="Додати новий факультет" onClose={handleAddClose} formType="add" updateFaculties={updateBuildings} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} />}
+        {showForm && <BuildingForm building={{type: "building", id: getId(), title: "", description: null, address: null, floor_amount: 0}} title="Додати новий корпус" onClose={handleAddClose} formType="add" updateFaculties={updateBuildings} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} />}
         {showPopup && <Popup message={popupMessage} />} 
 
         <GeneralTable updateFaculties={updateBuildings} rowList={buildings} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} />

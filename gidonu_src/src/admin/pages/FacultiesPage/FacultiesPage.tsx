@@ -4,20 +4,18 @@ import './FacultiesPage.css'
 // import Header from './components/Header';
 import GeneralTable from '../Components/GeneralTable';
 import FacultyForm from '../Components/GeneralFacultyForm';
-import Popup from './components/Popup';
+import Popup from '../Components/GeneralPopup';
 
-import * as api from './module/classes/api';
+import * as api from '../../helpers/helper';
 
-import Faculty from './module/types/faculty';
-import Building from './module/types/building';
-import BuildingsFacultiesDependance from './module/types/buildingsFacultiesDependance';
+import { Faculty, Building, BuildingsFacultiesDependence } from '../../helpers/interfaces';
 
 import plusIcon from './assets/plus.svg';
 
 function App() {
   const [faculties, setFaculties] = useState<Faculty[]>([]);
   const [buildings, setBuildings] = useState<Building[]>([]);
-  const [buildingsFacultiesDependences, setBuildingsFacultiesDependences] = useState<BuildingsFacultiesDependance[]>([]);
+  const [buildingsFacultiesDependences, setBuildingsFacultiesDependences] = useState<BuildingsFacultiesDependence[]>([]);
   const [sortedFaculties, setSortedFaculties] = useState<Faculty[]>([]);
   const [showForm, setShowForm] = useState<boolean>(false);
   const [facultiesUpdate, setFacultiesUpdate] = useState<boolean>(true);

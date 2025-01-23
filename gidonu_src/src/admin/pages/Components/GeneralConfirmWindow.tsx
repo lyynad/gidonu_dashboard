@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import './GeneralConfirmWindow.css';
 import closeIcon from "../../assets/images/svg/closeIcon.svg";
-import Faculty from '../FacultiesPage/module/types/faculty';
-import Building from '../FacultiesPage/module/types/building';
+import { Faculty, Building } from '../../helpers/interfaces';
 
 type ConfirmType = "add" | "edit" | "delete";
 

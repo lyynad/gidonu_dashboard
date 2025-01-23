@@ -1,4 +1,4 @@
-import '../styles/popup.css';
+import './GeneralPopup.css';
 
 interface Props {
     message: string
