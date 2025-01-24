@@ -14,7 +14,21 @@
 }
 
 .fc-table-container::-webkit-scrollbar {
-  padding-left: 20px;
+  width: 3px;
+}
+
+.fc-table-container::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4cqw;
+}
+
+.fc-table-container::-webkit-scrollbar-thumb {
+  background: #787878;
+  border-radius: 4cqw;
+}
+
+.fc-table-container::-webkit-scrollbar-thumb:hover {
+  background: #686868;
 }
 
 .fc-table-container::-webkit-scrollbar-track-piece:start{

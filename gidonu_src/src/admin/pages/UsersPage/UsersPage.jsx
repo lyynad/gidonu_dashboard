@@ -140,7 +140,7 @@ const UsersPage = () => {
                 <p className="">Роль</p>
               </div>
             </div>
-            <div className="flex flex-col  ">
+            <div className="flex flex-col max-h-<75vh>">
               {filteredAdmins?.map((elem, i) => {
                 return (
                   <div

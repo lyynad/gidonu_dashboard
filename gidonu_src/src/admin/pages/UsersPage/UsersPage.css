@@ -1,12 +1,34 @@
+.users-main::-webkit-scrollbar {
+  width: 3px;
+  padding-left: 20px;
+}
+
+.users-main::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4cqw;
+}
+
+.users-main::-webkit-scrollbar-thumb {
+  background: #787878;
+  border-radius: 4cqw;
+}
+
+.users-main::-webkit-scrollbar-thumb:hover {
+  background: #686868;
+}
+
+.users-main::-webkit-scrollbar-track-piece:start{
+  margin-top: 151px;
+}
+
 .users-main {
-  height: calc(100% - 30px);
-  padding: 40px 20px 0 20px;
+  max-height: calc(100% - 30px);
+  padding: 40px 5px 0 5px;
   margin-bottom: 30px;
   overflow: auto;
 }
 
 .users-cont {
-  width: max-content;
   border-radius: 1vw;
   overflow: hidden;
   outline: 1px solid #B1B1B1;
