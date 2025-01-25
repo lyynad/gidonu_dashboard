@@ -1,0 +1,3 @@
+.darkened:hover > .darkened-child {
+    filter: brightness(80%);
+}

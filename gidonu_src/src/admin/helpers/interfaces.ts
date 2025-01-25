@@ -20,3 +20,17 @@ export interface Faculty {
     description: string | null,
     contacts: string | null
 };
+
+export interface IUserProfile {
+  id: string,
+  name: string,
+  email: string,
+  isActive: boolean,
+  dataRegistration: string,
+  lastChangesDate: string,
+  applicationDate: string,
+  lastActivityDate: string,
+  telegramId: string,
+  isAdmin: boolean,
+  isSuper: boolean
+}

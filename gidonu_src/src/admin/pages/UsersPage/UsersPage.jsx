@@ -1,7 +1,7 @@
 import { getAllAdmins, updateUser } from "../../helpers/helper";
 import { useState, useEffect } from "react";
 import CheckBox from "../Components/CheckBox";
-import UserCard from '../Components/GeneralUserCard';
+import GnProfileChange from '../Components/GnProfileChange';
 import BackgroundBlur from "../Components/BackgroundBlur";
 
 import './UsersPage.css';
@@ -18,9 +18,23 @@ const UsersPage = () => {
   const [userProfile, setUserProfile] = useState({});
   const [showUserCard, setShowUserCard] = useState(false);
 
+
+  const handleUserCardClose = () => {
+    setShowUserCard(false);
+    setSelectedUser("0");
+  };
+
+
   useEffect(() => {
     getAllAdmins(setAdmins, setLoading);
+
+    document.addEventListener("mousedown", handleUserCardClose);
+
+    return () => {
+        document.removeEventListener("mousedown", handleUserCardClose);
+    }
   }, []);
+  
   const renderDate = (dateStr) => {
     const date = new Date(dateStr);
     const locale = "uk-UA";
@@ -65,7 +79,7 @@ const UsersPage = () => {
           name: profile.name,
           email: profile.email,
           userStatus: (profile.isActive === 0) ? "Inactive" : "Active",
-          registrationDate: renderDate(profile.dataRegistration),
+          dataRegistration: renderDate(profile.dataRegistration),
           lastChangesDate: '20 квіт. 2024р.',
           applicationDate: '20 квіт. 2024р.',
           lastActivityDate: '20 квіт. 2024р.',
@@ -84,11 +98,6 @@ const UsersPage = () => {
     setSelectedUser(id);
   };
 
-  const handleUserCardClose = () => {
-    setShowUserCard(false);
-    setSelectedUser("0");
-  };
-
   const handleProfileChange = async (newProfile) => {
     await updateUser(newProfile.id, newProfile.name, newProfile.email, newProfile.isAdmin, newProfile.isSuper);
     await getAllAdmins(setAdmins, setLoading);
@@ -97,11 +106,20 @@ const UsersPage = () => {
   return (
     <>
       {showUserCard &&
-          <UserCard
+        <div 
+          className="user-card user-card-maximized"
+          style={{"zIndex": "2"}} 
+          onMouseDown={(event) => {
+            event.stopPropagation();
+          }}
+        >
+          <GnProfileChange
             close={handleUserCardClose}
             userProfile={userProfile}
             handleProfileChange={handleProfileChange}
+            isOwn={false}
           />
+        </div>
       }
       {!showUserCard &&
         <div className="users-main">

@@ -15,7 +15,7 @@ export default function GnInput({value, name, className, handleChange, readonly 
   return (
     <div className={cn("relative w-full")}>
       <div className="text-[2.1cqw] ml-[1cqw]">{name}</div>
-      <input className={cn("peer p-2 h-full outline-none bg-transparent rounded-lg border border-color-main w-[30cqw] h-[3.4cqh] mt-[0.5cqw] text-[1.8cqw]", className!, readonly ? "cursor-not-allowed" : "")} value={val}
+      <input className={cn("peer p-2 h-full outline-none bg-transparent rounded-lg border border-color-main w-[35cqw] h-[4cqw] mt-[0.5cqw] text-[2cqw] font-light", className!, readonly ? "cursor-not-allowed" : "")} value={val}
              onChange={(e) => {setVal(e.target.value); if(handleChange) handleChange(e)}}
              readOnly={readonly}
       />

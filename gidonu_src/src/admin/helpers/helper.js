@@ -6,7 +6,7 @@ let host = window.SERVER_URL;
 const getAllAdmins = async (setAdmins, setLoading) => {
   try {
     setLoading(true);
-    const response = await axios.get(`${BASE_URL}${url.GET_ALL_ADMINS}`);
+    const response = await axios.get(`${host}${url.GET_ALL_ADMINS}`);
     console.log(response?.data);
     setAdmins(response?.data);
   } catch (error) {
@@ -16,6 +16,26 @@ const getAllAdmins = async (setAdmins, setLoading) => {
     setLoading(false);
   }
 };
+
+export const getUser = async(id) => {
+    const url = new URL(`${host}/api/admin/users/${id}`);
+
+    const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    if(!response.ok){
+        throw {
+            response: await response.json(),
+            message: new Error(`HTTP error. Status: ${response.status}`)
+        };
+    };
+
+    return await response.json();
+}
 
 const createUser = async (updateObj, setLoadingCreateUser) => {
   setLoadingCreateUser(true);

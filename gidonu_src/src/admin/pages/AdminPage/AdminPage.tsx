@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import users from "../../assets/images/svg/users.svg";
 import photo from "../../assets/images/photo.png";
 import bell from "../../assets/images/svg/bell.svg";
 import usersWhite from "../../assets/images/svg/usersWhite.svg";
 import logo from "../../assets/images/logo.png";
+import logout from '../../assets/images/svg/logout.svg';
+import user from '../../assets/images/svg/user.svg';
 import "../../assets/css/AdminPage.css";
 import "./AdminPage.css";
 import UserMain from "../UserMain/UserMain";
@@ -15,16 +17,41 @@ import FacultiesPage from "../FacultiesPage/FacultiesPage";
 import BuildingsPage from "../BuildingsPage/BuildingsPage";
 import LogsPage from "../LogsPage/LogsPage";
 import SvgSprite from "../../../gn-components/sprite/SvgSprite";
+import { IUserProfile } from "../../helpers/interfaces";
+import { getUser } from "../../helpers/helper";
 
 export default function AdminPage() {
-  const [adminActiveTab, setAdminActiveTab] = useState<number>(
-    +localStorage.getItem("adminActiveTab")!,
-  );
+  const [userProfile, setUserProfile] = useState<IUserProfile>();
+  const [userRequiresUpdate, setUserRequiresUpdate] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try{
+        const id = 40;
+        const currentUser = await getUser(id);
+        setUserProfile(currentUser[0]);
+
+        setAdminActiveTab(+localStorage.getItem("adminActiveTab")!,);
+      } catch(error) {
+        console.log(error);
+      }
+    };
+
+      if(userRequiresUpdate){
+        fetchData();
+        setUserRequiresUpdate(false);
+      }
+  }, [userRequiresUpdate]);
+
+  const handleUserRequiresUpdate = () => {
+    setUserRequiresUpdate(true);
+  }
+
+  const [adminActiveTab, setAdminActiveTab] = useState<number>();
   const changeAdminActiveTab = (num: number) => {
     setAdminActiveTab(num);
     localStorage.setItem("adminActiveTab", num.toString());
   };
-
   const menuElements: string[] = [
     "Користувачі",
     "Зворотній зв'язок",
@@ -44,6 +71,22 @@ export default function AdminPage() {
     "faculties",
     "logs",
   ];
+
+  
+  const userProfileEdit = {
+    id: '',
+    name: 'Рачинська Алла Леонідівна',
+    email: 'rachinskaya@onu.edu.ua',
+    userStatus: 'Active',
+    registrationDate: '20 квіт. 2024р.',
+    lastChangesDate: '20 квіт. 2024р.',
+    applicationDate: '20 квіт. 2024р.',
+    lastActivityDate: '20 квіт. 2024р.',
+    telegram: '@r_al_l',
+    isAdmin: false,
+    isSuper: true
+  }
+
 
   function toUsers() {
     changeAdminActiveTab(0);
@@ -96,7 +139,18 @@ export default function AdminPage() {
         </div>
       </div>
       {adminActiveTab === 0 ? (
-        <UserMain />
+        <>
+          <UserMain userProfile={userProfile} handleUserRequiresUpdate={handleUserRequiresUpdate} />
+          <div className="top-line h-[86px] absolute top-0 bg-[white] w-full ">
+            <div className="line-user">
+              <div className="txt">Вітаємо в особистому кабінеті</div>
+              <div className="right-btns">
+                <img className="btn-right" src={user}/>
+                <img className="btn-right" src={logout}/>
+              </div>
+            </div>
+          </div>
+        </>
       ) : (
         <div className="right flex items-center justify-center">
           <div className="top-line h-[86px] absolute top-0 bg-[white] w-full ">
