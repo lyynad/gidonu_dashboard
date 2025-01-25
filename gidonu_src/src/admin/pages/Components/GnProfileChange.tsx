@@ -74,47 +74,53 @@ export default function GnProfileChange({close, userProfile, handleProfileChange
     <div>
       <div className="flex justify-between">
         <div className="p-4 flex flex-row">
-          <img className="w-36" src={avatar}/>
+          <div className="avatar">
+            <img className="avatar-img" src={avatar}/>
+            <div className="user-status">
+              <div className="user-status-dot"></div>
+              <span className="user-status-text">В мережі</span>
+            </div>
+          </div>
           <div className="flex flex-col justify-between h-full">
             <div className="flex w-full justify-between">
               <div className="flex flex-col items-center gap-2">
-                <div className="px-5 rounded-2xl bg-[#BCDCE4]">admin</div>
+                <div className="px-5 rounded-2xl bg-[#BCDCE4] text-[1.6cqh]">admin</div>
                 <GnSwitch switched={isAdmin} colorProp="bg-gn-light-blue" onSwitch={() => setIsAdmin(!isAdmin)}/>
               </div>
               <div className="flex flex-col items-center gap-2">
-                <div className="px-5 rounded-2xl bg-[#F8E5E5]">super</div>
+                <div className="px-5 rounded-2xl bg-[#F8E5E5] text-[1.6cqh]">super</div>
                 <GnSwitch switched={isSuper} colorProp="bg-gn-beige" onSwitch={() => setIsSuper(!isSuper)}/>
               </div>
             </div>
             <GnInput className="!w-40" name={'Telegram'} value={userProfile.telegram}/>
           </div>
         </div>
-        <div>
-          <GnInput readonly={true} name={'Статус користувача'} value={userStatus} handleChange={handleUserStatus}/>
+        <div className="flex gap-[2cqw] flex-col">
+          <GnInput readonly={true} name={'Статус заявки'} value={userStatus} handleChange={handleUserStatus}/>
           <GnInput readonly={true} name={'Остання активність'} value={userProfile.lastActivityDate}/>
         </div>
       </div>
-      <div className="flex justify-between mt-7 gap-20">
-        <div className="flex gap-1 flex-col">
+      <div className="flex mt-[1cqw] gap-[25cqw]">
+        <div className="flex gap-[2cqw] flex-col">
           <GnInput readonly={true} name={'ID Користувача'} value={userProfile.id}/>
           <GnInput name={'Ім\'я користувача'} value={name} handleChange={handleName}/>
           <GnInput name={'Email'} value={email} handleChange={handleEmail}/>
         </div>
-        <div className="flex gap-1 flex-col">
+        <div className="flex gap-[2cqw] flex-col">
           <GnInput readonly={true} name={'Дата реєстрації'} value={userProfile.registrationDate}/>
           <GnInput readonly={true} name={'Дата заявки'} value={userProfile.applicationDate}/>
           <GnInput readonly={true} name={'Останні зміни'} value={lastChangesDate} handleChange={handleLastChangesDate}/>
         </div>
       </div>
-      <div className="w-full flex flex-row justify-end">
-        <div className="details w-max">
-          <div className="flex flex-row gap-2 cursor-pointer" onClick={handleAccept}>
-            <img src={tick}/>
+      <div className="w-full flex flex-row justify-end items-center mt-[2cqw]">
+        <div className="details-user w-max h-[4cqw] mt-[0] text-[1.9cqw]">
+          <div className="flex flex-row items-center gap-2 cursor-pointer" onClick={handleAccept}>
+            <img className="w-[2.3cqw] h-[2.3cqw]" src={tick}/>
             Зберегти
           </div>
           <div className="border-l border-black h-full"></div>
-          <div className="flex flex-row gap-2 cursor-pointer" onClick={close}>
-            <img src={cross}/>
+          <div className="flex flex-row items-center gap-2 cursor-pointer" onClick={close}>
+            <img className="w-[1.9cqw] h-[1.9cqw]" src={cross}/>
             <div>Відмінити</div>
           </div>
         </div>

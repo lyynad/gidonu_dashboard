@@ -32,7 +32,7 @@ export default function UserMain() {
   return (
     <div className="right">
       <div className="main-cont">
-        <div className="user-card" style={{"minWidth": isEditing ? "60%" : ""}}>
+        <div className="user-card" style={{"minWidth": isEditing ? "90cqh" : ""}}>
           <div className="header">
             <div className="text" style={{"borderRadius": "30%", "paddingLeft": "15px", "paddingRight": "15px"}}>super admin</div>
             <div className="buttons">
@@ -43,6 +43,10 @@ export default function UserMain() {
           {!isEditing && (
             <div className="avatar">
               <img className="avatar-img" src={avatar}/>
+              <div className="user-status">
+                <div className="user-status-dot"></div>
+                <span className="user-status-text">В мережі</span>
+              </div>
             </div>
           )}
           {!isEditing ?
@@ -63,9 +67,9 @@ export default function UserMain() {
             : <GnProfileChange userProfile={userProfileEdit}/>
           }
           {!isEditing && (
-            <div className="details">
-              <img className="details-img" src={details}/>
-              <p className="details-txt">Детальніше</p>
+            <div className="details-user" onClick={() => setIsEditing(!isEditing)}>
+              <img className="details-user-img" src={details}/>
+              <span className="details-user-txt">Детальніше</span>
             </div>
           )}
 

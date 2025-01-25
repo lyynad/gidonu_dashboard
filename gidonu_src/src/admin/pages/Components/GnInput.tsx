@@ -11,23 +11,14 @@ interface GnInputProps {
 
 export default function GnInput({value, name, className, handleChange, readonly = false}: GnInputProps) {
   const [val, setVal] = useState(value);
-  const [isFocusedClass, setIsFocusedClass] = useState('');
-
-  useEffect(() => {
-    if(readonly) setIsFocusedClass('-translate-y-4 scale-75');
-    else if(!val) setIsFocusedClass('');
-    else if(!isFocusedClass) setIsFocusedClass('-translate-y-4 scale-75')
-  }, [val]);
 
   return (
-    <div className={cn("relative w-full p-3")}>
-      <input className={cn("peer p-2 h-full outline-none bg-transparent rounded-lg border border-color-main w-80", className!, readonly ? "cursor-not-allowed" : "")} value={val}
+    <div className={cn("relative w-full")}>
+      <div className="text-[2.1cqw] ml-[1cqw]">{name}</div>
+      <input className={cn("peer p-2 h-full outline-none bg-transparent rounded-lg border border-color-main w-[30cqw] h-[3.4cqh] mt-[0.5cqw] text-[1.8cqw]", className!, readonly ? "cursor-not-allowed" : "")} value={val}
              onChange={(e) => {setVal(e.target.value); if(handleChange) handleChange(e)}}
              readOnly={readonly}
       />
-      <div className={cn("top-3 bg absolute px-2 mx-2 my-1 text-xl origin-[0]",
-        "transition-transform peer-focus:scale-75 bg-[#E8E8E8] peer-focus:-translate-y-4", isFocusedClass)}
-      >{name}</div>
     </div>
   )
 }

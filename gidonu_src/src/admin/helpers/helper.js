@@ -1,8 +1,5 @@
 import axios from "axios";
 import * as url from "./urlHelper";
-
-const BASE_URL = url.BASE_URL;
-
 let host = window.SERVER_URL;
 //let host = "http://localhost:3000";
 
@@ -19,6 +16,31 @@ const getAllAdmins = async (setAdmins, setLoading) => {
     setLoading(false);
   }
 };
+
+const createUser = async (updateObj, setLoadingCreateUser) => {
+  setLoadingCreateUser(true);
+  try {
+    await axios.post(`${host}/api/admin/users/`, updateObj);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  } finally {
+    setLoadingCreateUser(false);
+  }
+};
+
+const updateUser = async(id, name, email, isAdmin, isSuper) => {
+  try {
+    const data = {name: name, email: email, isAdmin: isAdmin, isSuper: isSuper};
+
+    await axios.put(`${host}/api/admin/users/${id}`, data)
+    .then(response => {
+      console.log('Updated successfully:', response.data);
+    });
+  } catch(error) {
+    console.log("Error updating user: ", error);
+  }
+}
 
 export const getFaculties = async () => {
     try {
@@ -282,31 +304,6 @@ export const deleteBuildingsFacultiesDependency = async(id) => {
     }
 
     return await response.json();
-}
-
-const createUser = async (updateObj, setLoadingCreateUser) => {
-  setLoadingCreateUser(true);
-  try {
-    await axios.post(`http://localhost:3000/api/admin/users/`, updateObj);
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
-  } finally {
-    setLoadingCreateUser(false);
-  }
-};
-
-const updateUser = async(id, name, email, isAdmin, isSuper) => {
-  try {
-    const data = {name: name, email: email, isAdmin: isAdmin, isSuper: isSuper};
-
-    await axios.put(`${BASE_URL}/api/admin/users/${id}`, data)
-    .then(response => {
-      console.log('Updated successfully:', response.data);
-    });
-  } catch(error) {
-    console.log("Error updating user: ", error);
-  }
 }
 
 export {
