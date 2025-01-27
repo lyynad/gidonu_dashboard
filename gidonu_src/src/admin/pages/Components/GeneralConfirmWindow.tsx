@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import './GeneralConfirmWindow.css';
 import closeIcon from "../../assets/images/svg/closeIcon.svg";
-import { Faculty, Building } from '../../helpers/interfaces';
+import { Faculty, Building, IUserProfile } from '../../helpers/interfaces';
 
 type ConfirmType = "add" | "edit" | "delete";
 
@@ -10,7 +10,7 @@ type Props =
         entity: Faculty,
         text: string,
         onClose: {
-            closeMain: (id: number, title?: string, description?: string, contacts?: string) => void,
+            closeMain: (id?: number) => void,
             closeCurrent: () => void
         },
         confirmType: ConfirmType,
@@ -19,7 +19,16 @@ type Props =
         entity: Building,
         text: string,
         onClose: {
-            closeMain: (id: number, title?: string, description?: string, address?: string, floor_amount?: number) => void,
+            closeMain: (id?: number) => void,
+            closeCurrent: () => void
+        },
+        confirmType: ConfirmType,
+    }
+    | {
+        entity: IUserProfile,
+        text: string,
+        onClose: {
+            closeMain: (id?: number) => void,
             closeCurrent: () => void
         },
         confirmType: ConfirmType,
@@ -49,21 +58,15 @@ const ConfirmWindow = ({entity, text, onClose, confirmType}: Props) => {
     const handleAccept = async () => {
         switch(confirmType){
             case "add":
-                if (entity.type === "faculty")
-                    onClose.closeMain(entity.id, entity.title || undefined, entity.description || undefined, entity.contacts || undefined);
-                else if (entity.type === "building")
-                    onClose.closeMain(entity.id, entity.title || undefined, entity.description || undefined, entity.address || undefined, entity.floor_amount || undefined);
+                onClose.closeMain();
                 onClose.closeCurrent();
                 break;
             case "edit":
-                if (entity.type === "faculty")
-                    onClose.closeMain(entity.id, entity.title || undefined, entity.description || undefined, entity.contacts || undefined);
-                else if (entity.type === "building")
-                    onClose.closeMain(entity.id, entity.title || undefined, entity.description || undefined, entity.address || undefined, entity.floor_amount || undefined);
+                onClose.closeMain();
                 onClose.closeCurrent();
                 break;
             case "delete":
-                onClose.closeMain(entity.id);
+                onClose.closeMain(Number(entity.id));
                 onClose.closeCurrent();
                 break;
         };
@@ -77,7 +80,7 @@ const ConfirmWindow = ({entity, text, onClose, confirmType}: Props) => {
             <form className="edit-confirm-window">
             
                 <img src={closeIcon} alt="close" role="button" style={{"marginLeft": "auto", "marginRight": "7cqw", "marginTop": "5.8cqw", "cursor": "pointer", "width": "5cqw"}} onClick={onClose.closeCurrent} />
-                <h1>Ви дійсно {text}?</h1>
+                <h1>{text}</h1>
             
                 <div className="edit-confirm-window-button-container">
                     <button type="button" onClick={handleAccept}>Так</button>

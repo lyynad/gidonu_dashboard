@@ -79,7 +79,7 @@ const Control = ({rowList, updateFaculties, setResponseMessage, setShowResponse,
     };
 
     const handleDeleteAccept = {
-        closeMain: async (id: number) => {
+        closeMain: async (id?: number) => {
             let response;
             try{
                 if(tableType === TableType.Faculties){
@@ -119,11 +119,11 @@ const Control = ({rowList, updateFaculties, setResponseMessage, setShowResponse,
         )}
 
         {tableType === TableType.Faculties && showConfirmDelete && rootElement && ReactDOM.createPortal(
-            <ConfirmWindow entity={selectedRow as Faculty} text="бажаєте видалити факультет" onClose={handleDeleteAccept} confirmType="delete" />,
+            <ConfirmWindow entity={selectedRow as Faculty} text="Ви дійсно бажаєте видалити факультет?" onClose={handleDeleteAccept} confirmType="delete" />,
             rootElement
         )}
         {tableType === TableType.Buildings && showConfirmDelete && rootElement && ReactDOM.createPortal(
-            <ConfirmWindow entity={selectedRow as Building} text="бажаєте видалити корпус" onClose={handleDeleteAccept} confirmType="delete" />,
+            <ConfirmWindow entity={selectedRow as Building} text="Ви дійсно бажаєте видалити корпус?" onClose={handleDeleteAccept} confirmType="delete" />,
             rootElement
         )}
 

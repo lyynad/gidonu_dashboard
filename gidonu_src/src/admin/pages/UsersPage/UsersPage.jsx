@@ -1,4 +1,4 @@
-import { getAllAdmins, updateUser } from "../../helpers/helper";
+import { getAllAdmins, } from "../../helpers/helper";
 import { useState, useEffect } from "react";
 import CheckBox from "../Components/CheckBox";
 import GnProfileChange from '../Components/GnProfileChange';
@@ -18,21 +18,8 @@ const UsersPage = () => {
   const [userProfile, setUserProfile] = useState({});
   const [showUserCard, setShowUserCard] = useState(false);
 
-
-  const handleUserCardClose = () => {
-    setShowUserCard(false);
-    setSelectedUser("0");
-  };
-
-
   useEffect(() => {
     getAllAdmins(setAdmins, setLoading);
-
-    document.addEventListener("mousedown", handleUserCardClose);
-
-    return () => {
-        document.removeEventListener("mousedown", handleUserCardClose);
-    }
   }, []);
   
   const renderDate = (dateStr) => {
@@ -74,21 +61,7 @@ const UsersPage = () => {
       let profile = filteredAdmins.find((user) => user.id === selectedUser);
       
       if (profile){
-        let sortedProfile = {
-          id: profile.id,
-          name: profile.name,
-          email: profile.email,
-          userStatus: (profile.isActive === 0) ? "Inactive" : "Active",
-          dataRegistration: renderDate(profile.dataRegistration),
-          lastChangesDate: '20 квіт. 2024р.',
-          applicationDate: '20 квіт. 2024р.',
-          lastActivityDate: '20 квіт. 2024р.',
-          telegram: '@temporary',
-          isAdmin: profile.isAdmin,
-          isSuper: profile.isSuper
-        }
-
-        setUserProfile(sortedProfile); 
+        setUserProfile(profile); 
         setShowUserCard(true);
       }
     }
@@ -97,11 +70,15 @@ const UsersPage = () => {
   const handleUserCardShow = (id) => {
     setSelectedUser(id);
   };
+  const handleUserCardClose = () => {
+    setShowUserCard(false);
+    setSelectedUser("0");
+  };
 
-  const handleProfileChange = async (newProfile) => {
-    await updateUser(newProfile.id, newProfile.name, newProfile.email, newProfile.isAdmin, newProfile.isSuper);
+  const handleProfileChange = async () => {
     await getAllAdmins(setAdmins, setLoading);
   }
+
 
   return (
     <>
@@ -116,7 +93,7 @@ const UsersPage = () => {
           <GnProfileChange
             close={handleUserCardClose}
             userProfile={userProfile}
-            handleProfileChange={handleProfileChange}
+            updateData={handleProfileChange}
             isOwn={false}
           />
         </div>

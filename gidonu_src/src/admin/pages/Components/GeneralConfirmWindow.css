@@ -7,7 +7,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 40vh;
-    padding-bottom: 2.43vw;
+    padding-bottom: 3cqw;
     border-radius: 1.74vw;
     background-color: #5294A6;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -19,7 +19,7 @@
     font-weight: 500;
     text-align: center;
     font-size: 5.8cqw;
-    width: 90cqw;
+    width: 80cqw;
     margin-left: auto;
     margin-right: auto;
 }

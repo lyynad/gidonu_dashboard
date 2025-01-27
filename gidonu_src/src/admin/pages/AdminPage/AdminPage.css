@@ -46,5 +46,14 @@
 }
 
 .tab-elem {
-  padding: 8px 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.admin {
+  background-color: #BCDCE4;
+}
+
+.super {
+  background-color: #F8E5E5;
 }

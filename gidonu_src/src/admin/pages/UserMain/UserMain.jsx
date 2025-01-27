@@ -6,15 +6,14 @@ import details from '../../assets/images/svg/details.svg';
 import arrowBack from "../../assets/images/svg/arrow-back.svg";
 import {useState} from "react";
 import GnProfileChange from "../Components/GnProfileChange";
-import { updateUser } from "../../helpers/helper";
 
 export default function UserMain({ userProfile, handleUserRequiresUpdate }) {
   const [isEditing, setIsEditing] = useState(false);
 
-  const handleProfileChange = async (newProfile) => {
-    await updateUser(newProfile.id, newProfile.name, newProfile.email, newProfile.isAdmin, newProfile.isSuper);
-    handleUserRequiresUpdate();
-  }
+  const handleUserCardClose = () => {
+    setIsEditing(false);
+  };
+
 
   return (
     <div className="right">
@@ -22,22 +21,22 @@ export default function UserMain({ userProfile, handleUserRequiresUpdate }) {
         {isEditing &&
           <img className="arrow-back" src={arrowBack} onClick={() => {setIsEditing(false)}}/>
         }
-        <div className={`user-card ${isEditing ? "user-card-maximized" : ""}`}>
+        <div className={`user-card ${isEditing ? "user-card-maximized" : ""}`} onMouseDown={(e) => {e.stopPropagation();}}>
           {!isEditing && (
             <div className="header">
-              <div className="text" style={{"borderRadius": "30%", "paddingLeft": "15px", "paddingRight": "15px"}}>super admin</div>
+              <div className={`text ${userProfile.isSuper ? "super" : "admin"}`} style={{"fontFamily": "Roboto Mono", "fontSize": "5.3cqw", "paddingLeft": "9cqw", "paddingRight": "9cqw"}}>{userProfile.isSuper ? "super admin" : "admin"}</div>
               <div className="buttons">
-                <img className="card-btn cursor-pointer" src={edit} onClick={() => setIsEditing(true)}/>
-                <img className="card-btn" src={deleteImg}/>
+                <img className="card-btn cursor-pointer" style={{"width": "6cqw", "height": "6cqw"}} src={edit} onClick={() => setIsEditing(true)}/>
+                <img className="card-btn" style={{"width": "6cqw", "height": "6cqw"}} src={deleteImg}/>
               </div>
             </div>
           )}
           {!isEditing && (
             <div className="avatar">
-              <img className="avatar-img" src={avatar}/>
-              <div className="user-status">
-                <div className="user-status-dot"></div>
-                <span className="user-status-text">В мережі</span>
+              <img className="avatar-img" style={{"width": "45cqw"}} src={avatar}/>
+              <div className="user-status" style={{"gap": "2cqw", "marginRight": "4cqw"}}>
+                <div className="user-status-dot" style={{"width": "3cqw", "height": "3cqw"}}></div>
+                <span className="user-status-text" style={{"fontSize": "4cqw"}}>В мережі</span>
               </div>
             </div>
           )}
@@ -56,7 +55,7 @@ export default function UserMain({ userProfile, handleUserRequiresUpdate }) {
                 <div className="info-body">{userProfile.telegramId}</div>
               </div>
             </div>
-            : <GnProfileChange userProfile={userProfile} isOwn={true} close={() => {setIsEditing(false)}} handleProfileChange={handleProfileChange}/>
+            : <GnProfileChange userProfile={userProfile} isOwn={true} close={handleUserCardClose} updateData={handleUserRequiresUpdate} />
           }
           {!isEditing && (
             <div className="details-user" onClick={() => setIsEditing(!isEditing)}>

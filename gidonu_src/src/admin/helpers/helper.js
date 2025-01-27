@@ -49,9 +49,9 @@ const createUser = async (updateObj, setLoadingCreateUser) => {
   }
 };
 
-const updateUser = async(id, name, email, isAdmin, isSuper) => {
+const updateUser = async(id, name, email, isAdmin, isSuper, isTelegram, isActive) => {
   try {
-    const data = {name: name, email: email, isAdmin: isAdmin, isSuper: isSuper};
+    const data = { name: name, email: email, isAdmin: isAdmin, isSuper: isSuper, isTelegram: isTelegram, isActive: isActive };
 
     await axios.put(`${host}/api/admin/users/${id}`, data)
     .then(response => {
@@ -61,6 +61,19 @@ const updateUser = async(id, name, email, isAdmin, isSuper) => {
     console.log("Error updating user: ", error);
   }
 }
+
+export const deleteUser = async(id) => {
+    try {
+      const data = { id: id };
+  
+      await axios.delete(`${host}/api/admin/users/${id}`, data)
+      .then(response => {
+        console.log('Deleted successfully:', response.data);
+      });
+    } catch(error) {
+      console.log("Error deleting user: ", error);
+    }
+  }
 
 export const getFaculties = async () => {
     try {

@@ -103,7 +103,7 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
     };
 
     const handleAcceptClose = {
-        closeMain: async (id: number, title?: string, description?: string, contacts?: string) => {  
+        closeMain: async () => {  
             onClose();
             updateFaculties();
             
@@ -112,14 +112,14 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
             try{                
                 switch(formType){
                     case "add":
-                        responseFaculty = await api.addFaculty(id, title || null, description || null, contacts || null);
+                        responseFaculty = await api.addFaculty(editedFaculty.id, editedFaculty.title || null, editedFaculty.description || null, editedFaculty.contacts || null);
                         for(let i = 0; i < currentDependencies.length; i++){
                             await api.addBuildingsFacultiesDependence(currentDependencies[i].id, currentDependencies[i].id_buildings, currentDependencies[i].id_faculties);
                         }
                         break;
                     case "edit":
                         if(titleChanged || contactsChanged || descriptionChanged)
-                            responseFaculty = await api.editFaculty(id, title || null, description || null, contacts || null);
+                            responseFaculty = await api.editFaculty(editedFaculty.id, editedFaculty.title || null, editedFaculty.description || null, editedFaculty.contacts || null);
                         
                         if (dependenciesChanged){
                             for(let i = 0; i < initialDependencies.length; i++){
@@ -342,8 +342,8 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
 
             </form>
 
-            {showConfirmAccept && <ConfirmWindow entity={editedFaculty} text="хочете зберегти зміни" onClose={handleAcceptClose} confirmType="edit" />}
-            {showConfirmDecline && <ConfirmWindow entity={editedFaculty} text="хочете відмінити зміни" onClose={handleDeclineClose} confirmType="edit" />}
+            {showConfirmAccept && <ConfirmWindow entity={editedFaculty} text="Ви дійсно хочете зберегти зміни?" onClose={handleAcceptClose} confirmType="edit" />}
+            {showConfirmDecline && <ConfirmWindow entity={editedFaculty} text="Ви дійсно хочете відмінити зміни?" onClose={handleDeclineClose} confirmType="edit" />}
 
         </>
     )

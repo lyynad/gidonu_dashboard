@@ -72,22 +72,6 @@ export default function AdminPage() {
     "logs",
   ];
 
-  
-  const userProfileEdit = {
-    id: '',
-    name: 'Рачинська Алла Леонідівна',
-    email: 'rachinskaya@onu.edu.ua',
-    userStatus: 'Active',
-    registrationDate: '20 квіт. 2024р.',
-    lastChangesDate: '20 квіт. 2024р.',
-    applicationDate: '20 квіт. 2024р.',
-    lastActivityDate: '20 квіт. 2024р.',
-    telegram: '@r_al_l',
-    isAdmin: false,
-    isSuper: true
-  }
-
-
   function toUsers() {
     changeAdminActiveTab(0);
   };
@@ -159,8 +143,8 @@ export default function AdminPage() {
                 <img src={photo} className="h-[66px]" onClick={toUsers} />
                 <div className="flex flex-col justify-start gap-[5px]">
                   <div className="h-[16px] flex justify-end items-center">
-                    <span className="  text-[16px] bg-[#F5E2E2] px-[10px] rounded-[20px] ">
-                      super admin
+                    <span className={`${userProfile?.isSuper ? "super" : "admin"} admin-flair  text-[16px] px-[1.5vw] rounded-[20px]`} style={{"fontFamily": "Roboto Mono"}}>
+                      {userProfile?.isSuper ? "super admin" : "admin"}
                     </span>
                   </div>
                   <p className="text-[20px] font-[500]">Admin</p>

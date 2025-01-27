@@ -18,7 +18,7 @@ body{
     padding: 40px 20px 0 20px;
     margin-bottom: 30px;
     overflow: auto;
-  }
+}
 
 .logsTable-container {
     width: max-content;

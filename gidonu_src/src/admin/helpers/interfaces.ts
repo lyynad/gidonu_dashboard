@@ -30,6 +30,7 @@ export interface IUserProfile {
   lastChangesDate: string,
   applicationDate: string,
   lastActivityDate: string,
+  isTelegram: boolean,
   telegramId: string,
   isAdmin: boolean,
   isSuper: boolean

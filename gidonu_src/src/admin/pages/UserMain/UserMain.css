@@ -40,10 +40,11 @@
 }
 
 .user-card {
+  position: relative;
   width: 34cqh;
   container-type: inline-size;
   padding: 5px 20px;
-  border-radius: 15px;
+  border-radius: 1vh;
   border: 1px solid black;
 }
 
@@ -76,15 +77,8 @@
   flex-direction: row;
 }
 
-.card-btn {
-  width: 6cqw;
-  height: 6cqw;
-}
-
 .text {
-  padding: 5px;
-  background-color: #F8E5E5;
-  font-size: 5.3cqw;
+  border-radius: 30cqw;
 }
 
 .avatar {
@@ -96,27 +90,18 @@
   justify-content: center;
 }
 
-.avatar-img {
-  width: 45cqw;
-}
-
 .user-status {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2cqw;
-  margin-right: 4cqw;
 }
 
 .user-status-dot {
   background-color: rgb(151, 219, 166, 0.8);
-  width: 3cqw;
-  height: 3cqw;
   border-radius: 50%;
 }
 
 .user-status-text {
-  font-size: 4cqw;
   font-weight: 300;
 }
 
@@ -147,7 +132,6 @@
   flex-direction: row;
   align-items: center;
   column-gap: 10px;
-  height: 17cqw;
   border-top: 1px solid #444444;
   cursor: pointer;
 }

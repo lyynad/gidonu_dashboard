@@ -1,5 +1,12 @@
 import "./GnProfileChange.css";
+
+import { useEffect, useState } from "react";
+import { updateUser, deleteUser } from "../../helpers/helper";
+import { IUserProfile } from "../../helpers/interfaces";
+
 import GnInput from "./GnInput";
+import GeneralConfirmWindow from "./GeneralConfirmWindow";
+
 import avatar from "../../assets/images/svg/photo-b.svg";
 import avatarEdit from "../../assets/images/svg/avatar-edit.svg";
 import tick from "../../assets/images/tick.svg";
@@ -7,26 +14,79 @@ import cross from "../../assets/images/cross.svg";
 import dottedMenu from "../../assets/images/svg/dot-menu.svg";
 import edit from '../../assets/images/svg/edit-b.svg';
 import deleteImg from '../../assets/images/svg/delete-b.svg';
-import { useState } from "react";
+import blockedImg from "../../assets/images/svg/image-blocked.svg";
+import deletedImg from "../../assets/images/svg/image-deleted.svg";
 import GnSwitch from "../../../gn-components/switch/GnSwitch";
-import { IUserProfile } from "../../helpers/interfaces";
 
 interface GnProfileChangeProps {
   close: () => void,
   userProfile: IUserProfile,
-  handleProfileChange?: (newProfile: IUserProfile) => void,
+  updateData: () => void,
   isOwn: boolean
 }
 
-export default function GnProfileChange({close, userProfile, handleProfileChange, isOwn}: GnProfileChangeProps) {
+export default function GnProfileChange({close, userProfile, updateData, isOwn}: GnProfileChangeProps) {
   const [name, setName] = useState<string>(userProfile.name);
   const [email, setEmail] = useState<string>(userProfile.email);
-  const [userStatus, setUserStatus] = useState<boolean>(userProfile.isActive);
   const [lastChangesDate, setLastChangesDate] = useState<string>(userProfile.lastChangesDate);
   const [isAdmin, setIsAdmin] = useState<boolean>(userProfile.isAdmin);
   const [isSuper, setIsSuper] = useState<boolean>(userProfile.isSuper);
+  const [isTelegram, setIsTelegram] = useState<boolean>(userProfile.isTelegram);
+  const [isActive, setIsActive] = useState<boolean>(userProfile.isActive);
+
+
+  const [isBeingDeleted, setIsBeingDeleted] = useState<boolean>(false);
 
   const [showMenu, setShowMenu] = useState<boolean>(false);
+  
+  const [showConfirmWindow, setShowConfirmWindow] = useState<boolean>(false);
+  const [isActionEdit, setIsActionEdit] = useState<boolean>(false);
+  const [isActionBlock, setIsActionBlock] = useState<boolean>(false);
+  const [isActionDelete, setIsActionDelete] = useState<boolean>(false);
+
+  const [newProfile, setNewProfile] = useState<IUserProfile>(userProfile); 
+
+  useEffect(() => {
+    const handleHideMenu = () => {
+      setShowMenu(false);
+    };
+
+    document.querySelector(".user-card")?.addEventListener("mousedown", handleHideMenu);
+    document.querySelector(".user-card-menu")?.addEventListener("mousedown", (e) => {
+      e.stopPropagation();
+    });
+
+    return () => {
+      document.querySelector(".user-card")?.removeEventListener("mousedown", handleHideMenu);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (name !== userProfile.name || email !== userProfile.email || isAdmin !== userProfile.isAdmin || isSuper !== userProfile.isSuper || isTelegram !== userProfile.isTelegram || isActive !== userProfile.isActive){
+    const newData: IUserProfile = {
+      ...userProfile,
+      name: name,
+      email: email,
+      isAdmin: isAdmin,
+      isSuper: isSuper,
+      isTelegram: isTelegram,
+      isActive: isActive
+    };
+
+      setIsActionEdit(true);
+      setNewProfile(newData);
+    }
+    else
+      setIsActionEdit(false);
+  }, [name, email, isAdmin, isSuper, isTelegram, isActive]);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleAcceptClose.closeMain);
+
+    return () => {
+      document.removeEventListener("mousedown", handleAcceptClose.closeMain);
+    }
+  }, [newProfile, isBeingDeleted]);
 
   const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value)
@@ -44,25 +104,34 @@ export default function GnProfileChange({close, userProfile, handleProfileChange
     setLastChangesDate(event.target.value)
   };
 
-  const handleAccept = () => {
-    const newProfile: IUserProfile = {
-      id: userProfile.id,
-      name: name,
-      email: email,
-      isActive: userStatus,
-      dataRegistration: userProfile.dataRegistration,
-      lastChangesDate: lastChangesDate,
-      applicationDate: userProfile.applicationDate,
-      lastActivityDate: userProfile.lastActivityDate,
-      telegramId: userProfile.telegramId,
-      isAdmin: isAdmin,
-      isSuper: isSuper
-    };
-    
-    if(handleProfileChange)
-      handleProfileChange(newProfile);
+  const handleAcceptClick = () => {
+    setShowConfirmWindow(true);
+  };
 
-    close();
+  const handleAcceptClose = {
+    closeMain: async () => {
+      if(isActionBlock)
+        setIsActive(false);
+      else if (newProfile && !isBeingDeleted && !isActionDelete){
+        await updateUser(newProfile.id, newProfile.name, newProfile.email, newProfile.isAdmin, newProfile.isSuper, newProfile.isTelegram, newProfile.isActive);
+        updateData();
+        close();
+      }
+
+      if(isActionDelete)
+        setIsBeingDeleted(true);
+      else if (newProfile && isBeingDeleted){
+        await deleteUser(newProfile.id);
+        updateData();
+        close();
+      }
+    },
+    closeCurrent: () => {
+      setShowConfirmWindow(false);
+      setIsActionEdit(false);
+      setIsActionBlock(false);
+      setIsActionDelete(false);
+    }
   }
 
   const handleShowMenu = () => {
@@ -80,14 +149,47 @@ export default function GnProfileChange({close, userProfile, handleProfileChange
 
   return (
     <div>
-      {!isOwn ? ( 
-          <img className="dotted-menu-icon ml-[97cqw] mt-[2cqw] cursor-pointer" src={dottedMenu} onClick={handleShowMenu}></img>
+      {showConfirmWindow && isActionEdit && <GeneralConfirmWindow entity={newProfile!}  text="Ви дійсно бажаєте зберегти зміни?" onClose={handleAcceptClose} confirmType="edit" />}
+      {showConfirmWindow && isActionBlock && <GeneralConfirmWindow entity={newProfile!}  text="Заблокувати даного користувача?" onClose={handleAcceptClose} confirmType="edit" />}
+      {showConfirmWindow && isActionDelete && <GeneralConfirmWindow entity={newProfile!}  text="Видалити даного користувача?" onClose={handleAcceptClose} confirmType="edit" />}
+
+
+      {!isOwn ? (
+          <>
+            {!isActive && !showConfirmWindow &&
+              <div className="absolute top-[0] left-[0] flex items-center justify-center w-[100%] h-[100%] bg-[#eaeaeab3] rounded-[1vh] z-[2]" onClick={() => {setIsActive(true)}}>
+                <img className="w-[18cqw]" src={blockedImg} />
+              </div>
+            }
+            {isBeingDeleted && !showConfirmWindow &&
+              <div className="absolute top-[0] left-[0] flex items-center justify-center w-[100%] h-[100%] bg-[#eaeaeab3] rounded-[1vh] z-[2]" onClick={() => {setIsBeingDeleted(false)}}>
+                <img className="w-[18cqw]" src={deletedImg} />
+              </div>
+            }
+            <div className="relative"> 
+              <img className="dotted-menu-icon ml-[97cqw] mt-[2cqw] cursor-pointer" src={dottedMenu} onClick={handleShowMenu}></img>
+              <ul className={`user-card-menu absolute right-[1cqw] top-[1cqw] bg-[#F6F6F6] z-[1] rounded-[1cqw] rounded-tr-[0] shadow-[0_0.8cqw_0.8cqw_rgba(0,0,0,0.25)] ${!showMenu ? "hidden" : ""}`}>
+                <li className="flex items-center justify-center w-[14cqw] h-[3.7cqw] font-light text-[1.8cqw] tracking-wide cursor-pointer" onClick={() => {setShowMenu(false); setIsActionBlock(true); setShowConfirmWindow(true);}}>Заблокувати</li>
+                <div className="absolute w-[80%] h-[0.1cqw] bg-[#3D3D3D] left-[9%]"></div>
+                <li className="flex items-center justify-center w-[14cqw] h-[3.7cqw] font-light text-[1.8cqw] tracking-wide cursor-pointer" onClick={() => {setShowMenu(false); setIsActionDelete(true); setShowConfirmWindow(true);}}>Видалити</li>
+              </ul>
+            </div>
+          </>
         )
         : (
           <div className="header">
-            <div className="text text-[1.9cqw]" style={{"borderRadius": "30%", "paddingLeft": "15px", "paddingRight": "15px"}}>super admin</div>
+            <div className={`text-[1.9cqw] px-[3cqw] ${userProfile.isSuper ? "super" : "admin"} text`} style={{"fontFamily": "Roboto Mono"}}>{userProfile.isSuper ? "super admin" : "admin"}</div>
             <div className="buttons">
-              <img className="card-btn cursor-pointer w-[2.2cqw] h-[2.2cqw]" src={edit} onClick={handleAccept}/>
+              <img 
+              className="card-btn cursor-pointer w-[2.2cqw] h-[2.2cqw]" 
+              src={edit} 
+              onClick={
+                () => {
+                  if (isActionEdit)
+                    close();
+                  else
+                    handleAcceptClick();
+                }}/>
               <img className="card-btn w-[2.2cqw] h-[2.2cqw]" src={deleteImg}/>
             </div>
           </div>
@@ -108,15 +210,20 @@ export default function GnProfileChange({close, userProfile, handleProfileChange
           <div className="flex flex-col gap-[3cqw] h-full">
             <div className="flex w-full gap-[2cqw]">
               <div className="flex flex-col items-center gap-2">
-                <div className="px-5 rounded-2xl bg-[#BCDCE4] text-[1.6cqh]">admin</div>
+                <div className="px-[2.5cqw] rounded-[30cqw] bg-[#BCDCE4] text-[1.6cqh]" style={{"fontFamily": "Roboto Mono"}}>admin</div>
                 <GnSwitch switched={isAdmin} colorProp="bg-gn-light-blue" onSwitch={() => setIsAdmin(!isAdmin)}/>
               </div>
               <div className="flex flex-col items-center gap-2">
-                <div className="px-5 rounded-2xl bg-[#F8E5E5] text-[1.6cqh]">super</div>
+                <div className="px-5 rounded-[30cqw] bg-[#F8E5E5] text-[1.6cqh]" style={{"fontFamily": "Roboto Mono"}}>super</div>
                 <GnSwitch switched={isSuper} colorProp="bg-gn-beige" onSwitch={() => setIsSuper(!isSuper)}/>
               </div>
             </div>
-            <GnInput className="!w-40" name={'Telegram'} value={userProfile.telegramId}/>
+            <div className="relative">
+              <GnInput className="!w-[20cqw]" name={'Telegram'} readonly={!isTelegram} value={userProfile.telegramId}/>
+              <div className="scale-[0.8] max-w-fit absolute right-[4cqw] bottom-[0.7cqw]">
+                <GnSwitch switched={isTelegram} colorProp="bg-black" onSwitch={() => setIsTelegram(!isTelegram)}/>
+              </div>
+            </div>
           </div>
         </div>
         <div className="flex gap-[2cqw] flex-col">
@@ -139,12 +246,22 @@ export default function GnProfileChange({close, userProfile, handleProfileChange
       {!isOwn &&
         <div className="w-full flex flex-row justify-end items-center mt-[2cqw]">
           <div className="details-user w-max h-[6cqw] mt-[0] text-[1.9cqw]">
-            <div className="flex flex-row items-center gap-2 cursor-pointer" onClick={handleAccept}>
+            <div 
+            className="flex flex-row items-center gap-2 cursor-pointer" 
+            style={{"fontFamily": "Roboto Mono"}} 
+            onClick={
+              () => {
+                if(!isActionEdit)
+                  close();
+                else  
+                  handleAcceptClick();
+              }}
+            >
               <img className="w-[2.3cqw] h-[2.3cqw]" src={tick}/>
               Зберегти
             </div>
             <div className="border-l border-black h-full"></div>
-            <div className="flex flex-row items-center gap-2 cursor-pointer" onClick={close}>
+            <div className="flex flex-row items-center gap-2 cursor-pointer" style={{"fontFamily": "Roboto Mono"}} onClick={close}>
               <img className="w-[1.9cqw] h-[1.9cqw]" src={cross}/>
               <div>Відмінити</div>
             </div>

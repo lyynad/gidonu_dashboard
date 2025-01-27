@@ -85,7 +85,7 @@ const BuildingForm = ({building, title, onClose, formType, updateFaculties, setR
     };
 
     const handleAcceptClose = {
-        closeMain: async (id: number, title?: string, description?: string, address?: string, floor_amount?: number) => {  
+        closeMain: async () => {  
             onClose();
             updateFaculties();
             
@@ -93,11 +93,11 @@ const BuildingForm = ({building, title, onClose, formType, updateFaculties, setR
             try{                
                 switch(formType){
                     case "add":
-                        response = await api.addBuilding(id, title || null, description || null, address || null, floor_amount || null);
+                        response = await api.addBuilding(editedBuilding.id, editedBuilding.title || null, editedBuilding.description || null, editedBuilding.address || null, editedBuilding.floor_amount || null);
                         break;
                     case "edit":
                         if(titleChanged || descriptionChanged || addressChanged || floorAmountChanged)
-                            response = await api.editBuilding(id, title || null, description || null, address || null, floor_amount || null);
+                            response = await api.editBuilding(editedBuilding.id, editedBuilding.title || null, editedBuilding.description || null, editedBuilding.address || null, editedBuilding.floor_amount || null);
                         break;
                 };
             } catch(error: any){
@@ -358,8 +358,8 @@ const BuildingForm = ({building, title, onClose, formType, updateFaculties, setR
 
             </form>
 
-            {showConfirmAccept && <ConfirmWindow entity={editedBuilding} text="хочете зберегти зміни" onClose={handleAcceptClose} confirmType="edit" />}
-            {showConfirmDecline && <ConfirmWindow entity={editedBuilding} text="хочете відмінити зміни" onClose={handleDeclineClose} confirmType="edit" />}
+            {showConfirmAccept && <ConfirmWindow entity={editedBuilding} text="Ви дійсно хочете хочете зберегти зміни?" onClose={handleAcceptClose} confirmType="edit" />}
+            {showConfirmDecline && <ConfirmWindow entity={editedBuilding} text="Ви дійсно хочете хочете відмінити зміни?" onClose={handleDeclineClose} confirmType="edit" />}
 
         </>
     )
