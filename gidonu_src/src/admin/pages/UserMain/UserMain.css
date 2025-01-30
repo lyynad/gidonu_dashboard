@@ -132,6 +132,7 @@
   flex-direction: row;
   align-items: center;
   column-gap: 10px;
+  height: 15cqw;
   border-top: 1px solid #444444;
   cursor: pointer;
 }
@@ -144,6 +145,5 @@
   font-size: 6.5cqw;
   font-weight: 400;
   color: #2F2F2F;
-  font-family: 'Roboto', sans-serif;
   letter-spacing: 0.6px;
 }
