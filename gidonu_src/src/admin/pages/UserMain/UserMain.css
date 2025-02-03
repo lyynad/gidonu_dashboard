@@ -70,7 +70,7 @@
   column-gap: 1cqh;
 }
 
-.header {
+.user-header {
   display: flex;
   align-items: center;
   justify-content: space-between;

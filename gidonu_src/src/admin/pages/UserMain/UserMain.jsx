@@ -17,14 +17,14 @@ export default function UserMain({ userProfile, handleUserRequiresUpdate }) {
 
 
   return (
-    <div className="right">
+    <div className="right" style={{"width": "100%", "height": "100%"}}>
       <div className="main-cont">
         {isDetailView &&
           <img className="arrow-back" src={arrowBack} onClick={() => {setIsDetailView(false)}}/>
         }
         <div className={`user-card ${isDetailView ? "user-card-maximized" : ""}`} onMouseDown={(e) => {e.stopPropagation();}}>
           {!isDetailView && (
-            <div className="header">
+            <div className="user-header">
               <div className={`text ${userProfile.isSuper ? "super" : "admin"}`} style={{"fontFamily": "Roboto Mono", "fontSize": "5.3cqw", "paddingLeft": "9cqw", "paddingRight": "9cqw"}}>{userProfile.isSuper ? "super admin" : "admin"}</div>
               <div className="buttons">
                 <img className="card-btn cursor-pointer" style={{"width": "6cqw", "height": "6cqw"}} src={edit} onClick={() => {setIsEditing(true); setIsDetailView(true);}}/>

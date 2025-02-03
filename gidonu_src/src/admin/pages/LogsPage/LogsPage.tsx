@@ -3,13 +3,16 @@ import * as api from "./module/classes/api";
 import Log from "./module/types/log";
 import "./LogsPage.css";
 import ContextMenu from "./components/ContextMenu";
+import arrowPrevious from "../../assets/images/svg/arrow-previous.svg";
+import arrowNext from "../../assets/images/svg/arrow-next.svg";
+import { min } from "moment";
 
 function App() {
     const [logs, setLogs] = useState<Log[]>([]);
-    const [showContextMenu, setShowContextMenu] = useState<boolean>(false);
-    const [selectedLogId, setSelectedLogId] = useState<number>(0);
-    const [contextMenuPosition, setContextMenuPosition] = useState({x: 0, y: 0});
-    const [updateData, setUpdateData] = useState<boolean>(true);
+    
+    const [page, setPage] = useState<number>(1);
+    const [sliceStart, setSliceStart] = useState<number>(0);
+    const [sliceEnd, setSliceEnd] = useState<number>(20);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -17,23 +20,22 @@ function App() {
             setLogs(logs);
         };
 
-        if (updateData){
-            fetchData();
-            setUpdateData(false);
+        fetchData();
+    }, []);
+
+    const handlePageNext = () => {
+        if (sliceEnd < logs.length){
+            setSliceEnd(sliceEnd + 20);
+            setSliceStart(sliceStart + 20);
+            setPage(page + 1);
         }
-    }, [updateData]);
-
-    const handleEntryClick = (event: React.MouseEvent<HTMLDivElement>, logId: number) => {
-        event.preventDefault();
-        setSelectedLogId(logId);
-        setShowContextMenu(true);
-
-        const position = {
-            x: event.pageX,
-            y: event.pageY
-        };
-
-        setContextMenuPosition(position);
+    };
+    const handlePagePrevious = () => {
+        if(sliceStart > 0){
+            setSliceStart(sliceStart - 20);
+            setSliceEnd(sliceEnd - 20);
+            setPage(page - 1);
+        }
     }
 
     const renderDate = (dateStr: string) => {
@@ -46,41 +48,52 @@ function App() {
       };
 
     return (
-        <>
-            <div className="logsTable-wrapper">
-                <div className="logsTable-container" style={{"padding": "0", "marginLeft": "20px"}}>
-                        <table>
+        <div className="paginationTable-wrapper">
 
-                            <thead>
-                                <tr>
-                                    <td style={{"textAlign": "center", "padding": "0"}}>№</td>
-                                    <td>Номер користувача</td>
-                                    <td>Змінена таблиця</td>
-                                    <td>Номер запису</td>
-                                    <td>Дія</td>
-                                    <td>Дата</td>
-                                </tr>
-                            </thead>
+            <div className="paginationTable-container">
 
-                            <tbody>
-                                {logs.map((log) => (
-                                    <tr key={log.id} onContextMenu={(e) => { handleEntryClick(e, log.id) }}>
-                                        <td style={{"textAlign": "center", "padding": "0"}}>{log.id}</td>
-                                        <td>{log.id_user}</td>
-                                        <td>{log.table_name}</td>
-                                        <td>{log.id_record}</td>
-                                        <td>{log.action}</td>
-                                        <td>{renderDate(log.logdate)}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
+                <table>
 
-                        </table>
+                    <thead>
+                        <tr>
+                            <td style={{"textAlign": "center", "padding": "0"}}>№</td>
+                            <td>Номер користувача</td>
+                            <td>Змінена таблиця</td>
+                            <td>Номер запису</td>
+                            <td>Дія</td>
+                            <td>Дата</td>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {logs.slice(Math.min(sliceStart, logs.length - 20), Math.min(sliceEnd, logs.length)).map((log) => (
+                            <tr key={log.id}>
+                                <td style={{"textAlign": "center", "padding": "0"}}>{log.id}</td>
+                                <td>{log.id_user}</td>
+                                <td>{log.table_name}</td>
+                                <td>{log.id_record}</td>
+                                <td>{log.action}</td>
+                                <td>{renderDate(log.logdate)}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+
+                </table>
+
+            </div>
+
+                <div className="paginationTable-foot">
+                    <div className="foot-row-counter">
+                        <span>{Math.min(sliceStart, logs.length - 20)}-{Math.min(sliceEnd, logs.length)} з {logs.length}</span>
+                    </div>
+                    <div className="foot-page-controller">
+                        <img src={arrowPrevious} onClick={handlePagePrevious}/>
+                        <div className="foot-page-counter">{page}</div>
+                        <img src={arrowNext} onClick={handlePageNext}/>
                     </div>
                 </div>
 
-            {showContextMenu && contextMenuPosition && <ContextMenu position={contextMenuPosition} entry_id={selectedLogId} setUpdateData={setUpdateData} setShowContextMenu={setShowContextMenu} />}
-        </>
+        </div>
     );
 }
 

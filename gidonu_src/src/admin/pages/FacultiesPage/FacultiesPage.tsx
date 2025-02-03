@@ -4,7 +4,7 @@ import './FacultiesPage.css'
 // import Header from './components/Header';
 import GeneralTable from '../Components/GeneralTable';
 import FacultyForm from '../Components/GeneralFacultyForm';
-import Popup from '../Components/GeneralPopup';
+import Popup from '../../../gn-components/popup/GnPopup';
 
 import * as api from '../../helpers/helper';
 
@@ -101,21 +101,19 @@ function App() {
   //  return <LoadingScreen />
 
   return (
-    <>
-      <div className="content-container">
-        <div className="add-btn" onClick={handleAddClick}>
+    <div className="content-container">
+      <div className="add-btn" onClick={handleAddClick}>
 
-          <span>Додати</span>
-          <img src={plusIcon} className='image-container' ></img>
+        <span>Додати</span>
+        <img src={plusIcon} className='image-container' ></img>
 
-        </div>
-
-        {showForm && <FacultyForm faculty={{type: "faculty", id: getId(), title: "", description: null, contacts: null}} title="Додати новий факультет" onClose={handleAddClose} formType="add" updateFaculties={updateFaculties} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} buildings={buildings} buildingsFacultiesDependences={buildingsFacultiesDependences} />}
-        {showPopup && <Popup message={popupMessage} />} 
-
-        <GeneralTable updateFaculties={updateFaculties} rowList={sortedFaculties} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} buildings={buildings} buildingsFacultiesDependences={buildingsFacultiesDependences} />
       </div>
-    </>
+
+      {showForm && <FacultyForm faculty={{type: "faculty", id: getId(), title: "", description: null, contacts: null}} title="Додати новий факультет" onClose={handleAddClose} formType="add" updateFaculties={updateFaculties} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} buildings={buildings} buildingsFacultiesDependences={buildingsFacultiesDependences} />}
+      {showPopup && <Popup message={popupMessage} code={200} />} 
+
+      <GeneralTable updateFaculties={updateFaculties} rowList={sortedFaculties} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} buildings={buildings} buildingsFacultiesDependences={buildingsFacultiesDependences} />
+    </div>
   )
 }
 

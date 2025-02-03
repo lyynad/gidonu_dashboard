@@ -184,7 +184,7 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
           </>
         )
         : (
-          <div className="header">
+          <div className="user-header">
             <div className={`text-[1.9cqw] px-[3cqw] ${userProfile.isSuper ? "super" : "admin"} text`} style={{"fontFamily": "Roboto Mono"}}>{userProfile.isSuper ? "super admin" : "admin"}</div>
             <div className="buttons">
               <img 

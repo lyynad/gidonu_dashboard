@@ -7,10 +7,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 40vh;
-    padding-bottom: 3cqw;
     border-radius: 1.74vw;
     background-color: #5294A6;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: white;
     z-index: 3;
 }
@@ -29,6 +27,7 @@
     direction: row;
     gap: 3cqw;
     width: 100%;
+    height: 20cqw;
     place-content: center;
     margin-top: 1.04vw;
 }

@@ -4,7 +4,7 @@ import './BuildingsPage.css'
 // import Header from './components/Header';
 import GeneralTable from '../Components/GeneralTable';
 import BuildingForm from '../Components/GeneralBuildingForm';
-import Popup from '../Components/GeneralPopup';
+import Popup from '../../../gn-components/popup/GnPopup';
 
 import * as api from '../../helpers/helper';
 
@@ -89,21 +89,19 @@ function App() {
   }
 
   return (
-    <>
-      <div className="content-container">
-        <div className="add-btn" onClick={handleAddClick}>
+    <div className="content-container">
+      <div className="add-btn" onClick={handleAddClick}>
 
-          <span>Додати</span>
-          <img src={plusIcon} className='image-container' ></img>
+        <span>Додати</span>
+        <img src={plusIcon} className='image-container' ></img>
 
-        </div>
-
-        {showForm && <BuildingForm building={{type: "building", id: getId(), title: "", description: null, address: null, floor_amount: 0}} title="Додати новий корпус" onClose={handleAddClose} formType="add" updateFaculties={updateBuildings} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} />}
-        {showPopup && <Popup message={popupMessage} />} 
-
-        <GeneralTable updateFaculties={updateBuildings} rowList={buildings} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} />
       </div>
-    </>
+
+      {showForm && <BuildingForm building={{type: "building", id: getId(), title: "", description: null, address: null, floor_amount: 0}} title="Додати новий корпус" onClose={handleAddClose} formType="add" updateFaculties={updateBuildings} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} />}
+      {showPopup && <Popup message={popupMessage} code={200} />} 
+
+      <GeneralTable updateFaculties={updateBuildings} rowList={buildings} setResponseMessage={setPopupMessage} setShowResponse={setShowPopup} />
+    </div>
   )
 }
 
