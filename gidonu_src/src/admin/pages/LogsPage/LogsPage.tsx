@@ -80,8 +80,6 @@ function App() {
 
                 </table>
 
-            </div>
-
                 <div className="paginationTable-foot">
                     <div className="foot-row-counter">
                         <span>{Math.min(sliceStart, logs.length - 20)}-{Math.min(sliceEnd, logs.length)} з {logs.length}</span>
@@ -92,6 +90,8 @@ function App() {
                         <img src={arrowNext} onClick={handlePageNext}/>
                     </div>
                 </div>
+                
+            </div>
 
         </div>
     );
