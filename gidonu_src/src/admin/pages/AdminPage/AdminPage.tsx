@@ -78,7 +78,6 @@ export default function AdminPage() {
         <>
           {parameterPage === null && <UserMain userProfile={userProfile} handleUserRequiresUpdate={handleUserRequiresUpdate} />}
           {parameterPage === "users" && <UsersPage />}
-          {parameterPage === "feedback" && <GnFeedBack />}
           {parameterPage === "corps" && <BuildingsPage />}
           {parameterPage === "faculties" && <FacultiesPage />}
           {parameterPage === "history" && <LogsPage />}
