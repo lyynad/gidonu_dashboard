@@ -28,7 +28,7 @@ function App() {
         const faculties = await api.getFaculties();
         const updatedFaculties = faculties.map((faculty: Faculty) => ({
           ...faculty,
-          type: 'faculty'  // or any logic you want for the "type"
+          type: 'faculty'
         }));
 
         const sortedFaculties = [...updatedFaculties].sort((a: Faculty, b: Faculty) => {

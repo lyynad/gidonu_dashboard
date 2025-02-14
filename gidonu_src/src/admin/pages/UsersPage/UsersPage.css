@@ -25,7 +25,6 @@
   max-height: calc(100% - 30px);
   padding: 40px 5px 0 5px;
   margin-bottom: 30px;
-  overflow: auto;
 }
 
 .users-cont {

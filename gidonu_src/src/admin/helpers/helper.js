@@ -8,7 +8,14 @@ const getAllAdmins = async (setAdmins, setLoading) => {
     setLoading(true);
     const response = await axios.get(`${host}${url.GET_ALL_ADMINS}`);
     console.log(response?.data);
-    setAdmins(response?.data);
+    
+    const admins = response?.data;
+    const typedAdmins = admins.map((user) => ({
+        ...user,
+        type: "user"
+    }))
+    
+    setAdmins(typedAdmins);
   } catch (error) {
     console.error("Error fetching data:", error);
     throw error;

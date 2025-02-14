@@ -22,16 +22,27 @@ export interface Faculty {
 };
 
 export interface IUserProfile {
-  id: string,
-  name: string,
-  email: string,
-  isActive: boolean,
-  dataRegistration: string,
-  lastChangesDate: string,
-  applicationDate: string,
-  lastActivityDate: string,
-  isTelegram: boolean,
-  telegramId: string,
-  isAdmin: boolean,
-  isSuper: boolean
-}
+    type: 'user',
+    id: string,
+    name: string,
+    email: string,
+    isActive: boolean,
+    dataRegistration: string,
+    lastChangesDate: string,
+    applicationDate: string,
+    lastActivityDate: string,
+    isTelegram: boolean,
+    telegramId: string,
+    isAdmin: boolean,
+    isSuper: boolean
+};
+
+export interface Log {
+    type: 'log',
+    id: number,
+    id_user: number,
+    table_name: string,
+    id_record: number,
+    action: string,
+    logdate: string
+};
