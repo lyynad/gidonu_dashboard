@@ -34,7 +34,7 @@ type Props =
     };
 
 const Control = ({rowList, updateFaculties, setResponseMessage, setShowResponse, buildings, buildingsFacultiesDependences}: Props) => {  
-    const rootElement = document.getElementById('root');
+    const rootElement = document.getElementById('react-root');
 
     const [tableType, setTableType] = useState<TableType>();
     const [selectedRow, setSelectedRow] = useState<Faculty | Building>();
@@ -109,74 +109,74 @@ const Control = ({rowList, updateFaculties, setResponseMessage, setShowResponse,
 
     return (
         <>
-        {tableType === TableType.Faculties && showForm && rootElement && ReactDOM.createPortal(
-            <FacultyForm faculty={selectedRow as Faculty} title="Редагувати інформацію про факультет" onClose={handleEditClose} formType="edit" updateFaculties={updateFaculties} setResponseMessage={setResponseMessage} setShowResponse={setShowResponse} buildings={buildings!} buildingsFacultiesDependences={buildingsFacultiesDependences!} />,
-            rootElement
-        )}
-        {tableType === TableType.Buildings && showForm && rootElement && ReactDOM.createPortal(
-            <BuildingForm building={selectedRow as Building} title="Редагувати інформацію про корпус" onClose={handleEditClose} formType="edit" updateFaculties={updateFaculties} setResponseMessage={setResponseMessage} setShowResponse={setShowResponse} />,
-            rootElement
-        )}
+            {tableType === TableType.Faculties && showForm && rootElement && ReactDOM.createPortal(
+                <FacultyForm faculty={selectedRow as Faculty} title="Редагувати інформацію про факультет" onClose={handleEditClose} formType="edit" updateFaculties={updateFaculties} setResponseMessage={setResponseMessage} setShowResponse={setShowResponse} buildings={buildings!} buildingsFacultiesDependences={buildingsFacultiesDependences!} />,
+                rootElement
+            )}
+            {tableType === TableType.Buildings && showForm && rootElement && ReactDOM.createPortal(
+                <BuildingForm building={selectedRow as Building} title="Редагувати інформацію про корпус" onClose={handleEditClose} formType="edit" updateFaculties={updateFaculties} setResponseMessage={setResponseMessage} setShowResponse={setShowResponse} />,
+                rootElement
+            )}
 
-        {tableType === TableType.Faculties && showConfirmDelete && rootElement && ReactDOM.createPortal(
-            <ConfirmWindow entity={selectedRow as Faculty} text="Ви дійсно бажаєте видалити факультет?" onClose={handleDeleteAccept} confirmType="delete" />,
-            rootElement
-        )}
-        {tableType === TableType.Buildings && showConfirmDelete && rootElement && ReactDOM.createPortal(
-            <ConfirmWindow entity={selectedRow as Building} text="Ви дійсно бажаєте видалити корпус?" onClose={handleDeleteAccept} confirmType="delete" />,
-            rootElement
-        )}
+            {tableType === TableType.Faculties && showConfirmDelete && rootElement && ReactDOM.createPortal(
+                <ConfirmWindow entity={selectedRow as Faculty} text="Ви дійсно бажаєте видалити факультет?" onClose={handleDeleteAccept} confirmType="delete" />,
+                rootElement
+            )}
+            {tableType === TableType.Buildings && showConfirmDelete && rootElement && ReactDOM.createPortal(
+                <ConfirmWindow entity={selectedRow as Building} text="Ви дійсно бажаєте видалити корпус?" onClose={handleDeleteAccept} confirmType="delete" />,
+                rootElement
+            )}
 
-        <div className="fc-table-container">
+            <div className="fc-table-container">
 
-            <div className="table-header">
-                <span>
-                    {tableType === TableType.Faculties && "Факультети"}
-                    {tableType === TableType.Buildings && "Корпуси"}
-                </span>
-            </div>
-            <div className="row-container">
-                {rowList.map((row) => (
-                    <a className="row-link" href={tableType === TableType.Buildings ? `../map/?building=1&zoom=0.9&x=151&y=15&isAdmin=true` : "#"}>
-                        <div 
-                            className="row" 
-                            style={{"cursor": `${tableType === TableType.Buildings ? "pointer" : ""}`}}
-                        >
+                <div className="table-header">
+                    <span>
+                        {tableType === TableType.Faculties && "Факультети"}
+                        {tableType === TableType.Buildings && "Корпуси"}
+                    </span>
+                </div>
+                <div className="row-container">
+                    {rowList.map((row) => (
+                        <a className="row-link" href={tableType === TableType.Buildings ? `../map/?building=1&zoom=0.9&x=151&y=15&isAdmin=true` : undefined}>
+                            <div 
+                                className="row" 
+                                style={{"cursor": `${tableType === TableType.Buildings ? "pointer" : ""}`}}
+                            >
 
-                            {tableType === TableType.Faculties &&
-                                <span className="row-text"><i>{(row as Faculty).title}</i></span>
-                            }
-                            {tableType === TableType.Buildings &&
-                                <div className="row-text-container">
-                                    <span className="row-text"><i>{(row as Building).address}</i></span>
-                                    <span className="row-subtext">
-                                        {(row as Building).title} | {(row as Building).floor_amount} {(row as Building).floor_amount === 1 ? "поверх" : ((row as Building).floor_amount < 5 ? "поверхи" : "поверхів")}
-                                    </span>
+                                {tableType === TableType.Faculties &&
+                                    <span className="row-text"><i>{(row as Faculty).title}</i></span>
+                                }
+                                {tableType === TableType.Buildings &&
+                                    <div className="row-text-container">
+                                        <span className="row-text"><i>{(row as Building).address}</i></span>
+                                        <span className="row-subtext">
+                                            {(row as Building).title} | {(row as Building).floor_amount} {(row as Building).floor_amount === 1 ? "поверх" : ((row as Building).floor_amount < 5 ? "поверхи" : "поверхів")}
+                                        </span>
+                                    </div>
+                                }
+                                <div className="row-images" onClick={(e) => {e.preventDefault();}}>
+                                    <img 
+                                        className="image-edit" 
+                                        src={editImage} 
+                                        alt="edit" 
+                                        role="button" 
+                                        onClick={() => {selectRow(row); handleEditClick();}} 
+                                    />
+                                    
+                                    <img 
+                                        className="image-delete" 
+                                        src={deleteImage} 
+                                        alt="delete" 
+                                        role="button" 
+                                        onClick={() => {selectRow(row); handleDeleteClick();}} 
+                                    />
                                 </div>
-                            }
-                            <div className="row-images" onClick={(e) => {e.preventDefault();}}>
-                                <img 
-                                    className="image-edit" 
-                                    src={editImage} 
-                                    alt="edit" 
-                                    role="button" 
-                                    onClick={() => {selectRow(row); handleEditClick();}} 
-                                />
-                                
-                                <img 
-                                    className="image-delete" 
-                                    src={deleteImage} 
-                                    alt="delete" 
-                                    role="button" 
-                                    onClick={() => {selectRow(row);handleDeleteClick();}} 
-                                />
                             </div>
-                        </div>
-                    </a>
-                ))}
-        </div>
+                        </a>
+                    ))}
+            </div>
 
-        </div>
+            </div>
         
         </>
     )

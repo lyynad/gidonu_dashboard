@@ -1,16 +1,14 @@
 .fc-table-container {
   container-type: inline-size;
   position: relative;
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%);
   width: 80cqw;
   min-width: 711px;
   max-height: 60cqh;
   overflow: auto;
   margin-right: -20px;
   border-radius: 1.5cqw;
+  align-self: center;
+  margin-top: 4cqw;
 }
 
 .fc-table-container::-webkit-scrollbar {
