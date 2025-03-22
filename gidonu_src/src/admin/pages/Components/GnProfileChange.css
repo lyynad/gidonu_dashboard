@@ -1,3 +1,33 @@
 .darkened:hover > .darkened-child {
     filter: brightness(80%);
 }
+
+.input-container::-webkit-scrollbar{
+    width: 0px;
+}
+
+.dropdown {
+    animation: dropdown-anim 0.25s forwards;
+}
+
+.dropdown-reverse {
+    animation: dropdown-anim-reverse 0.25s forwards;
+}
+
+@keyframes dropdown-anim {
+    0%{
+        max-height: 0px;
+    }
+
+    100%{
+        padding-top: 2cqw;
+        padding-bottom: 2cqw;
+        max-height: 1000px;
+    }
+}
+
+@keyframes dropdown-anim-reverse {
+    100%{
+        max-height: 0px;
+    }
+}

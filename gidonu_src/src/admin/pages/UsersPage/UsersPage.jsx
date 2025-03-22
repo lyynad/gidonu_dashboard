@@ -99,7 +99,7 @@ const UsersPage = () => {
           
           {filteredAdmins.length > 0 &&
             <PaginationTable 
-              headers={["№", "Користувачі", "Email", "Дата реєстрації", "Статус заявки", "Роль"]}
+              headers={["№ користувача", "Email", "Дата реєстрації", "Статус заявки", "Роль"]}
               body={filteredAdmins}
               onclick={handleUserCardShow}
             />

@@ -82,16 +82,19 @@ const PaginationTable = ({ body, headers, onclick }: Props) => {
                     <tbody>
                         {tableType === TableType.Users && (body as IUserProfile[]).slice(Math.min(sliceStart, body.length - 10), Math.min(sliceEnd, body.length)).map((user) => (
                             <tr key={user.id} onClick={() => onclick!(user.id)} style={{"cursor": "pointer"}}>
-                                <td style={{"textAlign": "center", "padding": "0"}}>{user.id}</td>
-                                <td>{user.name}</td>
+                                <td>{user.id}</td>
                                 <td>{user.email}</td>
                                 <td>{renderDate(user.dataRegistration)}</td>
                                 <td>
-                                    <p style={{"backgroundColor": "rgba(150,214,179,0.45)", "padding": "0 10px 0 10px", "width": "fit-content", "borderRadius": "0.5vw"}}>
-                                    Прийнята
+                                    <p style={{"backgroundColor": "rgba(150,214,179,0.45)", "padding": "0 10px 0 10px", "width": "fit-content", "borderRadius": "0.3vw", "fontFamily": "Roboto Mono"}}>
+                                        Прийнята
                                     </p>
                                 </td>
-                                <td>{user.isAdmin ? "Адмін" : "Супер"}</td>
+                                <td>
+                                    <p className={`${user.isSuper ? "super" : "admin"}`} style={{"padding": "0 10px 0 10px", "width": "fit-content", "borderRadius": "0.3vw", "fontFamily": "Roboto Mono"}}>
+                                        {user.isSuper ? "super" : "admin"}
+                                    </p>
+                                </td>
                             </tr>
                         ))}
 

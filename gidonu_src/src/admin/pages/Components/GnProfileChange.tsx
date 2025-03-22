@@ -49,6 +49,10 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
   
   const [cardReadonly, setCardReadonly] = useState<boolean>(readonly);
 
+  const [dropdownPersonalInfo, setDropdownPersonalInfo] = useState<boolean>(false);
+  const [dropdownActionInfo, setDropdownActionInfo] = useState<boolean>(false);
+  const [dropdownApplicationInfo, setDropdownApplicationInfo] = useState<boolean>(false);
+
   useEffect(() => {
     const handleHideMenu = () => {
       setShowMenu(false);
@@ -204,74 +208,97 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
         <div className="p-4 flex flex-row gap-[2cqw]">
           <div className="avatar relative p-[0]">
             <div className={`${!cardReadonly ? "darkened" : ""}`}>
-              <img className={`avatar-img w-[16cqw] ${!cardReadonly ? "darkened-child cursor-pointer" : "cursor-not-allowed"}`} src={avatar}/>
-              <img className="avatar-edit-img darkened-child absolute top-[67%] right-[12%] w-[2.8cqw] cursor-pointer" src={!cardReadonly ? avatarEdit : undefined}/>
+              <img className={`avatar-img w-[25cqw] ${!cardReadonly ? "darkened-child cursor-pointer" : "cursor-not-allowed"}`} src={avatar}/>
             </div>
-            <div className="user-status gap-[0.5cqw] mr-[1.2cqw]">
-              <div className="user-status-dot w-[1cqw] h-[1cqw]" style={{"backgroundColor": `${userProfile.isActive ? "rgb(151, 219, 166, 0.8)" : "rgb(242, 201, 201)"}`}}></div>
-              <span className="user-status-text text-[1.5cqw]">{isActive ? "Активний" : "Заблокований"}</span>
+            <div className="user-status gap-[1.5cqw] mr-[1.2cqw] mt-[1cqw]">
+              <div className="user-status-dot w-[1.6cqw] h-[1.6cqw]" style={{"backgroundColor": `${userProfile.isActive ? "rgb(151, 219, 166, 0.8)" : "rgb(242, 201, 201)"}`}}></div>
+              <span className="user-status-text text-[2.2cqw]">{isActive ? "Активний" : "Заблокований"}</span>
             </div>
           </div>
           <div className="flex flex-col gap-[3cqw] h-full">
             <div className="flex w-full gap-[2cqw]">
               <div className="flex flex-col items-center gap-2">
-                <div className="px-[2.5cqw] rounded-[30cqw] bg-[#BCDCE4] text-[1.6cqh]" style={{"fontFamily": "Roboto Mono"}}>admin</div>
-                <GnSwitch readonly={cardReadonly} switched={isAdmin || isSuper} colorProp="bg-gn-light-blue" onSwitch={() => {if(!isSuper) setIsAdmin(!isAdmin)}}/>
+                <div className="px-[2.5cqw] rounded-[30cqw] bg-[#BCDCE4] text-[2.4cqw]" style={{"fontFamily": "Roboto Mono"}}>admin</div>
+                <div className="scale-[0.8]">
+                  <GnSwitch readonly={cardReadonly} switched={isAdmin || isSuper} colorProp="bg-[#5D6065]" onSwitch={() => {if(!isSuper) setIsAdmin(!isAdmin)}}/>
+                </div>
               </div>
               <div className="flex flex-col items-center gap-2">
-                <div className="px-5 rounded-[30cqw] bg-[#F8E5E5] text-[1.6cqh]" style={{"fontFamily": "Roboto Mono"}}>super</div>
-                <GnSwitch readonly={cardReadonly} switched={isSuper} colorProp="bg-gn-beige" onSwitch={() => setIsSuper(!isSuper)}/>
+                <div className="px-5 rounded-[30cqw] bg-[#F8E5E5] text-[2.4cqw]" style={{"fontFamily": "Roboto Mono"}}>super</div>
+                <div className="scale-[0.8]">
+                  <GnSwitch readonly={cardReadonly} switched={isSuper} colorProp="bg-[#5D6065]" onSwitch={() => setIsSuper(!isSuper)}/>
+                </div>
               </div>
             </div>
             <div className="relative">
-              <GnInput className="!w-[20cqw]" name={'Telegram'} readonly={!isTelegram || cardReadonly} value={userProfile.telegramId}/>
-              <div className="scale-[0.8] max-w-fit absolute right-[4cqw] bottom-[0.7cqw]">
-                <GnSwitch readonly={cardReadonly} switched={isTelegram} colorProp="bg-black" onSwitch={() => setIsTelegram(!isTelegram)}/>
+              <GnInput className="!w-[30cqw]" name={'Telegram'} readonly={!isTelegram || cardReadonly} value={userProfile.telegramId}/>
+              <div className="scale-[0.8] max-w-fit absolute right-[2cqw] top-[6cqw]">
+                <GnSwitch readonly={cardReadonly} switched={isTelegram} colorProp="bg-[#5D6065]" onSwitch={() => setIsTelegram(!isTelegram)}/>
               </div>
             </div>
           </div>
         </div>
-        <div className="flex gap-[2cqw] flex-col">
-          <GnInput readonly={true} name={'Статус заявки'} value={userProfile.isActive ? "Прийнята" : "Відхилена"} handleChange={handleUserStatus}/>
-          <GnInput readonly={true} name={'Остання активність'} value={userProfile.lastActivityDate}/>
-        </div>
       </div>
-      <div className="flex mt-[1cqw] gap-[25cqw] mb-[2cqw]">
-        <div className="flex gap-[2cqw] flex-col">
-          <GnInput readonly={true} name={'ID Користувача'} value={userProfile.id}/>
-          <GnInput readonly={cardReadonly} name={'Ім\'я користувача'} value={name} handleChange={handleName}/>
-          <GnInput readonly={cardReadonly} name={'Email'} value={email} handleChange={handleEmail}/>
-        </div>
-        <div className="flex gap-[2cqw] flex-col">
-          <GnInput readonly={true} name={'Дата реєстрації'} value={renderDate(userProfile.dataRegistration)}/>
-          <GnInput readonly={true} name={'Дата заявки'} value={userProfile.applicationDate}/>
-          <GnInput readonly={true} name={'Останні зміни'} value={lastChangesDate} handleChange={handleLastChangesDate}/>
-        </div>
-      </div>
-        <div className={`w-full flex flex-row justify-end items-center mt-[2cqw] ${cardReadonly ? "opacity-[0.5] cursor-not-allowed" : "cursor-pointer"}`}>
-          <div className="flex justify-end gap-[1cqw] border-solid border-t-[1px] border-t-[black] w-[40cqw] h-[6cqw] mt-[0] text-[1.9cqw]">
-            <div 
-            className="flex flex-row items-center gap-2" 
-            style={{"fontFamily": "Roboto Mono"}} 
-            onClick={
-              () => {
-                if(!isActionEdit)
-                  close();
-                else  
-                  handleAcceptClick();
-              }}
-            >
-              <img className="w-[2.3cqw] h-[2.3cqw]" src={tick}/>
-              Зберегти
-            </div>
-            <div className="border-l border-black h-full"></div>
-            <div className="flex flex-row items-center gap-2" style={{"fontFamily": "Roboto Mono"}} onClick={close}>
-              <img className="w-[1.9cqw] h-[1.9cqw]" src={cross}/>
-              <div>Відмінити</div>
-            </div>
+      <div className="input-container flex flex-col gap-[4cqw] max-h-[90cqw] overflow-auto">
+        <div className="w-[80cqw] m-[auto] border-solid border-[1px] border-[#5D6065] rounded-[4cqw]">
+          <button className={`w-[100%] h-[11.5cqw] rounded-[4cqw] text-left pl-[2cqw] text-[3.2cqw] text-[#515D74] ${dropdownPersonalInfo ? "border-b-solid border-b-[1px] border-b-[#5D6065]" : ""}`}
+            onClick={() => {setDropdownPersonalInfo(!dropdownPersonalInfo)}}
+          >
+            Особиста інформація
+          </button>
+          <div className={`max-h-[0] flex gap-[2cqw] flex-col pl-[4cqw] overflow-hidden ${dropdownPersonalInfo ? "dropdown" : "dropdown-reverse"}`}>
+            <GnInput readonly={true} name={'ID Користувача'} value={userProfile.id}/>
+            <GnInput readonly={cardReadonly} name={'Ім\'я користувача'} value={name} handleChange={handleName}/>
+            <GnInput readonly={cardReadonly} name={'Email'} value={email} handleChange={handleEmail}/>
+            <GnInput readonly={true} name={'Дата реєстрації'} value={renderDate(userProfile.dataRegistration)}/>
           </div>
         </div>
-
+        <div className="w-[80cqw] m-[auto] border-solid border-[1px] border-[#5D6065] rounded-[4cqw]">
+          <button className={`w-[100%] h-[11.5cqw] rounded-[4cqw] text-left pl-[2cqw] text-[3.2cqw] text-[#515D74] ${dropdownActionInfo ? "border-b-solid border-b-[1px] border-b-[#5D6065]" : ""}`}
+            onClick={() => {setDropdownActionInfo(!dropdownActionInfo)}}
+          >
+            Інформація про дії
+          </button>
+          <div className={`max-h-[0] flex gap-[2cqw] flex-col pl-[4cqw] overflow-hidden ${dropdownActionInfo ? "dropdown" : "dropdown-reverse"}`}>
+            <GnInput readonly={true} name={'Остання активність'} value={userProfile.lastActivityDate}/>
+            <GnInput readonly={true} name={'Останні зміни'} value={lastChangesDate} handleChange={handleLastChangesDate}/>
+          </div>
+        </div>
+        <div className="w-[80cqw] m-[auto] border-solid border-[1px] border-[#5D6065] rounded-[4cqw]">
+          <button className={`w-[100%] h-[11.5cqw] rounded-[4cqw] text-left pl-[2cqw] text-[3.2cqw] text-[#515D74] ${dropdownApplicationInfo ? "border-b-solid border-b-[1px] border-b-[#5D6065]" : ""}`}
+            onClick={() => {setDropdownApplicationInfo(!dropdownApplicationInfo)}}
+          >
+            Інформація про заявку
+          </button>
+          <div className={`max-h-[0] flex gap-[2cqw] flex-col pl-[4cqw] overflow-hidden ${dropdownApplicationInfo ? "dropdown" : "dropdown-reverse"}`}>
+            <GnInput readonly={true} name={'Дата заявки'} value={userProfile.applicationDate}/>
+            <GnInput readonly={true} name={'Статус заявки'} value={userProfile.isActive ? "Прийнята" : "Відхилена"} handleChange={handleUserStatus}/>
+          </div>
+        </div>
+      </div>
+      <div className={`w-full flex flex-row justify-end items-center mt-[2cqw] ${cardReadonly ? "opacity-[0.5] cursor-not-allowed" : "cursor-pointer"}`}>
+        <div className="flex justify-end gap-[2cqw] border-solid border-t-[1px] border-t-[black] w-[50cqw] h-[6cqw] mt-[2cqw] text-[3cqw]">
+          <div 
+          className="flex flex-row items-center gap-2" 
+          style={{"fontFamily": "Roboto Mono"}} 
+          onClick={
+            () => {
+              if(!isActionEdit)
+                close();
+              else  
+                handleAcceptClick();
+            }}
+          >
+            <img className="w-[3.4cqw] h-[3.4cqw]" src={tick}/>
+            Зберегти
+          </div>
+          <div className="border-l border-black h-full"></div>
+          <div className="flex flex-row items-center gap-2" style={{"fontFamily": "Roboto Mono"}} onClick={close}>
+            <img className="w-[3.4cqw] h-[3.4cqw]" src={cross}/>
+            <div>Відмінити</div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
