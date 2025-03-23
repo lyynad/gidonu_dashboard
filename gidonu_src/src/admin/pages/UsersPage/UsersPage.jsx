@@ -67,7 +67,7 @@ const UsersPage = () => {
     <>
       {showUserCard &&
         <div 
-          className="user-card user-card-maximized"
+          className="user-card"
           style={{"zIndex": "2"}} 
           onMouseDown={(event) => {
             event.stopPropagation();
@@ -83,7 +83,7 @@ const UsersPage = () => {
       }
       {!showUserCard &&
         <div className="users-main">
-          <div className="w-full px-[12px] flex items-center justify-between mb-[30px]">
+          <div className="w-full px-[12px] flex items-center justify-between mb-[20px]">
             <div className="relative">
               <img src={search} className="absolute top-[12px] right-[30px]"/>
               <input

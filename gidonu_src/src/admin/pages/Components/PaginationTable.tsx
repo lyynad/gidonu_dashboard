@@ -29,6 +29,7 @@ const PaginationTable = ({ body, headers, onclick }: Props) => {
     const [page, setPage] = useState<number>(1);
     const [sliceStart, setSliceStart] = useState<number>(0);
     const [sliceEnd, setSliceEnd] = useState<number>(10);
+    const [sliceSize, setSliceSize] = useState<number>(10);
     
     useEffect(() => {
         if (body.length > 0)
@@ -38,19 +39,28 @@ const PaginationTable = ({ body, headers, onclick }: Props) => {
             else if (body[0].type === "user") {
                 setTableType(TableType.Users);
             }
+        
+        const table = document.querySelector(".paginationTable-wrapper");
+        const row = document.querySelector(".body-row");
+        
+        if(table instanceof HTMLElement){
+            const sliceSize = Math.floor((table.offsetHeight - 20) / (table.offsetWidth * 0.052));
+            setSliceSize(sliceSize);
+            setSliceEnd(sliceSize);
+        }
     }, []);
 
     const handlePageNext = () => {
         if (sliceEnd < body.length){
-            setSliceEnd(sliceEnd + 10);
-            setSliceStart(sliceStart + 10);
+            setSliceEnd(sliceEnd + sliceSize);
+            setSliceStart(sliceStart + sliceSize);
             setPage(page + 1);
         }
     };
     const handlePagePrevious = () => {
         if(sliceStart > 0){
-            setSliceStart(sliceStart - 10);
-            setSliceEnd(sliceEnd - 10);
+            setSliceStart(sliceStart - sliceSize);
+            setSliceEnd(sliceEnd - sliceSize);
             setPage(page - 1);
         }
     }
@@ -80,7 +90,7 @@ const PaginationTable = ({ body, headers, onclick }: Props) => {
                     </thead>
 
                     <tbody>
-                        {tableType === TableType.Users && (body as IUserProfile[]).slice(Math.min(sliceStart, body.length - 10), Math.min(sliceEnd, body.length)).map((user) => (
+                        {tableType === TableType.Users && (body as IUserProfile[]).slice(Math.min(sliceStart, body.length - sliceSize), Math.min(sliceEnd, body.length)).map((user) => (
                             <tr key={user.id} onClick={() => onclick!(user.id)} style={{"cursor": "pointer"}}>
                                 <td>{user.id}</td>
                                 <td>{user.email}</td>
@@ -98,8 +108,8 @@ const PaginationTable = ({ body, headers, onclick }: Props) => {
                             </tr>
                         ))}
 
-                        {tableType === TableType.Logs && (body as Log[]).slice(Math.min(sliceStart, body.length - 10), Math.min(sliceEnd, body.length)).map((log) => (
-                            <tr key={log.id}>
+                        {tableType === TableType.Logs && (body as Log[]).slice(Math.min(sliceStart, body.length - sliceSize), Math.min(sliceEnd, body.length)).map((log) => (
+                            <tr className="body-row" key={log.id}>
                                 <td style={{"textAlign": "center", "padding": "0"}}>{log.id}</td>
                                 <td>{log.id_user}</td>
                                 <td>{log.table_name}</td>
@@ -114,7 +124,7 @@ const PaginationTable = ({ body, headers, onclick }: Props) => {
 
                 <div className="paginationTable-foot">
                     <div className="foot-row-counter">
-                        <span>{Math.min(sliceStart, body.length - 10) > 0 ? `${Math.min(sliceStart, body.length - 10)}` : "0"}-{Math.min(sliceEnd, body.length)} з {body.length}</span>
+                        <span>{Math.min(sliceStart, body.length - sliceSize) > 0 ? `${Math.min(sliceStart, body.length - sliceSize)}` : "0"}-{Math.min(sliceEnd, body.length)} з {body.length}</span>
                     </div>
                     <div className="foot-page-controller">
                         <img src={arrowPrevious} onClick={handlePagePrevious}/>

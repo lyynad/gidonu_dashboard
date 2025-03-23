@@ -189,17 +189,16 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
         )
         : (
           <div className="user-header">
-            <div className={`text-[1.9cqw] px-[3cqw] ${userProfile.isSuper ? "super" : "admin"} text`} style={{"fontFamily": "Roboto Mono"}}>{userProfile.isSuper ? "super admin" : "admin"}</div>
             <div className="buttons">
               <img 
-                className="card-btn cursor-pointer w-[2.2cqw] h-[2.2cqw]" 
+                className="card-btn cursor-pointer w-[4cqw] h-[4cqw]" 
                 src={edit} 
                 onClick={
                   () => {
                     setCardReadonly(false);
                   }}
                 />
-              <img className="card-btn w-[2.2cqw] h-[2.2cqw]" src={deleteImg}/>
+              <img className="card-btn w-[4cqw] h-[4cqw]" src={deleteImg}/>
             </div>
           </div>
         )
@@ -239,7 +238,7 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
           </div>
         </div>
       </div>
-      <div className="input-container flex flex-col gap-[4cqw] max-h-[90cqw] overflow-auto">
+      <div className="input-container flex flex-col gap-[4cqw] overflow-auto mt-[3cqw]">
         <div className="w-[80cqw] m-[auto] border-solid border-[1px] border-[#5D6065] rounded-[4cqw]">
           <button className={`w-[100%] h-[11.5cqw] rounded-[4cqw] text-left pl-[2cqw] text-[3.2cqw] text-[#515D74] ${dropdownPersonalInfo ? "border-b-solid border-b-[1px] border-b-[#5D6065]" : ""}`}
             onClick={() => {setDropdownPersonalInfo(!dropdownPersonalInfo)}}
@@ -276,7 +275,7 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
           </div>
         </div>
       </div>
-      <div className={`w-full flex flex-row justify-end items-center mt-[2cqw] ${cardReadonly ? "opacity-[0.5] cursor-not-allowed" : "cursor-pointer"}`}>
+      <div className={`w-full flex flex-row justify-end items-center mt-[2cqw] ${cardReadonly ? "opacity-[0] cursor-default" : "cursor-pointer"}`}>
         <div className="flex justify-end gap-[2cqw] border-solid border-t-[1px] border-t-[black] w-[50cqw] h-[6cqw] mt-[2cqw] text-[3cqw]">
           <div 
           className="flex flex-row items-center gap-2" 

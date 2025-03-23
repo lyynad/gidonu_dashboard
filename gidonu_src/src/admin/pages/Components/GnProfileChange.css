@@ -2,9 +2,18 @@
     filter: brightness(80%);
 }
 
+.input-container {
+    max-height: 60cqh;
+}
 .input-container::-webkit-scrollbar{
     width: 0px;
 }
+
+@media (height < 900px) {
+    .input-container {
+      max-height: 40cqh;
+    }
+  }
 
 .dropdown {
     animation: dropdown-anim 0.25s forwards;
