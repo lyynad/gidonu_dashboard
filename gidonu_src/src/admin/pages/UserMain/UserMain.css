@@ -39,78 +39,6 @@
   cursor: pointer;
 }
 
-.user-card {
-  position: relative;
-  min-width: 55cqh;
-  max-height: 95%;
-  container-type: inline-size;
-  padding: 5px 20px;
-  border-radius: 1vh;
-  border: 1px solid black;
-  background-color: #FFFFFF;
-}
-.user-card::-webkit-scrollbar{
-  width: 0;
-}
-
-.user-card * {
-  font-family: "Roboto Mono";
-}
-
-.user-card-maximized::-webkit-scrollbar{
-  width: 0;
-}
-
-@media (height < 900px) {
-  .user-card {
-    min-width: 80cqh;
-  }
-}
-
-.buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  column-gap: 1cqh;
-  margin-left: auto;
-}
-
-.user-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
-}
-
-.text {
-  border-radius: 30cqw;
-}
-
-.avatar {
-  padding: 20px 0;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.user-status {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.user-status-dot {
-  background-color: rgb(151, 219, 166, 0.8);
-  border-radius: 50%;
-}
-
-.user-status-text {
-  font-weight: 300;
-}
-
 .profile {
   padding: 0 9cqw;
 }
@@ -129,6 +57,7 @@
   color: #2F2F2F;
   font-size: 5.8cqw;
   font-weight: 300;
+  font-family: "Istok Web" !important;
 }
 
 .details-user {

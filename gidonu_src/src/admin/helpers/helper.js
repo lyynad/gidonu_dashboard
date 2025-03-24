@@ -56,9 +56,9 @@ const createUser = async (updateObj, setLoadingCreateUser) => {
   }
 };
 
-const updateUser = async(id, name, email, isAdmin, isSuper, isTelegram, isActive) => {
+const updateUser = async(id, name, email, isAdmin, isSuper, isTelegram, telegramId, isActive) => {
   try {
-    const data = { name: name, email: email, isAdmin: isAdmin, isSuper: isSuper, isTelegram: isTelegram, isActive: isActive };
+    const data = { name: name, email: email, isAdmin: isAdmin, isSuper: isSuper, isTelegram: isTelegram, telegramId: telegramId, isActive: isActive };
 
     await axios.put(`${host}/api/admin/users/${id}`, data)
     .then(response => {

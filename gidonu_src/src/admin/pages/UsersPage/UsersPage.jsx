@@ -1,10 +1,14 @@
 import { getAllAdmins, } from "../../helpers/helper";
 import { useState, useEffect } from "react";
-import GnProfileChange from '../Components/GnProfileChange';
+
+import UserCard from '../Components/UserCard';
 import PaginationTable from "../Components/PaginationTable";
 
 import './UsersPage.css';
+import '../Components/UserCard.css';
+
 import search from "../../assets/images/search.png";
+
 const UsersPage = () => {
   const [admins, setAdmins] = useState([]);
   const [filteredAdmins, setFilteredAdmins] = useState([]);
@@ -67,13 +71,13 @@ const UsersPage = () => {
     <>
       {showUserCard &&
         <div 
-          className="user-card"
+          className="user-card user-card-maximized"
           style={{"zIndex": "2"}} 
           onMouseDown={(event) => {
             event.stopPropagation();
           }}
         >
-          <GnProfileChange
+          <UserCard
             close={handleUserCardClose}
             userProfile={userProfile}
             updateData={handleProfileChange}

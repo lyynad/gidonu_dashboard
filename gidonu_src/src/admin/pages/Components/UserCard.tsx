@@ -1,4 +1,4 @@
-import "./GnProfileChange.css";
+import "./UserCard.css";
 
 import { useEffect, useState } from "react";
 import { updateUser, deleteUser } from "../../helpers/helper";
@@ -6,6 +6,7 @@ import { IUserProfile } from "../../helpers/interfaces";
 
 import GnInput from "./GnInput";
 import GeneralConfirmWindow from "./GeneralConfirmWindow";
+import GnSwitch from "../../../gn-components/switch/GnSwitch";
 
 import avatar from "../../assets/images/svg/photo-b.svg";
 import avatarEdit from "../../assets/images/svg/avatar-edit.svg";
@@ -16,7 +17,7 @@ import edit from '../../assets/images/svg/edit-b.svg';
 import deleteImg from '../../assets/images/svg/delete-b.svg';
 import blockedImg from "../../assets/images/svg/image-blocked.svg";
 import deletedImg from "../../assets/images/svg/image-deleted.svg";
-import GnSwitch from "../../../gn-components/switch/GnSwitch";
+import arrowDown from "../../assets/images/svg/arrow-down-user-card.svg";
 
 interface GnProfileChangeProps {
   close: () => void,
@@ -33,8 +34,8 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
   const [isAdmin, setIsAdmin] = useState<boolean>(userProfile.isAdmin || userProfile.isSuper);
   const [isSuper, setIsSuper] = useState<boolean>(userProfile.isSuper);
   const [isTelegram, setIsTelegram] = useState<boolean>(userProfile.isTelegram);
+  const [telegramId, setTelegramId] = useState<string>(userProfile.telegramId);
   const [isActive, setIsActive] = useState<boolean>(userProfile.isActive);
-
 
   const [isBeingDeleted, setIsBeingDeleted] = useState<boolean>(false);
 
@@ -69,7 +70,7 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
   }, []);
 
   useEffect(() => {
-    if (name !== userProfile.name || email !== userProfile.email || isAdmin !== userProfile.isAdmin || isSuper !== userProfile.isSuper || isTelegram !== userProfile.isTelegram || isActive !== userProfile.isActive){
+    if (name !== userProfile.name || email !== userProfile.email || isAdmin !== userProfile.isAdmin || isSuper !== userProfile.isSuper || isTelegram !== userProfile.isTelegram || telegramId !== userProfile.telegramId || isActive !== userProfile.isActive){
     const newData: IUserProfile = {
       ...userProfile,
       name: name,
@@ -77,6 +78,7 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
       isAdmin: isAdmin,
       isSuper: isSuper,
       isTelegram: isTelegram,
+      telegramId: telegramId,
       isActive: isActive
     };
 
@@ -85,7 +87,7 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
     }
     else
       setIsActionEdit(false);
-  }, [name, email, isAdmin, isSuper, isTelegram, isActive]);
+  }, [name, email, isAdmin, isSuper, isTelegram, telegramId, isActive]);
 
   useEffect(() => {
     if (!isActive || isBeingDeleted)
@@ -98,6 +100,10 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
       document.removeEventListener("mousedown", close);
     }
   }, [newProfile, isBeingDeleted]);
+
+  const handleTelegramId = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTelegramId(event.target.value);
+  }
 
   const handleName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value)
@@ -124,7 +130,7 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
       if(isActionBlock)
         setIsActive(false);
       else if (newProfile && !isBeingDeleted && !isActionDelete){
-        await updateUser(newProfile.id, newProfile.name, newProfile.email, newProfile.isAdmin, newProfile.isSuper, newProfile.isTelegram, newProfile.isActive);
+        await updateUser(newProfile.id, newProfile.name, newProfile.email, newProfile.isAdmin, newProfile.isSuper, newProfile.isTelegram, newProfile.telegramId, newProfile.isActive);
         updateData();
         close();
       }
@@ -230,7 +236,7 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
               </div>
             </div>
             <div className="relative">
-              <GnInput className="!w-[30cqw]" name={'Telegram'} readonly={!isTelegram || cardReadonly} value={userProfile.telegramId}/>
+              <GnInput className="!w-[30cqw]" name={'Telegram'} readonly={!isTelegram || cardReadonly} value={userProfile.telegramId} handleChange={handleTelegramId}/>
               <div className="scale-[0.8] max-w-fit absolute right-[2cqw] top-[6cqw]">
                 <GnSwitch readonly={cardReadonly} switched={isTelegram} colorProp="bg-[#5D6065]" onSwitch={() => setIsTelegram(!isTelegram)}/>
               </div>
@@ -238,14 +244,17 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
           </div>
         </div>
       </div>
-      <div className="input-container flex flex-col gap-[4cqw] overflow-auto mt-[3cqw]">
+      <div className="dropdowns-container">
         <div className="w-[80cqw] m-[auto] border-solid border-[1px] border-[#5D6065] rounded-[4cqw]">
-          <button className={`w-[100%] h-[11.5cqw] rounded-[4cqw] text-left pl-[2cqw] text-[3.2cqw] text-[#515D74] ${dropdownPersonalInfo ? "border-b-solid border-b-[1px] border-b-[#5D6065]" : ""}`}
-            onClick={() => {setDropdownPersonalInfo(!dropdownPersonalInfo)}}
-          >
-            Особиста інформація
-          </button>
-          <div className={`max-h-[0] flex gap-[2cqw] flex-col pl-[4cqw] overflow-hidden ${dropdownPersonalInfo ? "dropdown" : "dropdown-reverse"}`}>
+          <div className="button-container">
+            <button className={`dropdown-button w-[100%] h-[11.5cqw] rounded-[4cqw] text-left pl-[2cqw] text-[3.2cqw] text-[#515D74] ${dropdownPersonalInfo ? "border-b-solid border-b-[1px] border-b-[#5D6065]" : ""}`}
+              onClick={() => {setDropdownPersonalInfo(!dropdownPersonalInfo)}}
+            >
+              <span>Особиста інформація</span>
+              <img className={`button-arrow ${dropdownPersonalInfo ? "button-arrow-animate" : ""}`} src={arrowDown} />
+            </button>
+          </div>
+          <div className={`max-h-[0] flex gap-[2cqw] flex-col pl-[4cqw] overflow-hidden ${dropdownPersonalInfo ? "dropdown" : ""}`}>
             <GnInput readonly={true} name={'ID Користувача'} value={userProfile.id}/>
             <GnInput readonly={cardReadonly} name={'Ім\'я користувача'} value={name} handleChange={handleName}/>
             <GnInput readonly={cardReadonly} name={'Email'} value={email} handleChange={handleEmail}/>
@@ -253,10 +262,11 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
           </div>
         </div>
         <div className="w-[80cqw] m-[auto] border-solid border-[1px] border-[#5D6065] rounded-[4cqw]">
-          <button className={`w-[100%] h-[11.5cqw] rounded-[4cqw] text-left pl-[2cqw] text-[3.2cqw] text-[#515D74] ${dropdownActionInfo ? "border-b-solid border-b-[1px] border-b-[#5D6065]" : ""}`}
+          <button className={`dropdown-button w-[100%] h-[11.5cqw] rounded-[4cqw] text-left pl-[2cqw] text-[3.2cqw] text-[#515D74] ${dropdownActionInfo ? "border-b-solid border-b-[1px] border-b-[#5D6065]" : ""}`}
             onClick={() => {setDropdownActionInfo(!dropdownActionInfo)}}
           >
-            Інформація про дії
+            <span>Інформація про дії</span>
+            <img className={`button-arrow ${dropdownActionInfo ? "button-arrow-animate" : ""}`} src={arrowDown} />
           </button>
           <div className={`max-h-[0] flex gap-[2cqw] flex-col pl-[4cqw] overflow-hidden ${dropdownActionInfo ? "dropdown" : "dropdown-reverse"}`}>
             <GnInput readonly={true} name={'Остання активність'} value={userProfile.lastActivityDate}/>
@@ -264,10 +274,11 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
           </div>
         </div>
         <div className="w-[80cqw] m-[auto] border-solid border-[1px] border-[#5D6065] rounded-[4cqw]">
-          <button className={`w-[100%] h-[11.5cqw] rounded-[4cqw] text-left pl-[2cqw] text-[3.2cqw] text-[#515D74] ${dropdownApplicationInfo ? "border-b-solid border-b-[1px] border-b-[#5D6065]" : ""}`}
+          <button className={`dropdown-button w-[100%] h-[11.5cqw] rounded-[4cqw] text-left pl-[2cqw] text-[3.2cqw] text-[#515D74] ${dropdownApplicationInfo ? "border-b-solid border-b-[1px] border-b-[#5D6065]" : ""}`}
             onClick={() => {setDropdownApplicationInfo(!dropdownApplicationInfo)}}
           >
-            Інформація про заявку
+            <span>Інформація про заявку</span>
+            <img className={`button-arrow ${dropdownApplicationInfo ? "button-arrow-animate" : ""}`} src={arrowDown} />
           </button>
           <div className={`max-h-[0] flex gap-[2cqw] flex-col pl-[4cqw] overflow-hidden ${dropdownApplicationInfo ? "dropdown" : "dropdown-reverse"}`}>
             <GnInput readonly={true} name={'Дата заявки'} value={userProfile.applicationDate}/>

@@ -92,7 +92,7 @@ function App() {
     <div className="content-container">
       <div className="add-btn" onClick={handleAddClick}>
 
-        <span>Додати</span>
+        <span>додати</span>
         <img src={plusIcon} className='image-container' ></img>
 
       </div>
