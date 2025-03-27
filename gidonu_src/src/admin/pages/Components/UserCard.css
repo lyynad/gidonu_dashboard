@@ -1,7 +1,8 @@
 .user-card {
   position: relative;
   min-width: min(45cqh, 75cqw);
-  max-height: 95%;
+  height: fit-content;
+  margin: auto;
   container-type: inline-size;
   padding: 1cqw;
   box-sizing: border-box;
@@ -75,6 +76,42 @@
 
 /* unique to UserCard.tsx */
 
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: #eaeaeab3;
+  border-radius: 1vh;
+  z-index: 2;
+  animation: card-overlay-fadeIn 0.5s forwards, card-overlay-fadeOut 0s forwards 1s;
+}
+
+card-overlay-img {
+  width: 28cqw;
+}
+
+@keyframes card-overlay-fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes card-overlay-fadeOut {
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
 .darkened:hover > .darkened-child {
     filter: brightness(80%);
 }
@@ -85,17 +122,10 @@
     gap: 4cqw;
     overflow: auto;
     margin-top: 3cqw;
-    max-height: 55cqh;
     padding-bottom: 1cqw;
 }
 .dropdowns-container::-webkit-scrollbar{
     width: 0px;
-}
-
-@media (height < 900px) {
-    .dropdowns-container {
-      max-height: 40cqh;
-    }
 }
 
 .dropdown-button {
@@ -153,6 +183,19 @@
   100%{
     max-height: 0px;
   }
+}
+
+.edit-button {
+  width: 43cqw;
+  font-size: 3.5cqw;
+  text-align: center;
+  border-radius: 3cqw;
+  margin: auto;
+  margin-top: 2cqw;
+  background-color: #E8E8E8;
+  color: #5D6065;
+  cursor: pointer;
+  box-shadow: 0 0.5cqw 0.5cqw rgba(0, 0, 0, 0.3);
 }
 
 /* #endregion */

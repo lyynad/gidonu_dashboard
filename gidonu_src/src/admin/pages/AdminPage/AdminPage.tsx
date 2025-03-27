@@ -73,7 +73,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="size-full flex items-center justify-center" style={{"containerType": "inline-size", "width": "100%", "height": "100%"}}>
+    <div className="page-root size-full flex overflow-auto" style={{"containerType": "inline-size", "width": "100%", "height": "100%"}}>
       {userProfile && (
         <>
           {parameterPage === null && <UserMain userProfile={userProfile} handleUserRequiresUpdate={handleUserRequiresUpdate} />}

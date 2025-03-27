@@ -82,6 +82,7 @@ const UsersPage = () => {
             userProfile={userProfile}
             updateData={handleProfileChange}
             isOwn={false}
+            readonly={true}
           />
         </div>
       }
@@ -101,13 +102,13 @@ const UsersPage = () => {
             <button></button>
           </div>
           
-          {filteredAdmins.length > 0 &&
+          {filteredAdmins.length > 0 && (
             <PaginationTable 
               headers={["№ користувача", "Email", "Дата реєстрації", "Статус заявки", "Роль"]}
               body={filteredAdmins}
               onclick={handleUserCardShow}
             />
-          }
+          )}
       </div>
       }
     </>

@@ -20,14 +20,14 @@ function App() {
     }, []);
 
     return (
-        <>
+        <div style={{"display": "flex", "justifyContent": "center", "alignItems": "center", "width": "100%", "height": "100%"}}>
             {logs.length > 0 &&
                 <PaginationTable 
                     body={logs}
                     headers={["№", "Номер користувача", "Змінена таблиця", "Номер запису", "Дія", "Дата"]}
                 />
             }
-        </>
+        </div>
     );
 }
 

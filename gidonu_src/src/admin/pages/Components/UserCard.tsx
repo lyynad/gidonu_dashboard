@@ -16,6 +16,7 @@ import dottedMenu from "../../assets/images/svg/dot-menu.svg";
 import edit from '../../assets/images/svg/edit-b.svg';
 import deleteImg from '../../assets/images/svg/delete-b.svg';
 import blockedImg from "../../assets/images/svg/image-blocked.svg";
+import unblockedImg from "../../assets/images/svg/image-unblocked.svg";
 import deletedImg from "../../assets/images/svg/image-deleted.svg";
 import arrowDown from "../../assets/images/svg/arrow-down-user-card.svg";
 
@@ -33,7 +34,7 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
   const [lastChangesDate, setLastChangesDate] = useState<string>(userProfile.lastChangesDate);
   const [isAdmin, setIsAdmin] = useState<boolean>(userProfile.isAdmin || userProfile.isSuper);
   const [isSuper, setIsSuper] = useState<boolean>(userProfile.isSuper);
-  const [isTelegram, setIsTelegram] = useState<boolean>(userProfile.isTelegram);
+  const [isTelegram, setIsTelegram] = useState<boolean>(Boolean(userProfile.isTelegram));
   const [telegramId, setTelegramId] = useState<string>(userProfile.telegramId);
   const [isActive, setIsActive] = useState<boolean>(userProfile.isActive);
 
@@ -70,33 +71,36 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
   }, []);
 
   useEffect(() => {
-    if (name !== userProfile.name || email !== userProfile.email || isAdmin !== userProfile.isAdmin || isSuper !== userProfile.isSuper || isTelegram !== userProfile.isTelegram || telegramId !== userProfile.telegramId || isActive !== userProfile.isActive){
-    const newData: IUserProfile = {
-      ...userProfile,
-      name: name,
-      email: email,
-      isAdmin: isAdmin,
-      isSuper: isSuper,
-      isTelegram: isTelegram,
-      telegramId: telegramId,
-      isActive: isActive
-    };
+    if (name !== userProfile.name || email !== userProfile.email || isAdmin != userProfile.isAdmin || isSuper != userProfile.isSuper || isTelegram != userProfile.isTelegram || telegramId !== userProfile.telegramId || isActive != userProfile.isActive){
+      const newData: IUserProfile = {
+        ...userProfile,
+        name: name,
+        email: email,
+        isAdmin: isAdmin,
+        isSuper: isSuper,
+        isTelegram: isTelegram,
+        telegramId: telegramId,
+        isActive: isActive
+      };
 
-      setIsActionEdit(true);
-      setNewProfile(newData);
+        setIsActionEdit(true);
+        setNewProfile(newData);
     }
     else
       setIsActionEdit(false);
   }, [name, email, isAdmin, isSuper, isTelegram, telegramId, isActive]);
-
+  
   useEffect(() => {
-    if (!isActive || isBeingDeleted)
-      document.addEventListener("mousedown", handleAcceptClose.closeMain);
+    if ((isActive !== userProfile.isActive) || isBeingDeleted){
+      setDropdownPersonalInfo(false);
+      setDropdownApplicationInfo(false);
+      setDropdownActionInfo(false);
+      setTimeout(handleAcceptClose.closeMain, 1000);
+    }
     else
       document.addEventListener("mousedown", close);
 
     return () => {
-      document.removeEventListener("mousedown", handleAcceptClose.closeMain);
       document.removeEventListener("mousedown", close);
     }
   }, [newProfile, isBeingDeleted]);
@@ -128,7 +132,7 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
   const handleAcceptClose = {
     closeMain: async () => {
       if(isActionBlock)
-        setIsActive(false);
+        setIsActive(!isActive);
       else if (newProfile && !isBeingDeleted && !isActionDelete){
         await updateUser(newProfile.id, newProfile.name, newProfile.email, newProfile.isAdmin, newProfile.isSuper, newProfile.isTelegram, newProfile.telegramId, newProfile.isActive);
         updateData();
@@ -145,7 +149,6 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
     },
     closeCurrent: () => {
       setShowConfirmWindow(false);
-      setIsActionEdit(false);
       setIsActionBlock(false);
       setIsActionDelete(false);
     }
@@ -167,28 +170,33 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
   return (
     <div>
       {showConfirmWindow && isActionEdit && <GeneralConfirmWindow entity={newProfile!}  text="Ви дійсно бажаєте зберегти зміни?" onClose={handleAcceptClose} confirmType="edit" />}
-      {showConfirmWindow && isActionBlock && <GeneralConfirmWindow entity={newProfile!}  text="Заблокувати даного користувача?" onClose={handleAcceptClose} confirmType="edit" />}
+      {showConfirmWindow && isActionBlock && <GeneralConfirmWindow entity={newProfile!}  text={`${isActive ? "Заблокувати" : "Розблокувати"} даного користувача?`} onClose={handleAcceptClose} confirmType="edit" />}
       {showConfirmWindow && isActionDelete && <GeneralConfirmWindow entity={newProfile!}  text="Видалити даного користувача?" onClose={handleAcceptClose} confirmType="edit" />}
 
 
       {!isOwn ? (
           <>
-            {!isActive && !showConfirmWindow &&
-              <div className="absolute top-[0] left-[0] flex items-center justify-center w-[100%] h-[100%] bg-[#eaeaeab3] rounded-[1vh] z-[2]" onClick={() => {setIsActive(true)}}>
-                <img className="w-[18cqw]" src={blockedImg} />
+            {isActive !== userProfile.isActive && isActive === false && !showConfirmWindow &&
+              <div className="card-overlay">
+                <img className="card-overlay-img" src={blockedImg} />
+              </div>
+            }
+            {isActive !== userProfile.isActive && isActive === true && !showConfirmWindow &&
+              <div className="card-overlay">
+                <img className="card-overlay-img" src={unblockedImg} />
               </div>
             }
             {isBeingDeleted && !showConfirmWindow &&
-              <div className="absolute top-[0] left-[0] flex items-center justify-center w-[100%] h-[100%] bg-[#eaeaeab3] rounded-[1vh] z-[2]" onClick={() => {setIsBeingDeleted(false)}}>
-                <img className="w-[18cqw]" src={deletedImg} />
+              <div className="card-overlay">
+                <img className="card-overlay-img" src={deletedImg} />
               </div>
             }
-            <div className="relative"> 
-              <img className="dotted-menu-icon ml-[97cqw] mt-[2cqw] cursor-pointer" src={dottedMenu} onClick={handleShowMenu}></img>
-              <ul className={`user-card-menu absolute right-[1cqw] top-[1cqw] bg-[#F6F6F6] z-[1] rounded-[1cqw] rounded-tr-[0] shadow-[0_0.8cqw_0.8cqw_rgba(0,0,0,0.25)] ${!showMenu ? "hidden" : ""}`}>
-                <li className="flex items-center justify-center w-[14cqw] h-[3.7cqw] font-light text-[1.8cqw] tracking-wide cursor-pointer" onClick={() => {setShowMenu(false); setIsActionBlock(true); setShowConfirmWindow(true);}}>Заблокувати</li>
+            <div className="sticky top-[2cqw] z-[2]"> 
+              <img className="dotted-menu-icon ml-[auto] mt-[2cqw] cursor-pointer w-[6cqw]" src={dottedMenu} onClick={handleShowMenu}></img>
+              <ul className={`user-card-menu absolute right-[1cqw] top-[1cqw] z-[1] rounded-[1cqw] rounded-tr-[0] shadow-[0_0.8cqw_0.8cqw_rgba(0,0,0,0.25)] ${!showMenu ? "hidden" : ""}`}>
+                <li className="flex items-center justify-center w-[19cqw] h-[5cqw] font-light text-[2.2cqw] tracking-wide cursor-pointer" onClick={() => {setShowMenu(false); setIsActionBlock(true); setShowConfirmWindow(true);}}>{isActive ? "Заблокувати" : "Розблокувати"}</li>
                 <div className="absolute w-[80%] h-[0.1cqw] bg-[#3D3D3D] left-[9%]"></div>
-                <li className="flex items-center justify-center w-[14cqw] h-[3.7cqw] font-light text-[1.8cqw] tracking-wide cursor-pointer" onClick={() => {setShowMenu(false); setIsActionDelete(true); setShowConfirmWindow(true);}}>Видалити</li>
+                <li className="flex items-center justify-center w-[19cqw] h-[5cqw] font-light text-[2.2cqw] tracking-wide cursor-pointer" onClick={() => {setShowMenu(false); setIsActionDelete(true); setShowConfirmWindow(true);}}>Видалити</li>
               </ul>
             </div>
           </>
@@ -209,42 +217,40 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
           </div>
         )
       }
-      <div className="flex justify-between">
+      <div className="sticky top-[0] bg-[white] flex justify-between ml-[4cqw] z-[1]">
         <div className="p-4 flex flex-row gap-[2cqw]">
           <div className="avatar relative p-[0]">
             <div className={`${!cardReadonly ? "darkened" : ""}`}>
               <img className={`avatar-img w-[25cqw] ${!cardReadonly ? "darkened-child cursor-pointer" : "cursor-not-allowed"}`} src={avatar}/>
             </div>
             <div className="user-status gap-[1.5cqw] mr-[1.2cqw] mt-[1cqw]">
-              <div className="user-status-dot w-[1.6cqw] h-[1.6cqw]" style={{"backgroundColor": `${userProfile.isActive ? "rgb(151, 219, 166, 0.8)" : "rgb(242, 201, 201)"}`}}></div>
+              <div className="user-status-dot w-[1.6cqw] h-[1.6cqw]" style={{"backgroundColor": `${isActive ? "rgb(151, 219, 166, 0.8)" : "rgb(242, 201, 201)"}`}}></div>
               <span className="user-status-text text-[2.2cqw]">{isActive ? "Активний" : "Заблокований"}</span>
             </div>
           </div>
           <div className="flex flex-col gap-[3cqw] h-full">
-            <div className="flex w-full gap-[2cqw]">
+            <div className="flex w-full gap-[4cqw]">
               <div className="flex flex-col items-center gap-2">
-                <div className="px-[2.5cqw] rounded-[30cqw] bg-[#BCDCE4] text-[2.4cqw]" style={{"fontFamily": "Roboto Mono"}}>admin</div>
-                <div className="scale-[0.8]">
-                  <GnSwitch readonly={cardReadonly} switched={isAdmin || isSuper} colorProp="bg-[#5D6065]" onSwitch={() => {if(!isSuper) setIsAdmin(!isAdmin)}}/>
+                <div className="px-[5cqw] rounded-[30cqw] bg-[#BCDCE4] text-[2.4cqw]" style={{"fontFamily": "Roboto Mono"}}>admin</div>
+                <div className="">
+                  <GnSwitch readonly={cardReadonly || !isActive} switched={isAdmin || isSuper} colorProp="bg-[#5D6065]" className="w-[7cqw]" onSwitch={() => {if(!isSuper) setIsAdmin(!isAdmin)}}/>
                 </div>
               </div>
               <div className="flex flex-col items-center gap-2">
-                <div className="px-5 rounded-[30cqw] bg-[#F8E5E5] text-[2.4cqw]" style={{"fontFamily": "Roboto Mono"}}>super</div>
-                <div className="scale-[0.8]">
-                  <GnSwitch readonly={cardReadonly} switched={isSuper} colorProp="bg-[#5D6065]" onSwitch={() => setIsSuper(!isSuper)}/>
+                <div className="px-[5cqw] rounded-[30cqw] bg-[#F8E5E5] text-[2.4cqw]" style={{"fontFamily": "Roboto Mono"}}>super</div>
+                <div className="">
+                  <GnSwitch readonly={cardReadonly || !isActive} switched={isSuper} colorProp="bg-[#5D6065]" className="w-[7cqw]" onSwitch={() => setIsSuper(!isSuper)}/>
                 </div>
               </div>
             </div>
-            <div className="relative">
+            <div className="relative w-fit">
               <GnInput className="!w-[30cqw]" name={'Telegram'} readonly={!isTelegram || cardReadonly} value={userProfile.telegramId} handleChange={handleTelegramId}/>
-              <div className="scale-[0.8] max-w-fit absolute right-[2cqw] top-[6cqw]">
-                <GnSwitch readonly={cardReadonly} switched={isTelegram} colorProp="bg-[#5D6065]" onSwitch={() => setIsTelegram(!isTelegram)}/>
-              </div>
+              <GnSwitch readonly={cardReadonly} switched={isTelegram} colorProp="bg-[#5D6065]" className="w-[7cqw] absolute right-[2cqw] top-[7cqw]" onSwitch={() => setIsTelegram(!isTelegram)}/>
             </div>
           </div>
         </div>
       </div>
-      <div className="dropdowns-container">
+      <div className="dropdowns-container z-[-1]">
         <div className="w-[80cqw] m-[auto] border-solid border-[1px] border-[#5D6065] rounded-[4cqw]">
           <div className="button-container">
             <button className={`dropdown-button w-[100%] h-[11.5cqw] rounded-[4cqw] text-left pl-[2cqw] text-[3.2cqw] text-[#515D74] ${dropdownPersonalInfo ? "border-b-solid border-b-[1px] border-b-[#5D6065]" : ""}`}
@@ -286,29 +292,36 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
           </div>
         </div>
       </div>
-      <div className={`w-full flex flex-row justify-end items-center mt-[2cqw] ${cardReadonly ? "opacity-[0] cursor-default" : "cursor-pointer"}`}>
-        <div className="flex justify-end gap-[2cqw] border-solid border-t-[1px] border-t-[black] w-[50cqw] h-[6cqw] mt-[2cqw] text-[3cqw]">
-          <div 
-          className="flex flex-row items-center gap-2" 
-          style={{"fontFamily": "Roboto Mono"}} 
-          onClick={
-            () => {
-              if(!isActionEdit)
-                close();
-              else  
-                handleAcceptClick();
-            }}
-          >
-            <img className="w-[3.4cqw] h-[3.4cqw]" src={tick}/>
-            Зберегти
-          </div>
-          <div className="border-l border-black h-full"></div>
-          <div className="flex flex-row items-center gap-2" style={{"fontFamily": "Roboto Mono"}} onClick={close}>
-            <img className="w-[3.4cqw] h-[3.4cqw]" src={cross}/>
-            <div>Відмінити</div>
+      {(cardReadonly && !isOwn) ? (
+        <div className="edit-button"
+          onClick={() => {setCardReadonly(false);}}
+        >
+          Обробити заявку
+        </div>
+      )
+      : (
+        <div className={`w-full flex flex-row justify-end items-center mt-[2cqw] ${cardReadonly ? "opacity-[0] cursor-default" : (!isActionEdit ? "opacity-[0.5] cursor-default" : "cursor-pointer")}`}>
+          <div className="flex justify-end gap-[2cqw] border-solid border-t-[1px] border-t-[black] w-[50cqw] h-[6cqw] mt-[2cqw] text-[3cqw]">
+            <div 
+            className="flex flex-row items-center gap-2" 
+            style={{"fontFamily": "Roboto Mono"}} 
+            onClick={
+              () => {
+                if(isActionEdit)
+                  handleAcceptClick();
+              }}
+            >
+              <img className="w-[3.4cqw] h-[3.4cqw]" src={tick}/>
+              Зберегти
+            </div>
+            <div className="border-l border-black h-full"></div>
+            <div className="flex flex-row items-center gap-2" style={{"fontFamily": "Roboto Mono"}} onClick={close}>
+              <img className="w-[3.4cqw] h-[3.4cqw]" src={cross}/>
+              <div>Відмінити</div>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
