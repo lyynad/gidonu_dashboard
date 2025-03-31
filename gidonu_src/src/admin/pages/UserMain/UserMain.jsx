@@ -8,11 +8,15 @@ import deleteImg from '../../assets/images/svg/delete-b.svg';
 import avatar from '../../assets/images/svg/photo-b.svg';
 import details from '../../assets/images/svg/details.svg';
 import arrowBack from "../../assets/images/svg/arrow-back.svg";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 export default function UserMain({ userProfile, handleUserRequiresUpdate }) {
   const [isEditing, setIsEditing] = useState(false);
   const [isDetailView, setIsDetailView] = useState(false);
+
+  useEffect(() => {
+    document.title = "Дашборд";
+  }, []);
 
   const handleUserCardClose = () => {
     setIsEditing(false);

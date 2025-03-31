@@ -20,6 +20,10 @@ function App() {
   const [showPopup, setShowPopup] = useState<boolean>(false);
 
   useEffect(() => {
+    document.title = "Корпуси";
+  })
+
+  useEffect(() => {
     const fetchData = async () => {
       try{
         const buildings = await api.getBuildings();

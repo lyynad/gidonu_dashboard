@@ -22,6 +22,8 @@ const UsersPage = () => {
 
   useEffect(() => {
     getAllAdmins(setAdmins, setLoading);
+
+    document.title = "Користувачі";
   }, []);
   
   useEffect(() => {

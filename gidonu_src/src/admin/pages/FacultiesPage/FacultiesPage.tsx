@@ -23,6 +23,10 @@ function App() {
   const [showPopup, setShowPopup] = useState<boolean>(false);
 
   useEffect(() => {
+    document.title = "Факультети";
+  }, []);
+
+  useEffect(() => {
     const fetchData = async () => {
       try{
         const faculties = await api.getFaculties();

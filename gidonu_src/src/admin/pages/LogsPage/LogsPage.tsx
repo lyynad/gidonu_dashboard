@@ -17,6 +17,8 @@ function App() {
         };
 
         fetchData();
+
+        document.title = "Історія змін";
     }, []);
 
     return (
