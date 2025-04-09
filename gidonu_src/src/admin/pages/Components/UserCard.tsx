@@ -191,7 +191,7 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
                 <img className="card-overlay-img" src={deletedImg} />
               </div>
             }
-            <div className="sticky top-[2cqw] z-[2]"> 
+            <div className="relative z-[2]"> 
               <img className="dotted-menu-icon ml-[auto] mt-[2cqw] cursor-pointer w-[6cqw]" src={dottedMenu} onClick={handleShowMenu}></img>
               <ul className={`user-card-menu absolute right-[1cqw] top-[1cqw] z-[1] rounded-[1cqw] rounded-tr-[0] shadow-[0_0.8cqw_0.8cqw_rgba(0,0,0,0.25)] ${!showMenu ? "hidden" : ""}`}>
                 <li className="flex items-center justify-center w-[19cqw] h-[5cqw] font-light text-[2.2cqw] tracking-wide cursor-pointer" onClick={() => {setShowMenu(false); setIsActionBlock(true); setShowConfirmWindow(true);}}>{isActive ? "Заблокувати" : "Розблокувати"}</li>
@@ -217,7 +217,7 @@ export default function GnProfileChange({close, userProfile, updateData, isOwn, 
           </div>
         )
       }
-      <div className="sticky top-[0] bg-[white] flex justify-between ml-[4cqw] z-[1]">
+      <div className="relative bg-[white] flex justify-between ml-[4cqw] z-[1]">
         <div className="p-4 flex flex-row gap-[2cqw]">
           <div className="avatar relative p-[0]">
             <div className={`${!cardReadonly ? "darkened" : ""}`}>
