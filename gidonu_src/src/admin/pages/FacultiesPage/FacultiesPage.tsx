@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import './FacultiesPage.css'
 
 // import Header from './components/Header';
-import GeneralTable from '../Components/GeneralTable';
-import FacultyForm from '../Components/GeneralFacultyForm';
+import GeneralTable from '../../components/GeneralTable';
+import FacultyForm from '../../components/GeneralFacultyForm';
 import Popup from '../../../gn-components/popup/GnPopup';
 
 import * as api from '../../helpers/helper';
@@ -11,6 +11,7 @@ import * as api from '../../helpers/helper';
 import { Faculty, Building, BuildingsFacultiesDependence } from '../../helpers/interfaces';
 
 import plusIcon from './assets/plus.svg';
+import { useScrollToggle } from '../../hooks/useScrollToggle';
 
 function App() {
   const [faculties, setFaculties] = useState<Faculty[]>([]);
@@ -77,6 +78,8 @@ function App() {
     }
 
   }, [showPopup]);
+
+  useScrollToggle(showForm);
 
   const updateFaculties = async () => {
     setFacultiesUpdate(true);

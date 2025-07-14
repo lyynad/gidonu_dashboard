@@ -1,11 +1,11 @@
 import { getAllAdmins, } from "../../helpers/helper";
 import { useState, useEffect } from "react";
 
-import UserCard from '../Components/UserCard';
-import PaginationTable from "../Components/PaginationTable";
+import UserCard from '../../components/UserCard';
+import PaginationTable from "../../components/PaginationTable";
 
 import './UsersPage.css';
-import '../Components/UserCard.css';
+import '../../components/UserCard.css';
 
 import search from "../../assets/images/search.png";
 

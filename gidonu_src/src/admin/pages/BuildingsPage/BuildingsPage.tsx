@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import './BuildingsPage.css'
 
 // import Header from './components/Header';
-import GeneralTable from '../Components/GeneralTable';
-import BuildingForm from '../Components/GeneralBuildingForm';
+import GeneralTable from '../../components/GeneralTable';
+import BuildingForm from '../../components/GeneralBuildingForm';
 import Popup from '../../../gn-components/popup/GnPopup';
 
 import * as api from '../../helpers/helper';
@@ -11,6 +11,7 @@ import * as api from '../../helpers/helper';
 import { Building } from '../../helpers/interfaces';
 
 import plusIcon from './assets/plus.svg';
+import { useScrollToggle } from '../../hooks/useScrollToggle';
 
 function App() {
   const [buildings, setBuildings] = useState<Building[]>([]);
@@ -68,6 +69,8 @@ function App() {
     }
 
   }, [showPopup]);
+
+  useScrollToggle(showForm);
 
   const updateBuildings = async () => {
     setBuildingsUpdate(true);

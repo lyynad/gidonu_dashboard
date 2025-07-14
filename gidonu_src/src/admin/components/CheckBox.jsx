@@ -1,6 +1,6 @@
 import { useState } from "react";
 import check from "../../assets/images/checkBlack.png";
-import "../../assets/css/CheckBox.css";
+import "../assets/css/CheckBox.css";
 
 const CheckBox = ({ childId, switchState, onSwitchChange }) => {
   const [active, setActive] = useState(false);

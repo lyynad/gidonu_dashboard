@@ -1,7 +1,7 @@
 import './UserMain.css';
-import '../Components/UserCard.css';
+import '../../components/UserCard.css';
 
-import UserCard from "../Components/UserCard";
+import UserCard from "../../components/UserCard";
 
 import edit from '../../assets/images/svg/edit-b.svg';
 import deleteImg from '../../assets/images/svg/delete-b.svg';

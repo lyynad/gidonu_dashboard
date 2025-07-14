@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import * as api from "./module/classes/api";
 import { Log } from "../../helpers/interfaces";
-import PaginationTable from "../Components/PaginationTable";
+import PaginationTable from "../../components/PaginationTable";
 
 function App() {
     const [logs, setLogs] = useState<Log[]>([]);

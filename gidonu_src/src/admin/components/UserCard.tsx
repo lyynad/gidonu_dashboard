@@ -1,24 +1,24 @@
 import "./UserCard.css";
 
 import { useEffect, useState } from "react";
-import { updateUser, deleteUser } from "../../helpers/helper";
-import { IUserProfile } from "../../helpers/interfaces";
+import { updateUser, deleteUser } from "../helpers/helper";
+import { IUserProfile } from "../helpers/interfaces";
 
 import GnInput from "./GnInput";
 import GeneralConfirmWindow from "./GeneralConfirmWindow";
-import GnSwitch from "../../../gn-components/switch/GnSwitch";
+import GnSwitch from "../../gn-components/switch/GnSwitch";
 
-import avatar from "../../assets/images/svg/photo-b.svg";
-import avatarEdit from "../../assets/images/svg/avatar-edit.svg";
-import tick from "../../assets/images/tick.svg";
-import cross from "../../assets/images/cross.svg";
-import dottedMenu from "../../assets/images/svg/dot-menu.svg";
-import edit from '../../assets/images/svg/edit-b.svg';
-import deleteImg from '../../assets/images/svg/delete-b.svg';
-import blockedImg from "../../assets/images/svg/image-blocked.svg";
-import unblockedImg from "../../assets/images/svg/image-unblocked.svg";
-import deletedImg from "../../assets/images/svg/image-deleted.svg";
-import arrowDown from "../../assets/images/svg/arrow-down-user-card.svg";
+import avatar from "../assets/images/svg/photo-b.svg";
+import avatarEdit from "../assets/images/svg/avatar-edit.svg";
+import tick from "../assets/images/tick.svg";
+import cross from "../assets/images/cross.svg";
+import dottedMenu from "../assets/images/svg/dot-menu.svg";
+import edit from '../assets/images/svg/edit-b.svg';
+import deleteImg from '../assets/images/svg/delete-b.svg';
+import blockedImg from "../assets/images/svg/image-blocked.svg";
+import unblockedImg from "../assets/images/svg/image-unblocked.svg";
+import deletedImg from "../assets/images/svg/image-deleted.svg";
+import arrowDown from "../assets/images/svg/arrow-down-user-card.svg";
 
 interface GnProfileChangeProps {
   close: () => void,

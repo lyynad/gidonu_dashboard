@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-import "../../assets/css/style.css";
+import "../assets/css/style.css";
 
 const BackgroundBlur = ({ children }) => {
   return (

@@ -1,9 +1,9 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
+import { useState, useEffect, ChangeEvent, FormEvent, useCallback } from 'react';
 import './GeneralForm.css';
-import { Faculty, Building, BuildingsFacultiesDependence } from "../../helpers/interfaces";
+import { Faculty, Building, BuildingsFacultiesDependence } from "../helpers/interfaces";
 import ConfirmWindow from './GeneralConfirmWindow';
-import closeIcon from "../../assets/images/svg/closeIcon.svg";
-import * as api from '../../helpers/helper';
+import closeIcon from "../assets/images/svg/closeIcon.svg";
+import * as api from '../helpers/helper';
 
 type FormType = "add" | "edit";
 
@@ -71,7 +71,6 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
             handleTooltip();
         });
         document.addEventListener("keydown", handleEscape, false);
-        document.body.style.overflowY = "hidden";
 
         if (!textAreaFocused) {
             document.addEventListener("keydown", handleEnter, false);
@@ -85,7 +84,6 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
             document.removeEventListener("keydown", handleEnter, false);
             document.removeEventListener("mousedown", handleTooltip, false);
             document.removeEventListener("mousedown", handleBuildingsList, false);
-            document.body.style.overflowY = "auto";
         };
     }, [showConfirmAccept, showConfirmDecline, textAreaFocused, buildingsListVisibility, titleChanged, contactsChanged, descriptionChanged, dependenciesChanged]);
 
@@ -103,7 +101,7 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
     };
 
     const handleAcceptClose = {
-        closeMain: async () => {  
+        closeMain: useCallback(async () => {  
             onClose();
             updateFaculties();
             
@@ -140,7 +138,7 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
 
             setResponseMessage(responseFaculty.message + " Статус: " + responseFaculty.code);
             setShowResponse(true);
-        },
+        }, []),
 
         closeCurrent: async () => {
             setShowConfirmAccept(false);
@@ -306,7 +304,7 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
                     
                     <div className="info-window-field">
                         <label>Назва</label>
-                        <input className="info-window-field-title" defaultValue={faculty.title || ""} onChange={handleValuesChange} required={true} onInvalid={handleInvalidInput} autoFocus readOnly={(showConfirmAccept || showConfirmDecline) ? true : false}></input>
+                        <input name="title" className="info-window-field-title" defaultValue={faculty.title || ""} onChange={handleValuesChange} required={true} onInvalid={handleInvalidInput} autoFocus readOnly={(showConfirmAccept || showConfirmDecline) ? true : false}></input>
                         <div className="tooltip" style={showTooltip ? {"visibility": "visible"} : {"visibility": "hidden"}}>Будь ласка, введіть назву.</div>
                     </div>
                     
@@ -325,12 +323,12 @@ const FacultyForm = ({faculty, title, onClose, formType, updateFaculties, setRes
 
                     <div className="info-window-field">
                         <label>Опис</label>
-                        <textarea className="info-window-field-description" defaultValue={faculty.description || ""} onFocus={handleTextAreaOnFocus} onBlur={handleTextAreaOnFocusOut} onChange={handleValuesChange} readOnly={(showConfirmAccept || showConfirmDecline) ? true : false}></textarea>
+                        <textarea name="description" className="info-window-field-description" defaultValue={faculty.description || ""} onFocus={handleTextAreaOnFocus} onBlur={handleTextAreaOnFocusOut} onChange={handleValuesChange} readOnly={(showConfirmAccept || showConfirmDecline) ? true : false}></textarea>
                     </div>
 
                     <div className="info-window-field">
                         <label>Контакти</label>
-                        <textarea className="info-window-field-contacts" defaultValue={faculty.contacts || ""} onFocus={handleTextAreaOnFocus} onBlur={handleTextAreaOnFocusOut} onChange={handleValuesChange} readOnly={(showConfirmAccept || showConfirmDecline) ? true : false}></textarea>
+                        <textarea name="contacts" className="info-window-field-contacts" defaultValue={faculty.contacts || ""} onFocus={handleTextAreaOnFocus} onBlur={handleTextAreaOnFocusOut} onChange={handleValuesChange} readOnly={(showConfirmAccept || showConfirmDecline) ? true : false}></textarea>
                     </div>
 
                 </div>

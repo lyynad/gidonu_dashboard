@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import BackgroundBlur from "./BackgroundBlur";
-import { createUser } from "../../helpers/helper";
+import { createUser } from "../helpers/helper";
 import { jwtDecode } from "jwt-decode";
-import useAuth from "../../auth/useAuth";
-import { getAllAdmins } from "../../helpers/helper";
+import useAuth from "../auth/useAuth";
+import { getAllAdmins } from "../helpers/helper";
 import { useNavigate } from "react-router-dom";
 
-import logo from "../../assets/images/onuLogo.png";
-import check from "../../assets/images/checkBlack.png";
-import close from "../../assets/images/close.png";
-import "../../assets/css/LoginForm.css";
+import logo from "../assets/images/onuLogo.png";
+import check from "../assets/images/checkBlack.png";
+import close from "../assets/images/close.png";
+import "../assets/css/LoginForm.css";
 import axios from "axios";
 
 const LoginForm = ({ setLoginFormShow }) => {

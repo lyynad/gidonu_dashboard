@@ -1,5 +1,5 @@
 import {useEffect, useMemo, useState} from "react";
-import {cn} from "../../../gn-toolbox/toolbox/utils";
+import {cn} from "../../gn-toolbox/toolbox/utils";
 
 interface GnInputProps {
   name: string;

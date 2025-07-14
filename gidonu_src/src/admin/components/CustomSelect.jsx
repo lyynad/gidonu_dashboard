@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-import "../../assets/css/AdminSelect.css";
+import "../assets/css/AdminSelect.css";
 
 const CustomSelect = ({ optionsList, defaultText, setCabinetType }) => {
   const [defaultSelectText, setDefaultSelectText] = useState({

@@ -1,6 +1,6 @@
 import message from "../../assets/images/message.png";
 
-import "../../assets/css/ContactUs.css";
+import "../assets/css/ContactUs.css";
 
 const ContactUs = () => {
   return (

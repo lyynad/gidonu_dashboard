@@ -1,9 +1,9 @@
-import { useState, useEffect, useRef, ChangeEvent, FormEvent } from 'react';
+import { useState, useEffect, useRef, ChangeEvent, FormEvent, useCallback } from 'react';
 import './GeneralForm.css';
-import { Building } from '../../helpers/interfaces';
+import { Building } from '../helpers/interfaces';
 import ConfirmWindow from './GeneralConfirmWindow';
-import closeIcon from "../../assets/images/svg/closeIcon.svg";
-import * as api from '../../helpers/helper';
+import closeIcon from "../assets/images/svg/closeIcon.svg";
+import * as api from '../helpers/helper';
 
 type FormType = "add" | "edit";
 
@@ -54,7 +54,6 @@ const BuildingForm = ({building, title, onClose, formType, updateFaculties, setR
         document.addEventListener("mousedown", handleTooltip, false);
 
         document.addEventListener("keydown", handleEscape, false);
-        document.body.style.overflowY = "hidden";
 
         if (!textAreaFocused) {
             document.addEventListener("keydown", handleEnter, false);
@@ -67,7 +66,6 @@ const BuildingForm = ({building, title, onClose, formType, updateFaculties, setR
             document.removeEventListener("keydown", handleEscape, false);
             document.removeEventListener("keydown", handleEnter, false);
             document.removeEventListener("mousedown", handleTooltip, false);
-            document.body.style.overflowY = "auto";
         };
     }, [showConfirmAccept, showConfirmDecline, textAreaFocused, titleChanged, addressChanged, descriptionChanged, floorAmountChanged]);
 
@@ -85,7 +83,7 @@ const BuildingForm = ({building, title, onClose, formType, updateFaculties, setR
     };
 
     const handleAcceptClose = {
-        closeMain: async () => {  
+        closeMain: useCallback(async () => {  
             onClose();
             updateFaculties();
             
@@ -107,7 +105,7 @@ const BuildingForm = ({building, title, onClose, formType, updateFaculties, setR
 
             setResponseMessage(response.message + " Статус: " + response.code);
             setShowResponse(true);
-        },
+        }, []),
 
         closeCurrent: async () => {
             setShowConfirmAccept(false);

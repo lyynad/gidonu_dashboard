@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { getBuildings } from "./helpers/helper";
 import useLoadingState from "./helpers/state/buildingsLoading";
 import AdminPage from "./pages/AdminPage/AdminPage";
-import LoginForm from "./pages/Components/LoginForm";
+import LoginForm from "./components/LoginForm";
 
 import "./App.css";
 import porfile from "./assets/images/profile.png";

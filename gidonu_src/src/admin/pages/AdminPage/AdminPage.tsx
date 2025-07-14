@@ -11,8 +11,6 @@ import "../../assets/css/AdminPage.css";
 import "./AdminPage.css";
 import UserMain from "../UserMain/UserMain";
 import UsersPage from "../UsersPage/UsersPage";
-import GnFeedBack from "../Feedback/GnFeedBack";
-import Building from "../Buildings/Building";
 import FacultiesPage from "../FacultiesPage/FacultiesPage";
 import BuildingsPage from "../BuildingsPage/BuildingsPage";
 import LogsPage from "../LogsPage/LogsPage";

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { IUserProfile, Log } from "../../helpers/interfaces";
+import { IUserProfile, Log } from "../helpers/interfaces";
 
 import "./PaginationTable.css";
 
-import arrowPrevious from "../../assets/images/svg/arrow-previous.svg";
-import arrowNext from "../../assets/images/svg/arrow-next.svg";
+import arrowPrevious from "../assets/images/svg/arrow-previous.svg";
+import arrowNext from "../assets/images/svg/arrow-next.svg";
 
 type Props =
     | {
