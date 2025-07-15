@@ -31,3 +31,14 @@
   overflow: hidden;
   outline: 1px solid #B1B1B1;
 }
+
+.search-icon {
+  z-index: 1;
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}

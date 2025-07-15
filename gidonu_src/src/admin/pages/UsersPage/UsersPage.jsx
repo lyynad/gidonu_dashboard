@@ -92,13 +92,15 @@ const UsersPage = () => {
         <div className="users-main">
           <div className="w-full px-[12px] flex items-center justify-between mb-[20px]">
             <div className="relative">
-              <img src={search} className="absolute top-[12px] right-[30px]"/>
+              <img src={search} className="search-icon"/>
               <input
                 placeholder={"Пошук"}
                 onChange={(e) => {
                   setSearchInput(e?.target?.value);
                 }}
-                className="w-[300px] outline-none bg-[#D3D3D3] text-[#292929] pl-[25px] h-[43px] rounded-[10px] pr-[50px]"
+                className="w-[316px] h-[46px] rounded-[15px] bg-[#D9D9D9] outline-none shadow-[0_4px_4px_0_#00000040] px-[25px] py-[10px] 
+                font-['Roboto_Mono'] font-normal text-[20px] leading-[100%] tracking-[0.02em] text-[#5D6065] cursor-pointer relative 
+                padding-left-[500px] placeholder-[#5D6065]"
               />
             </div>
             <button></button>
